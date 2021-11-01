@@ -1,4 +1,4 @@
-package com.service.cloud;
+package com.cloud.member;
 
 import java.sql.Date;
 
