@@ -1,6 +1,6 @@
 package com.cloud.myprj.member;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class SendVO {
 
@@ -9,7 +9,7 @@ public class SendVO {
 	private String fileCode;
 	private String sendContent;
 	private String readCheck;
-	private Date sendDate;
+	private Timestamp sendDate;
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
@@ -22,7 +22,7 @@ public class SendVO {
 	public void setSendContent(String sendContent) {
 		this.sendContent = sendContent;
 	}
-	public void setSendDate(Date sendDate) {
+	public void setSendDate(Timestamp sendDate) {
 		this.sendDate = sendDate;
 	}
 	public String getSender() {
@@ -37,7 +37,7 @@ public class SendVO {
 	public String getSendContent() {
 		return sendContent;
 	}
-	public Date getSendDate() {
+	public Timestamp getSendDate() {
 		return sendDate;
 	}
 	public String getReadCheck() {
