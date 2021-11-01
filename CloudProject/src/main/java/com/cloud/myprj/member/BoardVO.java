@@ -1,13 +1,13 @@
 package com.cloud.myprj.member;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BoardVO {
 
 	private String contentNum;
 	private String boardTitle;
 	private String boardContent;
-	private Date boardDate;
+	private Timestamp boardDate;
 	public void setContentNum(String contentNum) {
 		this.contentNum = contentNum;
 	}
@@ -17,7 +17,7 @@ public class BoardVO {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public void setBoardDate(Date boardDate) {
+	public void setBoardDate(Timestamp boardDate) {
 		this.boardDate = boardDate;
 	}
 	public String getContentNum() {
@@ -29,7 +29,7 @@ public class BoardVO {
 	public String getBoardContent() {
 		return boardContent;
 	}
-	public Date getBoardDate() {
+	public Timestamp getBoardDate() {
 		return boardDate;
 	}
 	@Override

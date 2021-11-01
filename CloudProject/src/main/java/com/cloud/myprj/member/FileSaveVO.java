@@ -1,6 +1,6 @@
 package com.cloud.myprj.member;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
 
 public class FileSaveVO {
@@ -11,10 +11,11 @@ public class FileSaveVO {
 	private String fileName;
 	private byte[] fileContent;
 	private String fileExplanation;
-	private Date uploadDate;
-	private Date updateDate;
+	private Timestamp uploadDate;
+	private Timestamp updateDate;
 	private String deleteTF;
 	private String filePath;
+	
 	public void setFileCode(String fileCode) {
 		this.fileCode = fileCode;
 	}
@@ -33,10 +34,10 @@ public class FileSaveVO {
 	public void setFileExplanation(String fileExplanation) {
 		this.fileExplanation = fileExplanation;
 	}
-	public void setUploadDate(Date uploadDate) {
+	public void setUploadDate(Timestamp uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
 	public void setDeleteTF(String deleteTF) {
@@ -63,10 +64,10 @@ public class FileSaveVO {
 	public String getFileExplanation() {
 		return fileExplanation;
 	}
-	public Date getUploadDate() {
+	public Timestamp getUploadDate() {
 		return uploadDate;
 	}
-	public Date getUpdateDate() {
+	public Timestamp getUpdateDate() {
 		return updateDate;
 	}
 	public String getDeleteTF() {

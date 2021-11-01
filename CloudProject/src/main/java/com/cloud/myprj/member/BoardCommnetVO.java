@@ -1,6 +1,6 @@
 package com.cloud.myprj.member;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BoardCommnetVO {
 
@@ -8,7 +8,7 @@ public class BoardCommnetVO {
 	private String contentNum;
 	private String commentContent;
 	private String memberNum;
-	private Date commentDate;
+	private Timestamp commentDate;
 	public void setCommentNum(String commentNum) {
 		this.commentNum = commentNum;
 	}
@@ -21,7 +21,7 @@ public class BoardCommnetVO {
 	public void setMemberNum(String memberNum) {
 		this.memberNum = memberNum;
 	}
-	public void setCommentDate(Date commentDate) {
+	public void setCommentDate(Timestamp commentDate) {
 		this.commentDate = commentDate;
 	}
 	public String getCommentNum() {
@@ -36,7 +36,7 @@ public class BoardCommnetVO {
 	public String getMemberNum() {
 		return memberNum;
 	}
-	public Date getCommentDate() {
+	public Timestamp getCommentDate() {
 		return commentDate;
 	}
 	@Override
