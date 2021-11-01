@@ -26,7 +26,7 @@
 			<td>${mem.department}</td>
 			<td>
 				<a href="memupdate?memum=${mem.memberNums}">수정</a>
-				<a href="memdelete?memnum=${mem.memberNums}">삭제</a>
+				<a href="memdelete?memnum=${mem.memberNums}">삭제</a> 
 			</td>
 		</tr>
 		</c:forEach>
