@@ -8,7 +8,7 @@ public class SendVO {
 	private String recipient;
 	private String fileCode;
 	private String sendContent;
-	private String check;
+	private String readCheck;
 	private Date sendDate;
 	public void setSender(String sender) {
 		this.sender = sender;
@@ -21,9 +21,6 @@ public class SendVO {
 	}
 	public void setSendContent(String sendContent) {
 		this.sendContent = sendContent;
-	}
-	public void setCheck(String check) {
-		this.check = check;
 	}
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
@@ -40,16 +37,21 @@ public class SendVO {
 	public String getSendContent() {
 		return sendContent;
 	}
-	public String getCheck() {
-		return check;
-	}
 	public Date getSendDate() {
 		return sendDate;
+	}
+	public String getReadCheck() {
+		return readCheck;
+	}
+	public void setReadCheck(String readCheck) {
+		this.readCheck = readCheck;
 	}
 	@Override
 	public String toString() {
 		return "SendVO [sender=" + sender + ", recipient=" + recipient + ", fileCode=" + fileCode + ", sendContent="
-				+ sendContent + ", check=" + check + ", sendDate=" + sendDate + "]";
+				+ sendContent + ", readCheck=" + readCheck + ", sendDate=" + sendDate + "]";
 	}
+	
+
 
 }
