@@ -1,4 +1,4 @@
-package com.cloud.member;
+package com.cloud.myprj.member;
 
 public class MemberVO {
 	private String memberNum;
@@ -28,6 +28,27 @@ public class MemberVO {
 	}
 	public void setMemberAuth(String memberAuth) {
 		this.memberAuth = memberAuth;
+	}
+	public String getMemberNum() {
+		return memberNum;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public String getDeparment() {
+		return deparment;
+	}
+	public String getMemberAuth() {
+		return memberAuth;
 	}
 	@Override
 	public String toString() {
