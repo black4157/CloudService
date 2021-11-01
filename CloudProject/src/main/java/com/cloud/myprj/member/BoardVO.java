@@ -1,4 +1,4 @@
-package com.cloud.member;
+package com.cloud.myprj.member;
 
 import java.sql.Date;
 
@@ -19,6 +19,18 @@ public class BoardVO {
 	}
 	public void setBoardDate(Date boardDate) {
 		this.boardDate = boardDate;
+	}
+	public String getContentNum() {
+		return contentNum;
+	}
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+	public String getBoardContent() {
+		return boardContent;
+	}
+	public Date getBoardDate() {
+		return boardDate;
 	}
 	@Override
 	public String toString() {

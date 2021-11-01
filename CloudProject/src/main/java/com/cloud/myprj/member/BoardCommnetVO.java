@@ -1,4 +1,4 @@
-package com.cloud.member;
+package com.cloud.myprj.member;
 
 import java.sql.Date;
 
@@ -23,6 +23,21 @@ public class BoardCommnetVO {
 	}
 	public void setCommentDate(Date commentDate) {
 		this.commentDate = commentDate;
+	}
+	public String getCommentNum() {
+		return commentNum;
+	}
+	public String getContentNum() {
+		return contentNum;
+	}
+	public String getCommentContent() {
+		return commentContent;
+	}
+	public String getMemberNum() {
+		return memberNum;
+	}
+	public Date getCommentDate() {
+		return commentDate;
 	}
 	@Override
 	public String toString() {

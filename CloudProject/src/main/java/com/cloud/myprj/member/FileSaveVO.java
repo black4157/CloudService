@@ -1,4 +1,4 @@
-package com.cloud.member;
+package com.cloud.myprj.member;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -44,6 +44,36 @@ public class FileSaveVO {
 	}
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+	public String getFileCode() {
+		return fileCode;
+	}
+	public String getFileManagedCode() {
+		return fileManagedCode;
+	}
+	public String getMemberNum() {
+		return memberNum;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public byte[] getFileContent() {
+		return fileContent;
+	}
+	public String getFileExplanation() {
+		return fileExplanation;
+	}
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public String getDeleteTF() {
+		return deleteTF;
+	}
+	public String getFilePath() {
+		return filePath;
 	}
 	@Override
 	public String toString() {

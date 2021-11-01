@@ -1,4 +1,4 @@
-package com.cloud.member;
+package com.cloud.myprj.member;
 
 import java.sql.Date;
 
@@ -27,6 +27,24 @@ public class SendVO {
 	}
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
+	}
+	public String getSender() {
+		return sender;
+	}
+	public String getRecipient() {
+		return recipient;
+	}
+	public String getFileCode() {
+		return fileCode;
+	}
+	public String getSendContent() {
+		return sendContent;
+	}
+	public String getCheck() {
+		return check;
+	}
+	public Date getSendDate() {
+		return sendDate;
 	}
 	@Override
 	public String toString() {
