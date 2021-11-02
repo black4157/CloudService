@@ -8,6 +8,8 @@
 <title>사원 목록</title>
 </head>
 <body>
+	${memberVO.name} <p>
+	${memberVO.department }
 <h1>사원 목록</h1>
 	<table border="1">
 		<tr>

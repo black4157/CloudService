@@ -11,7 +11,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-	
+
 	<context:component-scan base-package="com.cloud.myprj.controller" />
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
@@ -19,7 +19,6 @@
 	<resources mapping="/images/**" location="/WEB-INF/resources/images/" />
 	<resources mapping="/js/**" 	location="/WEB-INF/resources/js/" />
 	<resources mapping="/css/**" 	location="/WEB-INF/resources/css/" />
-	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,5 +29,7 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="100000000" />
 	</beans:bean>
+	
+	<view-controller path="/WEB-INF/views/home.jsp" view-name="home"/>
 	
 </beans:beans>
