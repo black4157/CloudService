@@ -13,7 +13,7 @@
 		<table>
 			<tr>
 				<th>사원번호</th>
-				<td><input type="text" name="memberNums" value="${mem.memberNums}" readonly></td>
+				<td><input type="text" name="memberNums" value="${mem.memberNum}" readonly></td>
 			</tr>
 			<tr>
 				<th>이름</th>

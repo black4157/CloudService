@@ -12,7 +12,7 @@
 		<table>
 			<tr>
 				<td>사원번호</td>
-				<td><input type="text" name="memberNums"></td>
+				<td><input type="text" name="memberNum"></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>

@@ -19,14 +19,14 @@
 		</tr>
 		<c:forEach var="mem" items="${memList}"> <!-- var와 items 변경시 컨트롤+F 로 변경 -->
 		<tr>
-			<td>${mem.memberNums}</td>
+			<td>${mem.memberNum}</td>
 			<td>${mem.name}</td>
 			<td>${mem.phone}</td>
 			<td>${mem.position}</td>
 			<td>${mem.department}</td>
 			<td>
-				<a href="memupdate?memum=${mem.memberNums}">수정</a>
-				<a href="memdelete?memnum=${mem.memberNums}">삭제</a> 
+				<a href="memupdate?memum=${mem.memberNum}">수정</a>
+				<a href="memdelete?memnum=${mem.memberNum}">삭제</a> 
 			</td>
 		</tr>
 		</c:forEach>
