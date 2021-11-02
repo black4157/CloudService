@@ -10,8 +10,8 @@
 <c:url var="actionURL" value='/upload/new'/>
 <form action="${actionURL}" method="post" enctype="multipart/form-data">
 	<select name="dir">
-		<option value="/personal">/개인자료
-		<option value="/share">/공유자료
+		<option value="/private">/개인자료
+		<option value="/public">/공유자료
 	</select>
 	<input type="file" name="file">
 	<input type="submit" name="save">
