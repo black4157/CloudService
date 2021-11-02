@@ -2,7 +2,7 @@ package com.cloud.myprj.member;
 
 import java.sql.Timestamp;
 
-public class BoardCommnetVO {
+public class BoardCommentVO {
 
 	private String commentNum;
 	private String contentNum;
