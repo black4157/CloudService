@@ -23,5 +23,6 @@
 	
 	</form>
 
+<a href='<c:url value="/board/boardList"/>'>공지사항 쓰기</a>
 </body>
 </html>
