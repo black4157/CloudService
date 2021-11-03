@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +23,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cloud.myprj.member.FileSaveVO;
 import com.cloud.myprj.member.MemberVO;
 import com.cloud.myprj.service.IFileUploadService;
+import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class FileUploadController {
 
 	@Autowired
 	IFileUploadService fileUploadService;
+	
+	@Autowired
+	IUserService userService;
 
 	static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
@@ -115,8 +118,31 @@ public class FileUploadController {
 	}
 	
 	@RequestMapping(value="/upload/sharedelete/{fileCode}")
-	public String deleteShareFile(@PathVariable String fileCode) {
-		fileUploadService.deletePersonalFile(fileCode);
+	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo) {
+		String memberNum= "S0002";
+		vo = new MemberVO();
+		try {
+			vo = userService.getMemberInfo(memberNum);
+			// 최고 권한자
+			if("S".equals(vo.getMemberAuth())) {
+				fileUploadService.deletePersonalFile(fileCode);
+			// 모두 삭제 가능
+			} else if("A".equals(vo.getMemberAuth())) {
+				fileUploadService.deletePersonalFile(fileCode);
+			// 자신것만 삭제 가능
+			} else if("B".equals(vo.getMemberAuth())) {
+				FileSaveVO file = fileUploadService.getSelectFile(fileCode);
+				if(file.getMemberNum().equals(vo.getMemberNum())) {
+					fileUploadService.deletePersonalFile(fileCode);
+				}else {
+					return "upload/delete";//삭제불가능인 경우 이동하는 jsp
+				}
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		return "redirect:/upload/share";
 	}
 	@RequestMapping(value="/dowload/{fileCode}")
