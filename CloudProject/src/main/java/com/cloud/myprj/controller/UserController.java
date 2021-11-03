@@ -18,10 +18,10 @@ import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	IUserService userService;
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(MemberVO memberVO, Model model, HttpServletRequest req, RedirectAttributes rttr) {
 		try {
@@ -31,15 +31,14 @@ public class UserController {
 			if(memberVO.getName() != null) {
 				model.addAttribute("memberVO", memberVO);
 				session.setAttribute("memberVO", memberVO);
-				
 				session.setAttribute("memberNum", memberVO.getMemberNum());
-				session.setAttribute("pwd", memberVO.getPwd());
-				session.setAttribute("name", memberVO.getName());
-				session.setAttribute("phone", memberVO.getPhone());
-				session.setAttribute("position", memberVO.getPosition());
-				session.setAttribute("department", memberVO.getDepartment());
-				session.setAttribute("memberAuth", memberVO.getMemberAuth());
-				
+				//				session.setAttribute("pwd", memberVO.getPwd());
+				//				session.setAttribute("name", memberVO.getName());
+				//				session.setAttribute("phone", memberVO.getPhone());
+				//				session.setAttribute("position", memberVO.getPosition());
+				//				session.setAttribute("department", memberVO.getDepartment());
+				//				session.setAttribute("memberAuth", memberVO.getMemberAuth());
+
 				return "member/loginsuccess";
 			}
 			else {
@@ -51,7 +50,7 @@ public class UserController {
 			return "member/loginfail";
 		}
 	}
-	
+
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		try {
@@ -64,21 +63,29 @@ public class UserController {
 		}
 
 	}
-	
-	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(Model model) {
+
+	@RequestMapping(value="/list")
+	public String list(HttpServletRequest req, MemberVO memberVO, Model model) {
 		List<MemberVO> memberList;
+
 		try {
-			memberList = userService.getMemberList();
-			model.addAttribute("memberList", memberList);
-			return "member/list";
+			HttpSession session = req.getSession();
+			if(session.getAttribute("memberNum").equals("S0001")) {
+				memberList = userService.getMemberList();
+				model.addAttribute("memberList", memberList);
+				return "member/list";
+			}
+			else {
+				return "admin/adminhome";
+			}
+
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return "admin/adminhome";
 		}
 
 	}
-	
+
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signup(HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -99,9 +106,9 @@ public class UserController {
 			System.out.println(e.getMessage());
 			return "admin/insertform";
 		}
-		
+
 	}
-	
+
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -112,7 +119,7 @@ public class UserController {
 			return "home";
 		}
 	}
-	
+
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(MemberVO memberVO) {
 		try {
@@ -122,9 +129,9 @@ public class UserController {
 			System.out.println(e.getMessage());
 			return "admin/updateform";
 		}
-		
+
 	}
-	
+
 }
 
 

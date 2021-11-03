@@ -8,12 +8,6 @@
 <title>사원 목록</title>
 </head>
 <body>
-	${memberNum} <p>
-	${name }<p>
-	${phone}<p>
-	${position}<p>
-	${department}<p>
-	${memberAuth}<p>
 
 <h1>사원 목록</h1>
 	<table border="1">

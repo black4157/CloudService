@@ -8,6 +8,6 @@
 </head>
 <body>
 	관리자의 홈 페이지 입니다.
-	<a href='<c:url value="/member/memberList"/>'>전체 사원 정보 조회</a>
+	<a href="/list">전체 사원 정보 조회</a>
 </body>
 </html>
