@@ -36,7 +36,7 @@ public class UserRepository implements IUserRepository {
 	}
 
 	@Override
-	public MemberVO memberlogin(MemberVO memberVO) throws Exception {
+	public MemberVO memberLogin(MemberVO memberVO) throws Exception {
 		String sql = "select * from member where member_num = ? and pwd = ?";
 		Object[] args = {memberVO.getMemberNum(), memberVO.getPwd()};
 		return jdbcTemplate.queryForObject(sql, args, new RowMapper<MemberVO>() {
@@ -77,6 +77,26 @@ public class UserRepository implements IUserRepository {
 	@Override
 	public MemberVO getByUserId(String memberNum) throws Exception {
 		return null;
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() {
+		String sql = "select * from member";
+		return jdbcTemplate.query(sql, new RowMapper<MemberVO>() {
+
+			@Override
+			public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setMemberNum(rs.getString("member_num"));
+				memberVO.setPwd(rs.getString("pwd"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setPhone(rs.getString("phone"));
+				memberVO.setPosition(rs.getString("position"));
+				memberVO.setDepartment(rs.getString("department"));
+				memberVO.setMemberAuth(rs.getString("member_auth"));
+				return memberVO;
+			}
+		});
 	}
 
 

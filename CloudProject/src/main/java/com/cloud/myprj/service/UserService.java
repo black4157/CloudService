@@ -1,5 +1,7 @@
 package com.cloud.myprj.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ public class UserService implements IUserService {
 	@Override
 	public MemberVO memberLogin(MemberVO memberVO) throws Exception {
 		
-		return userRepository.memberlogin(memberVO);
+		return userRepository.memberLogin(memberVO);
 	}
 
 	@Override
@@ -32,6 +34,11 @@ public class UserService implements IUserService {
 	@Override
 	public void memberDelete(MemberVO memberVO) throws Exception {
 		userRepository.memberDelete(memberVO);
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() throws Exception {
+		return userRepository.getMemberList();
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.cloud.myprj.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -63,9 +65,18 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value="/list")
-	public String list() {
-		return "member/list";
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public String list(Model model) {
+		List<MemberVO> memberList;
+		try {
+			memberList = userService.getMemberList();
+			model.addAttribute("memberList", memberList);
+			return "member/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "admin/adminhome";
+		}
+
 	}
 	
 	@RequestMapping(value="/signup", method=RequestMethod.GET)

@@ -1,5 +1,7 @@
 package com.cloud.myprj.repository;
 
+import java.util.List;
+
 import com.cloud.myprj.member.MemberVO;
 
 
@@ -8,7 +10,7 @@ public interface IUserRepository {
 	public void memberRegister(MemberVO memberVO) throws Exception;
 	
 	// 로그인
-	public MemberVO memberlogin(MemberVO memberVO) throws Exception;
+	public MemberVO memberLogin(MemberVO memberVO) throws Exception;
 	
 	// Admin이 회원 수정
 	public void memberUpdate(MemberVO memberVO) throws Exception;
@@ -21,5 +23,8 @@ public interface IUserRepository {
 
 	// memberNum 가져오기
 	public String getMemberNum() throws Exception;
+	
+	// memeber list 가져오기
+	public List<MemberVO> getMemberList() throws Exception;
 	
 }
