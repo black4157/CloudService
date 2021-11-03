@@ -80,7 +80,6 @@ public class UserController {
 	@RequestMapping(value="/list")
 	public String list(HttpServletRequest req, MemberVO memberVO, Model model) {
 		List<MemberVO> memberList;
-
 		try {
 			HttpSession session = req.getSession();
 			if(session.getAttribute("memberNum").equals("S0001")) {

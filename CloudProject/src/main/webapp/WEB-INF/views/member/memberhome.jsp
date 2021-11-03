@@ -12,5 +12,7 @@
 	
 	<a href="/logout">로그아웃 하기</a><p>
 	<a href="/adminhome">관리자 홈페이지로 이동</a><p>
+
+	<a href="/board/boardList">공지사항 보기</a>
 </body>
 </html>
