@@ -1,12 +1,20 @@
 package com.cloud.myprj.controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,7 +65,7 @@ public class FileUploadController {
 			e.printStackTrace();
 		}
 		
-		return "upload/uploadOk";
+		return "redirect:/upload/personal";
 	}
 
 	
@@ -65,6 +73,7 @@ public class FileUploadController {
 	public String getPersonalFile(Model model, MemberVO vo) {
 		model.addAttribute("personalFile", fileUploadService.getPersonalFileList("S0000"));
 		return "upload/personal";
+		
 	}
 	
 /*	@RequestMapping(value="/upload/movdToShare", method=RequestMethod.GET)
@@ -72,12 +81,58 @@ public class FileUploadController {
 	*/
 	
 	@RequestMapping(value="/upload/movetoshare")
-	public String moveToShare() {
-		FileSaveVO vo = new FileSaveVO();
-		vo = fileUploadService.getSelectFile("F000000001");
-		vo.setFileManagedCode("s");
-		fileUploadService.uploadFile(vo);
+	public String moveToShare(@RequestParam(value="fileCode", required=false, defaultValue="/") String fileCode) {
+//		FileSaveVO vo = new FileSaveVO();
+//		vo = fileUploadService.getSelectFile(fileCode);
+//		vo.setFileManagedCode("s");
+//		fileUploadService.uploadFile(vo);
+		List<String> lstFileCode = new ArrayList<String>();
+		String add="";
+		for(int i=0;i<fileCode.length();i++) {
+			if(",".equals(fileCode.substring(i,i+1))) {
+				lstFileCode.add(add);	
+				System.out.println("----------------------------"+add);
+				add="";
+			}else {
+				add=add+fileCode.substring(i,i+1);
+			}
+		}
+		lstFileCode.add(add);
+		fileUploadService.uploadShareFile(lstFileCode);
 		return "upload/shareok";
 	}
 	
+	@RequestMapping(value="/upload/share")
+	public String getShareFile(Model model, MemberVO vo) {
+		model.addAttribute("shareFile",fileUploadService.getShareFileList("s"));
+		return "upload/share";
+	}
+	
+	@RequestMapping(value="/upload/delete/{fileCode}")
+	public String deletePersonalFile(@PathVariable String fileCode) {
+		fileUploadService.deletePersonalFile(fileCode);
+		return "redirect:/upload/personal";
+	}
+	
+	@RequestMapping(value="/upload/sharedelete/{fileCode}")
+	public String deleteShareFile(@PathVariable String fileCode) {
+		fileUploadService.deletePersonalFile(fileCode);
+		return "redirect:/upload/share";
+	}
+	@RequestMapping(value="/dowload/{fileCode}")
+	public ResponseEntity<byte[]> getImageFile(@PathVariable String fileCode) {
+		FileSaveVO file = fileUploadService.getSelectFile(fileCode);
+		final HttpHeaders headers = new HttpHeaders();
+		if(file != null) {
+			logger.info("getFile " + file.toString());
+//			String[] mtypes = file.getFileContentType().split("/");
+//			headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+//			headers.setContentLength(file.getFileSize());
+			headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
+			
+			return new ResponseEntity<byte[]>(file.getFileContent(), headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

@@ -2,6 +2,7 @@ package com.cloud.myprj.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class FileUploadRepository implements IFileUploadRepository {
 		jdbcTemplate.update(sql, file.getFileCode(), file.getFileManagedCode(), file.getMemberNum(), file.getFileName(),
 				file.getFileContent(), file.getFileExplanation(), file.getFilePath());
 	}
+	
+//	@Override
+//	public void uploadShareFile(HashMap<String, Object> map) {
+//		String sql = "insert into file_save values(?,?,?,?,?,?,systimestamp,systimestamp,'F',?)";
+//		jdbcTemplate.update(sql, map.getFileCode(), map.getFileManagedCode(), map.getMemberNum(), .getFileName(),
+//				file.getFileContent(), file.getFileExplanation(), file.getFilePath());
+//	}
 
 	@Override
 	public String getFileCode() {
@@ -46,7 +54,7 @@ public class FileUploadRepository implements IFileUploadRepository {
 
 	@Override
 	public List<FileSaveVO> getPersonalFileList(String memberNum) {
-		String sql = "select * from file_save where member_num = ?";
+		String sql = "select * from file_save where member_num = ? and file_managed_code='p' order by update_date desc";
 
 		return jdbcTemplate.query(sql, new RowMapper<FileSaveVO>() {
 			@Override
@@ -112,5 +120,46 @@ public class FileUploadRepository implements IFileUploadRepository {
 			}
 		}, fileCode);
 	}
+
+	@Override
+	public void deletePersonalFile(String fileCode) {
+		String sql = "delete from file_save where file_code = ?";
+		
+		jdbcTemplate.update(sql,fileCode);
+	}
+
+//	@Override
+//	public String getShareFileCode() {
+//		String sql = "select substr(max(greatest(a.file_code, b.file_code)),length(max(greatest(a.file_code, b.file_code)))-8,length((max(greatest(a.file_code, b.file_code))))) as file_code" + 
+//				" from file_save a, file_save_share b" + 
+//				" where a.delete_tf=b.delete_tf";
+//		int intResult = jdbcTemplate.queryForObject(sql, Integer.class) + 1;
+//		String strResult = String.format("%09d", intResult);
+//		return "F" + strResult;
+//	}
+
+
+//	@Override
+//	public List<FileSaveVO> getSelectFileGroup(String fileCode) {
+//		String sql = "select * from file_save where file_code = ?";
+//
+//		return jdbcTemplate.query(sql, new RowMapper<FileSaveVO>() {
+//			@Override
+//			public FileSaveVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//				FileSaveVO vo = new FileSaveVO();
+//				vo.setFileCode(rs.getString("file_code"));
+//				vo.setFileManagedCode(rs.getString("file_managed_code"));
+//				vo.setMemberNum(rs.getString("member_num"));
+//				vo.setFileName(rs.getString("file_name"));
+//				vo.setFileContent(rs.getBytes("file_content"));
+//				vo.setFileExplanation(rs.getString("file_explanation"));
+//				vo.setUploadDate(rs.getTimestamp("upload_date"));
+//				vo.setUpdateDate(rs.getTimestamp("update_date"));
+//				vo.setDeleteTF(rs.getString("delete_tf"));
+//				vo.setFilePath(rs.getString("file_path"));
+//				return vo;
+//			}
+//		}, fileCode);
+//	}
 }
 

@@ -1,5 +1,6 @@
 package com.cloud.myprj.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,26 @@ public class FIleUploadService implements IFileUploadService {
 	public List<FileSaveVO> getShareFileList(String fileManagedCode) {
 		return fileUploadRepository.getShareFileList(fileManagedCode);
 	}
+
+	@Override
+	public void deletePersonalFile(String fileCode) {
+		fileUploadRepository.deletePersonalFile(fileCode);
+	}
+
+	@Override
+	public void uploadShareFile(List<String> fileCodes) {
+		for(String fileCode: fileCodes) {
+			FileSaveVO vo = new FileSaveVO();
+			vo = fileUploadRepository.getSelectFile(fileCode);
+			vo.setFileManagedCode("s");
+			uploadFile(vo);
+		}
+	}
+
+	
+//	@Override
+//	public List<FileSaveVO> getSelectFileGroup(String fileCode) {
+//		return fileUploadRepository.getSelectFileGroup(fileCode);
+//	}
 
 }

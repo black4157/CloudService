@@ -13,8 +13,5 @@
 	<a href="/upload/personal">개인폴더</a>
 	<a href="/upload/share">공유폴더</a>
 	<a href="/upload/movetoshare">공유로전송</a>
-
-
-
 </body>
 </html>
