@@ -10,9 +10,8 @@
 
 <c:url var= "actionURL" value='/board/boardInsert' />
 <form action ="${actionURL}" method="post">
-번호 <input type= "text" name = "num" id = "num"><br>
 제목 <input type= "text" name = "boardTitle" id = "boardTitle"><br>
-내용<input type= "text" name = "boardContent" id = "boardContent"><br>
+내용<textArea rows="5" cols="30" name = "boardContent" id = "boardContent"> </textArea>
 <input type="submit" value="등록">
 </form>
 

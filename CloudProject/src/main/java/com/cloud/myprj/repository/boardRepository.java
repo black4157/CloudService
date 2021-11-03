@@ -89,7 +89,7 @@ public class boardRepository implements IBoardRepository {
 				boardComment.setCommentDate(rs.getTimestamp("COMMENT_DATE"));
 				boardComment.setCommentNum(rs.getString("COMMENT_NUM"));
 				boardComment.setMemberNum(rs.getString("MEMBER_NUM"));
-				
+
 				return boardComment;
 			}
 		}, contentNum);
@@ -102,10 +102,28 @@ public class boardRepository implements IBoardRepository {
 				boardComment.getCommentContent(), boardComment.getMemberNum(), boardComment.getCommentDate());
 
 	}
+
 	@Override
 	public void deleteComment(String commentNum) {
 		String sql = "DELETE FROM BOARD_COMMENT WHERE COMMENT_NUM= ?";
-		jdbcTemplate.update(sql,commentNum);
-		
+		jdbcTemplate.update(sql, commentNum);
+
+	}
+
+	@Override
+	public void updateBoard(BoardVO board) {
+		String sql = "Update board set board_title=?, board_content=?,board_date=? where content_num=?";
+		jdbcTemplate.update(sql, board.getBoardTitle(), board.getBoardContent(), board.getBoardDate(),
+				board.getContentNum());
+	}
+
+	@Override
+	public void deleteBoard(String contentNum) {
+		//공지사항을 삭제
+		String sql = "DELETE FROM BOARD WHERE CONTENT_NUM= ?";
+		jdbcTemplate.update(sql, contentNum);
+		//공지사항에 올라왔던 댓글 삭제
+		String sql2 = "DELETE FROM BOARD_COMMENT WHERE CONTENT_NUM= ?";
+		jdbcTemplate.update(sql2, contentNum);
 	}
 }

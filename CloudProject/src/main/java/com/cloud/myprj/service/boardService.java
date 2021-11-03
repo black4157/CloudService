@@ -48,4 +48,15 @@ public class boardService implements IBoardService {
 		boardRepository.deleteComment(commentNum);
 
 	}
+
+	@Override
+	public void updateBoard(BoardVO board) {
+		boardRepository.updateBoard(board);
+	}
+
+	@Override
+	public void deleteBoard(String contentNum) {
+		boardRepository.deleteBoard(contentNum);
+
+	}
 }

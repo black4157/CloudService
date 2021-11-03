@@ -32,7 +32,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
 	public String board(@PathVariable String contentNum, Model model) {
-		logger.info("글 출력" );
+		logger.info("글 출력");
 		model.addAttribute("board", boardService.getBoard(contentNum));
 		model.addAttribute("commentList", boardService.getComment(contentNum));
 		return "board/boardReply";
@@ -42,9 +42,10 @@ public class BoardController {
 	public String insertReply(@RequestParam String comment, @RequestParam String contentNum,
 			RedirectAttributes redirectAttrs) {
 		try {
-			logger.info("댓글 등록" + comment+contentNum);
+			logger.info("댓글 등록" + comment + contentNum);
 			BoardCommentVO boardComment = new BoardCommentVO();
 			boardComment.setContentNum(contentNum);
+			comment=comment.replace("\r\n", "<br>");
 			boardComment.setCommentContent(comment);
 			boardComment.setMemberNum("s");
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -55,22 +56,24 @@ public class BoardController {
 			logger.error(e.getMessage());
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "redirect:/board/boardReply/"+contentNum;
+		return "redirect:/board/boardReply/" + contentNum;
 	}
+
 	@RequestMapping(value = "/board/boardInsert", method = RequestMethod.GET)
 	public String getBoardNum(Model model) {
 		return "board/boardInsert";
 	}
 
 	@RequestMapping(value = "/board/boardInsert", method = RequestMethod.POST)
-	public String insertBoard(@RequestParam String boardTitle, @RequestParam String boardContent, String num,
+	public String insertBoard(@RequestParam String boardTitle, @RequestParam String boardContent,
 			RedirectAttributes redirectAttrs) {
 		try {
 
 			logger.info("공지사항 등록" + boardTitle);
 			BoardVO board = new BoardVO();
-			board.setContentNum(num);
 			board.setBoardTitle(boardTitle);
+			//내용 줄바꿈 적용
+			boardContent=boardContent.replace("\r\n", "<br>");
 			board.setBoardContent(boardContent);
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			board.setBoardDate(timestamp);
@@ -82,17 +85,52 @@ public class BoardController {
 		}
 		return "redirect:/board/boardList";
 	}
-	
-	@RequestMapping(value = "/board/boardDelete/{commentNum}",  method = RequestMethod.GET)
-	public String deleteBoardComment(@RequestParam String commentNum, Model model) {
+
+	// 댓글 삭제
+	@RequestMapping(value = "/board/boardCommentDelete")
+	public String deleteBoardComment(Model model, String commentNum, String contentNum) {
 		boardService.deleteComment(commentNum);
-		return "/board/boardReply/";
+		return "redirect:/board/boardReply/" + contentNum;
 	}
-//	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
-//	public String board(@PathVariable String contentNum, Model model) {
-//		logger.info("글 출력" );
-//		model.addAttribute("board", boardService.getBoard(contentNum));
-//		model.addAttribute("commentList", boardService.getComment(contentNum));
-//		return "board/boardReply";
-//	}
+
+	// 공지사항 수정하기,get
+	@RequestMapping(value = "/board/boardUpdate/{contentNum}", method = RequestMethod.GET)
+	public String getUpdateBoard(@PathVariable String contentNum, Model model) {
+		BoardVO boardLoad=boardService.getBoard(contentNum);
+		boardLoad.setBoardContent(boardLoad.getBoardContent().replace("<br>","\r\n"));
+		model.addAttribute("board", boardLoad);
+		return "board/boardUpdate";
+	}
+
+	// 공지사항 수정하기,post
+	@RequestMapping(value = "/board/boardUpdate", method = RequestMethod.POST)
+	public String UpdateBoard(@RequestParam String boardTitle, @RequestParam String boardContent,
+			@RequestParam String boardcontentNum, RedirectAttributes redirectAttrs) {
+		try {
+
+			logger.info("공지사항 수정" + boardTitle);
+			BoardVO board = new BoardVO();
+			board.setContentNum(boardcontentNum);
+			board.setBoardTitle(boardTitle);
+			boardContent=boardContent.replace("\r\n", "<br>");
+			board.setBoardContent(boardContent);
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			board.setBoardDate(timestamp);
+			boardService.updateBoard(board);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "redirect:/board/boardList";
+	}
+
+	// 공지사항 삭제
+	@RequestMapping(value = "/board/boardDelete")
+	public String deleteBoard(Model model, String contentNum) {
+		logger.info("공지사항 삭제" + contentNum);
+		boardService.deleteBoard(contentNum);
+		return "redirect:/board/boardList";
+	}
+
 }
