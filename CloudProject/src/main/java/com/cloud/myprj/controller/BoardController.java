@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloud.myprj.member.BoardCommentVO;
 import com.cloud.myprj.member.BoardVO;
+import com.cloud.myprj.member.MemberVO;
 import com.cloud.myprj.service.IBoardService;
 
 @Controller
@@ -57,15 +58,17 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/boardReply", method = RequestMethod.POST)
 	public String insertReply(@RequestParam String comment, @RequestParam String contentNum,
-			RedirectAttributes redirectAttrs, HttpServletRequest req) {
+			RedirectAttributes redirectAttrs, HttpServletRequest req, MemberVO memberVO, Model model) {
 		if(logincheck(req) == 1) {
 			try {
+				HttpSession session = req.getSession();
+				model.addAttribute("memberVO", memberVO);
 				logger.info("댓글 등록" + comment + contentNum);
 				BoardCommentVO boardComment = new BoardCommentVO();
 				boardComment.setContentNum(contentNum);
 				comment=comment.replace("\r\n", "<br>");
 				boardComment.setCommentContent(comment);
-				boardComment.setMemberNum("s");
+				boardComment.setMemberNum((String)session.getAttribute("memberNum"));
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 				boardComment.setCommentDate(timestamp);
 				boardService.insertComment(boardComment);
