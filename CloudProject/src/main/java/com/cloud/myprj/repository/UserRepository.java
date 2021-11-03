@@ -81,7 +81,7 @@ public class UserRepository implements IUserRepository {
 
 	@Override
 	public List<MemberVO> getMemberList() {
-		String sql = "select * from member";
+		String sql = "select * from member where member_num not in('S0001') order by member_num";
 		return jdbcTemplate.query(sql, new RowMapper<MemberVO>() {
 
 			@Override

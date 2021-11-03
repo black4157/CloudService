@@ -20,15 +20,11 @@
 		</tr>
 		<c:forEach var="member" items="${memberList}"> <!-- var와 items 변경시 컨트롤+F 로 변경 -->
 		<tr>
-			<td>${member.memberNum}</td>
+			<td><a href="memupdate?memnum=${member.memberNum}">${member.memberNum}</a></td>
 			<td>${member.name}</td>
 			<td>${member.phone}</td>
 			<td>${member.position}</td>
 			<td>${member.department}</td>
-			<td>
-				<a href="memupdate?memmum=${member.memberNum}">수정</a>
-				<a href="memdelete?memnum=${member.memberNum}">삭제</a> 
-			</td>
 		</tr>
 		</c:forEach>
 	</table>

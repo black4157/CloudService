@@ -73,7 +73,7 @@ public class UserController {
 			if(session.getAttribute("memberNum").equals("S0001")) {
 				memberList = userService.getMemberList();
 				model.addAttribute("memberList", memberList);
-				return "member/list";
+				return "admin/list";
 			}
 			else {
 				return "admin/adminhome";
