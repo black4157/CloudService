@@ -20,10 +20,19 @@ public class UserRepository implements IUserRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+   @Override
+   public String getMemberNum() {
+      String sql = "select nvl(max(SUBSTR(member_num,length(member_num)-3,length(member_num))),0) as member_num"
+            + " from member";
+      int intResult = jdbcTemplate.queryForObject(sql, Integer.class) + 1;
+      String strResult = String.format("%04d", intResult);
+      return "S" + strResult;
+   }
+	
 	@Override
 	public void memberRegister(MemberVO memberVO) throws Exception {
-		// TODO Auto-generated method stub
-		
+		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, memberVO.getMemberNum(), memberVO.getPwd(), memberVO.getName(), memberVO.getPhone(), memberVO.getPosition(), memberVO.getDepartment(), memberVO.getMemberAuth());
 	}
 
 	@Override
@@ -36,11 +45,12 @@ public class UserRepository implements IUserRepository {
 			public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				MemberVO memberVO = new MemberVO();
 				memberVO.setMemberNum(rs.getString("member_num"));
-				memberVO.setDepartment(rs.getString("department"));
-				memberVO.setMemberAuth(rs.getString("member_auth"));
+				memberVO.setPwd(rs.getString("pwd"));
+				memberVO.setName(rs.getString("name"));
 				memberVO.setPhone(rs.getString("phone"));
 				memberVO.setPosition(rs.getString("position"));
-				memberVO.setName(rs.getString("name"));
+				memberVO.setDepartment(rs.getString("department"));
+				memberVO.setMemberAuth(rs.getString("member_auth"));
 				return memberVO;
 			}
 		});
@@ -48,20 +58,20 @@ public class UserRepository implements IUserRepository {
 	
 	@Override
 	public void memberUpdate(MemberVO memberVO) throws Exception {
-		// TODO Auto-generated method stub
-		
+		String sql = "update member set pwd=?, name=?, phone=?, position=?, department=?, member_auth=? where member_num=?";
+		jdbcTemplate.update(sql, memberVO.getPwd(),
+								 memberVO.getName(),
+								 memberVO.getPhone(),
+								 memberVO.getPosition(),
+								 memberVO.getDepartment(),
+								 memberVO.getMemberAuth());	
 	}
 
 	@Override
 	public void memberDelete(MemberVO memberVO) throws Exception {
-		// TODO Auto-generated method stub
+		String sql = "delete from member where member_num=?";
 		
-	}
-
-	@Override
-	public int memberIdChk(MemberVO memberVO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 
 	@Override

@@ -8,8 +8,13 @@
 <title>사원 목록</title>
 </head>
 <body>
-	${memberVO.name} <p>
-	${memberVO.department }
+	${memberNum} <p>
+	${name }<p>
+	${phone}<p>
+	${position}<p>
+	${department}<p>
+	${memberAuth}<p>
+
 <h1>사원 목록</h1>
 	<table border="1">
 		<tr>

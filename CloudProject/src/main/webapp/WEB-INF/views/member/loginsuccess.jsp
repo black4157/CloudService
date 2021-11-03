@@ -11,6 +11,8 @@
 		${memberVO.name }님 로그인 되었습니다.
 		<input type="submit" value="로그아웃">
 	</form>
+	
+	<a href="/signup">회원가입하기</a>
 
 </body>
 </html>
