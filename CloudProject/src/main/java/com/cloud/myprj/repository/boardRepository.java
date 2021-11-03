@@ -19,7 +19,7 @@ public class boardRepository implements IBoardRepository {
 
 	@Override
 	public List<BoardVO> getAllBoard() {
-		String sql = "select * from BOARD";
+		String sql = "select * from BOARD ORDER BY CONTENT_NUM";
 
 		return jdbcTemplate.query(sql, new RowMapper<BoardVO>() {
 
@@ -71,20 +71,21 @@ public class boardRepository implements IBoardRepository {
 
 	@Override
 	public String getCommentNum() {
-		String sql = "select NVL(MAX(BOARD_COMMENT),0) from BOARD";
+		String sql = "select NVL(MAX(COMMENT_NUM),0) from BOARD_COMMENT";
 		String num = jdbcTemplate.queryForObject(sql, String.class);
 		return String.valueOf(Integer.parseInt(num) + 1);
 	}
 
 	@Override
 	public List<BoardCommentVO> getComment(String contentNum) {
-		String sql = "select * from BOARD_COMMENT where CONTENT_NUM=?";
+		String sql = "select * from BOARD_COMMENT where CONTENT_NUM=? ORDER BY COMMENT_NUM";
 		return jdbcTemplate.query(sql, new RowMapper<BoardCommentVO>() {
 
 			@Override
 			public BoardCommentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardCommentVO boardComment = new BoardCommentVO();
 				boardComment.setCommentContent(rs.getString("COMMENT_CONTENT"));
+				boardComment.setContentNum(rs.getString("CONTENT_NUM"));
 				boardComment.setCommentDate(rs.getTimestamp("COMMENT_DATE"));
 				boardComment.setCommentNum(rs.getString("COMMENT_NUM"));
 				boardComment.setMemberNum(rs.getString("MEMBER_NUM"));
@@ -96,9 +97,15 @@ public class boardRepository implements IBoardRepository {
 
 	@Override
 	public void insertComment(BoardCommentVO boardComment) {
-		String sql = "insert into board(COMMENT_NUM, CONTENT_NUM, COMMENT_CONTENT,MEMBER_NUM,COMMENT_DATE) values(?,?,?,?,?)";
+		String sql = "insert into BOARD_COMMENT(COMMENT_NUM, CONTENT_NUM, COMMENT_CONTENT,MEMBER_NUM,COMMENT_DATE) values(?,?,?,?,?)";
 		jdbcTemplate.update(sql, boardComment.getCommentNum(), boardComment.getContentNum(),
 				boardComment.getCommentContent(), boardComment.getMemberNum(), boardComment.getCommentDate());
 
+	}
+	@Override
+	public void deleteComment(String commentNum) {
+		String sql = "DELETE FROM BOARD_COMMENT WHERE COMMENT_NUM= ?";
+		jdbcTemplate.update(sql,commentNum);
+		
 	}
 }

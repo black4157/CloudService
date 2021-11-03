@@ -37,8 +37,15 @@ public class boardService implements IBoardService {
 		boardRepository.insertComment(boardComment);
 
 	}
+
 	@Override
 	public List<BoardCommentVO> getComment(String contentNum) {
 		return boardRepository.getComment(contentNum);
+	}
+
+	@Override
+	public void deleteComment(String commentNum) {
+		boardRepository.deleteComment(commentNum);
+
 	}
 }

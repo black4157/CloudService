@@ -14,4 +14,5 @@ public interface IBoardService {
 	void insertBoard(BoardVO board);
 	void insertComment(BoardCommentVO boardComment);
 	List<BoardCommentVO> getComment(String contentNum);
+	void deleteComment(String commentNum);
 }

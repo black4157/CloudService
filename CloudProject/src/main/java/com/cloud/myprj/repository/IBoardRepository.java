@@ -14,4 +14,5 @@ public interface IBoardRepository {
 	void insertComment(BoardCommentVO boardComment);
 	String getCommentNum();
 	List<BoardCommentVO> getComment(String contentNum);
+	void deleteComment(String commentNum);
 }

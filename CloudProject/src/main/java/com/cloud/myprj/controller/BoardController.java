@@ -32,16 +32,17 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
 	public String board(@PathVariable String contentNum, Model model) {
+		logger.info("글 출력" );
 		model.addAttribute("board", boardService.getBoard(contentNum));
-		model.addAttribute("comment", boardService.getComment(contentNum));
+		model.addAttribute("commentList", boardService.getComment(contentNum));
 		return "board/boardReply";
 	}
 
-	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.POST)
+	@RequestMapping(value = "/board/boardReply", method = RequestMethod.POST)
 	public String insertReply(@RequestParam String comment, @RequestParam String contentNum,
 			RedirectAttributes redirectAttrs) {
 		try {
-			logger.info("댓글 등록" + comment);
+			logger.info("댓글 등록" + comment+contentNum);
 			BoardCommentVO boardComment = new BoardCommentVO();
 			boardComment.setContentNum(contentNum);
 			boardComment.setCommentContent(comment);
@@ -81,5 +82,17 @@ public class BoardController {
 		}
 		return "redirect:/board/boardList";
 	}
-
+	
+	@RequestMapping(value = "/board/boardDelete/{commentNum}",  method = RequestMethod.GET)
+	public String deleteBoardComment(@RequestParam String commentNum, Model model) {
+		boardService.deleteComment(commentNum);
+		return "/board/boardReply/";
+	}
+//	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
+//	public String board(@PathVariable String contentNum, Model model) {
+//		logger.info("글 출력" );
+//		model.addAttribute("board", boardService.getBoard(contentNum));
+//		model.addAttribute("commentList", boardService.getComment(contentNum));
+//		return "board/boardReply";
+//	}
 }
