@@ -7,7 +7,8 @@
 <title>관리자 홈 페이지</title>
 </head>
 <body>
-	관리자의 홈 페이지 입니다.
-	<a href="/list">전체 사원 정보 조회</a>
+	관리자의 홈 페이지 입니다.<p>
+	<a href="/list">사원 리스트 보기</a><p>
+	<a href="/signup">사원 추가하기</a><p>
 </body>
 </html>

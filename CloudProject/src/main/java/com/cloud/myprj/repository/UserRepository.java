@@ -31,7 +31,7 @@ public class UserRepository implements IUserRepository {
 	
 	@Override
 	public void memberRegister(MemberVO memberVO) throws Exception {
-		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 'F')";
 		jdbcTemplate.update(sql, memberVO.getMemberNum(), memberVO.getPwd(), memberVO.getName(), memberVO.getPhone(), memberVO.getPosition(), memberVO.getDepartment(), memberVO.getMemberAuth());
 	}
 
@@ -51,37 +51,36 @@ public class UserRepository implements IUserRepository {
 				memberVO.setPosition(rs.getString("position"));
 				memberVO.setDepartment(rs.getString("department"));
 				memberVO.setMemberAuth(rs.getString("member_auth"));
+				memberVO.setRetire(rs.getString("retire"));
 				return memberVO;
 			}
 		});
 	}
 	
 	@Override
-	public void memberUpdate(MemberVO memberVO) throws Exception {
-		String sql = "update member set pwd=?, name=?, phone=?, position=?, department=?, member_auth=? where member_num=?";
-		jdbcTemplate.update(sql, memberVO.getPwd(),
+	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception {
+		String sql = "update member set member_num=?, pwd=?, name=?, phone=?, position=?, department=?, member_auth=?, retire=? where member_num=?";
+		jdbcTemplate.update(sql, memberVO.getMemberNum(),
+								 memberVO.getPwd(),
 								 memberVO.getName(),
 								 memberVO.getPhone(),
 								 memberVO.getPosition(),
 								 memberVO.getDepartment(),
-								 memberVO.getMemberAuth());	
+								 memberVO.getMemberAuth(),
+								 memberVO.getRetire(),
+								 memberNum);	
 	}
 
 	@Override
-	public void memberDelete(MemberVO memberVO) throws Exception {
-		String sql = "delete from member where member_num=?";
-		
-		
+	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception {
+		String sql = "update member set retire=? where member_num=?";
+		jdbcTemplate.update(sql, memberVO.getRetire(), memberNum);
 	}
 
-	@Override
-	public MemberVO getByUserId(String memberNum) throws Exception {
-		return null;
-	}
-
+	
 	@Override
 	public List<MemberVO> getMemberList() {
-		String sql = "select * from member where member_num not in('S0001') order by member_num";
+		String sql = "select * from member where member_num not in('S0001') and retire = 'F' order by member_num";
 		return jdbcTemplate.query(sql, new RowMapper<MemberVO>() {
 
 			@Override
@@ -94,6 +93,7 @@ public class UserRepository implements IUserRepository {
 				memberVO.setPosition(rs.getString("position"));
 				memberVO.setDepartment(rs.getString("department"));
 				memberVO.setMemberAuth(rs.getString("member_auth"));
+				memberVO.setRetire(rs.getString("retire"));
 				return memberVO;
 			}
 		});
@@ -101,8 +101,8 @@ public class UserRepository implements IUserRepository {
 
 	@Override
 	public MemberVO getMemberInfo(String memberNum) throws Exception {
-		String sql = "select member_num, name, phone, "
-				+ "position, department, member_auth "
+		String sql = "select member_num, pwd, name, phone, "
+				+ "position, department, member_auth, retire "
 				+ "from member "
 				+ " where member_num=?";
 		return jdbcTemplate.queryForObject(sql, new RowMapper<MemberVO>() {
@@ -111,16 +111,15 @@ public class UserRepository implements IUserRepository {
 			public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				MemberVO memberVO = new MemberVO();
 				memberVO.setMemberNum(rs.getString("member_num"));
+				memberVO.setPwd(rs.getString("pwd"));
 				memberVO.setName(rs.getString("name"));
 				memberVO.setPhone(rs.getString("phone"));
 				memberVO.setPosition(rs.getString("position"));
 				memberVO.setDepartment(rs.getString("department"));
 				memberVO.setMemberAuth(rs.getString("member_auth"));
+				memberVO.setRetire(rs.getString("retire"));
 				return memberVO;
 			}
 		}, memberNum);
 	}
-
-
-
 }

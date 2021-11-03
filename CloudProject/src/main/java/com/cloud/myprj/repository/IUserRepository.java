@@ -13,15 +13,12 @@ public interface IUserRepository {
 	public MemberVO memberLogin(MemberVO memberVO) throws Exception;
 	
 	// Admin이 회원 수정
-	public void memberUpdate(MemberVO memberVO) throws Exception;
+	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception;
 	
 	// Admin이 회원 삭제
-	public void memberDelete(MemberVO memberVO) throws Exception;
+	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception;
 	
-	//관리자가 수정할 회원 가져오기
-	public MemberVO getByUserId(String memberNum) throws Exception;
-
-	// memberNum 가져오기
+	// memberNum +1씩 증가
 	public String getMemberNum() throws Exception;
 	
 	// memeber list 가져오기

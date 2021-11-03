@@ -8,6 +8,9 @@ public class MemberVO {
 	private String position;
 	private String department;
 	private String memberAuth;
+	private String retire;
+	
+	
 	public String getMemberNum() {
 		return memberNum;
 	}
@@ -50,12 +53,17 @@ public class MemberVO {
 	public void setMemberAuth(String memberAuth) {
 		this.memberAuth = memberAuth;
 	}
+	public String getRetire() {
+		return retire;
+	}
+	public void setRetire(String retire) {
+		this.retire = retire;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [memberNum=" + memberNum + ", pwd=" + pwd + ", name=" + name + ", phone=" + phone
-				+ ", position=" + position + ", department=" + department + ", memberAuth=" + memberAuth + "]";
+				+ ", position=" + position + ", department=" + department + ", memberAuth=" + memberAuth + ", retire="
+				+ retire + "]";
 	}
-
-	
 	
 }

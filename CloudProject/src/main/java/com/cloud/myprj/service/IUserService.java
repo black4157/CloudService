@@ -12,10 +12,10 @@ public interface IUserService {
 	public void memberSignUp(MemberVO memberVO) throws Exception;
 	
 	// 멤버 정보 수정
-	public void memberUpdate(MemberVO memberVO) throws Exception;
+	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception;
 	
 	// Admin이 회원 삭제
-	public void memberDelete(MemberVO memberVO) throws Exception;
+	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception;
 	
 	// memberList 가져오기
 	public List<MemberVO> getMemberList() throws Exception;

@@ -19,10 +19,18 @@ import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class UserController {
-
+	
 	@Autowired
 	IUserService userService;
-
+	
+	public int logincheck(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("memberVO") != null) {
+			return 1;
+		}
+		else return 0;
+	}
+	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(MemberVO memberVO, Model model, HttpServletRequest req, RedirectAttributes rttr) {
 		try {
@@ -33,30 +41,34 @@ public class UserController {
 				model.addAttribute("memberVO", memberVO);
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
-				//				session.setAttribute("pwd", memberVO.getPwd());
-				//				session.setAttribute("name", memberVO.getName());
-				//				session.setAttribute("phone", memberVO.getPhone());
-				//				session.setAttribute("position", memberVO.getPosition());
-				//				session.setAttribute("department", memberVO.getDepartment());
-				//				session.setAttribute("memberAuth", memberVO.getMemberAuth());
-
-				return "member/loginsuccess";
+				
+//				session.setAttribute("pwd", memberVO.getPwd());
+//				session.setAttribute("name", memberVO.getName());
+//				session.setAttribute("phone", memberVO.getPhone());
+//				session.setAttribute("position", memberVO.getPosition());
+//				session.setAttribute("department", memberVO.getDepartment());
+//				session.setAttribute("memberAuth", memberVO.getMemberAuth());
+				
+				return "member/memberhome";
 			}
 			else {
 				session.setAttribute("memberVO", null);
-				return "member/loginfail";
+				return "home";
 			}
 		}
 		catch(Exception e) {
-			return "member/loginfail";
+			return "home";
 		}
 	}
-
+	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletRequest req) {
 		try {
-			session.invalidate();
-			return "member/logout";
+			if(logincheck(req) == 1) {
+				session.invalidate();
+				return "home";
+			}
+			else return "member/logoutfail";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -103,7 +115,19 @@ public class UserController {
 		}
 		
 	}
-
+	
+	@RequestMapping(value="/adminhome")
+	public String adminhome(HttpServletRequest req, MemberVO memberVO) {
+		HttpSession session = req.getSession();
+		memberVO = (MemberVO)session.getAttribute("memberVO");
+		if(session.getAttribute("memberNum").equals("S0001")) {
+			return "admin/adminhome";
+		}
+		else {
+			return "member/memberhome";
+		}
+	}
+	
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signup(HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -111,7 +135,7 @@ public class UserController {
 			return "admin/insertform";
 		}
 		else {
-			return "home";
+			return "member/memberhome";
 		}
 	}
 
@@ -122,34 +146,75 @@ public class UserController {
 			return "admin/adminhome";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return "admin/insertform";
-		}
-
-	}
-
-	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		if(session.getAttribute("memberNum").equals("S0001")) {
-			return "admin/updateform";
-		}
-		else {
-			return "home";
-		}
-	}
-
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(MemberVO memberVO) {
-		try {
-			userService.memberUpdate(memberVO);
 			return "admin/adminhome";
+		}
+		
+	}
+	
+	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.GET)
+	public String update(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
+		try {
+			HttpSession session = req.getSession();
+			if(session.getAttribute("memberNum").equals("S0001")) {
+				memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("memberVO", memberVO);
+				return "admin/updateform";
+			}
+			else {
+				return "member/memberhome";
+			}
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			return "member/memberhome";
+		}
+	} 
+
+
+	
+	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.POST)
+	public String update(MemberVO memberVO, @PathVariable String memberNum) {
+		try {
+			userService.memberUpdate(memberVO, memberNum);
+			return "redirect:/list";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return "admin/updateform";
 		}
+		
+	}
+	
+	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.GET)
+	public String delete(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
+		try {
+			HttpSession session = req.getSession();
+			if(session.getAttribute("memberNum").equals("S0001")) {
+				memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("memberVO", memberVO);
+				return "admin/deleteform";
+			}
+			else {
+				return "member/memberhome";
+			}
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			return "member/memberhome";
+		}
 
 	}
-
+	
+	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.POST)
+	public String delete(MemberVO memberVO, @PathVariable String memberNum) {
+		try {
+			userService.memberDelete(memberVO, memberNum);
+			return "redirect:/list";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "admin/deleteform";
+		}
+	}
+	
 }
 
 

@@ -27,15 +27,15 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void memberUpdate(MemberVO memberVO) throws Exception {
-		userRepository.memberUpdate(memberVO);	
+	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception {
+		userRepository.memberUpdate(memberVO, memberNum);	
 	}
 
 	@Override
-	public void memberDelete(MemberVO memberVO) throws Exception {
-		userRepository.memberDelete(memberVO);
+	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception {
+		userRepository.memberDelete(memberVO, memberNum);
 	}
-
+	
 	@Override
 	public List<MemberVO> getMemberList() throws Exception {
 		return userRepository.getMemberList();
@@ -45,6 +45,5 @@ public class UserService implements IUserService {
 	public MemberVO getMemberInfo(String memberNum) throws Exception {
 		return userRepository.getMemberInfo(memberNum);
 	}
-	
 	
 }

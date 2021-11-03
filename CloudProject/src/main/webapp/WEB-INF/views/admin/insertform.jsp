@@ -24,15 +24,37 @@
 			</tr>
 			<tr>
 				<td>직급</td>
-				<td><input type="text" name="position"></td>
+				<td>
+					<select name="position">
+						<option value="S1">부장</option>
+						<option value="S2">차장</option>
+						<option value="S3">과장</option>
+						<option value="S4">대리</option>
+						<option value="S5">사원</option>
+						<option value="S6">인턴</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>부서</td>
-				<td><input type="text" name="department"></td>
+				<td>
+					<select name="department">
+						<option>개발</option>
+						<option>영업</option>
+						<option>마케팅</option>
+						<option>인사</option>
+						<option>기획</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>권한</td>
-				<td><input type="text" name="memberAuth"></td>
+				<td><select name="memberAuth">
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+					</select>
+				</td>
 			</tr>
 		</table>
 		
