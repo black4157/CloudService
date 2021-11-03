@@ -24,16 +24,16 @@
 			<th>직급</th>
 			<th>부서</th>
 		</tr>
-		<c:forEach var="mem" items="${memList}"> <!-- var와 items 변경시 컨트롤+F 로 변경 -->
+		<c:forEach var="member" items="${memberList}"> <!-- var와 items 변경시 컨트롤+F 로 변경 -->
 		<tr>
-			<td>${mem.memberNum}</td>
-			<td>${mem.name}</td>
-			<td>${mem.phone}</td>
-			<td>${mem.position}</td>
-			<td>${mem.department}</td>
+			<td>${member.memberNum}</td>
+			<td>${member.name}</td>
+			<td>${member.phone}</td>
+			<td>${member.position}</td>
+			<td>${member.department}</td>
 			<td>
-				<a href="memupdate?memum=${mem.memberNum}">수정</a>
-				<a href="memdelete?memnum=${mem.memberNum}">삭제</a> 
+				<a href="memupdate?memmum=${member.memberNum}">수정</a>
+				<a href="memdelete?memnum=${member.memberNum}">삭제</a> 
 			</td>
 		</tr>
 		</c:forEach>

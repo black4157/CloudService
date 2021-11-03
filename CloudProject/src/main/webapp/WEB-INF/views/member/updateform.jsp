@@ -13,23 +13,23 @@
 		<table>
 			<tr>
 				<th>사원번호</th>
-				<td><input type="text" name="memberNums" value="${mem.memberNum}" readonly></td>
+				<td><input type="text" name="memberNum" value="${member.memberNum}" readonly></td>
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="name" value="${mem.name}" readonly></td>
+				<td><input type="text" name="name" value="${member.name}" readonly></td>
 			</tr>
 			<tr>
 				<th>전화번호</th>
-				<td><input type="text" name="phone" value="${mem.phone}"></td>
+				<td><input type="text" name="phone" value="${member.phone}"></td>
 			</tr>
 			<tr>
 				<th>직급</th>
-				<td><input type="text" name="position" value="${mem.position}"></td>
+				<td><input type="text" name="position" value="${member.position}"></td>
 			</tr>
 			<tr>
 				<th>부서</th>
-				<td><input type="text" name="department" value="${mem.department}"></td>
+				<td><input type="text" name="department" value="${member.department}"></td>
 			</tr>
 		</table>
 		
