@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -78,12 +79,29 @@ public class UserController {
 			else {
 				return "admin/adminhome";
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return "admin/adminhome";
 		}
-
+	}
+	
+	@RequestMapping(value="/info/{memberNum}")
+	public String info(HttpServletRequest req, @PathVariable String memberNum, Model model, MemberVO memberVO) {
+		
+		try {
+			HttpSession session = req.getSession();
+			if(session.getAttribute("memberNum").equals("S0001")) {
+				memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("memberVO", memberVO);
+				return "admin/info";
+			}else {
+				return "admin/list";
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			return "admin/list";
+		}
+		
 	}
 
 	@RequestMapping(value="/signup", method=RequestMethod.GET)

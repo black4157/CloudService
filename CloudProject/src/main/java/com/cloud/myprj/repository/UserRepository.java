@@ -99,6 +99,28 @@ public class UserRepository implements IUserRepository {
 		});
 	}
 
+	@Override
+	public MemberVO getMemberInfo(String memberNum) throws Exception {
+		String sql = "select member_num, name, phone, "
+				+ "position, department, member_auth "
+				+ "from member "
+				+ " where member_num=?";
+		return jdbcTemplate.queryForObject(sql, new RowMapper<MemberVO>() {
+
+			@Override
+			public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setMemberNum(rs.getString("member_num"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setPhone(rs.getString("phone"));
+				memberVO.setPosition(rs.getString("position"));
+				memberVO.setDepartment(rs.getString("department"));
+				memberVO.setMemberAuth(rs.getString("member_auth"));
+				return memberVO;
+			}
+		}, memberNum);
+	}
+
 
 
 }

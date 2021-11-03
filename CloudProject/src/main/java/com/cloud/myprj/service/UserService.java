@@ -40,6 +40,11 @@ public class UserService implements IUserService {
 	public List<MemberVO> getMemberList() throws Exception {
 		return userRepository.getMemberList();
 	}
+
+	@Override
+	public MemberVO getMemberInfo(String memberNum) throws Exception {
+		return userRepository.getMemberInfo(memberNum);
+	}
 	
 	
 }

@@ -19,4 +19,7 @@ public interface IUserService {
 	
 	// memberList 가져오기
 	public List<MemberVO> getMemberList() throws Exception;
+	
+	// memberInfo
+	public MemberVO getMemberInfo(String memberNum) throws Exception;
 }
