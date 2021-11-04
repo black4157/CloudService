@@ -13,23 +13,16 @@
 	<table border="1">
 		<tr>
 			<th>본낸사람</th>
-			<th>받는사람</th>
 			<th>제목</th>
 			<th>받은 날짜</th>
-			<c:if test="${mailList.memberNum = 'S0001' }">
-				<th>삭제</th>
-			</c:if>
+			<th>삭제</th>
 		</tr>
 		<c:forEach var="mailList" items="${recivedMail }">
-			<a href="/send/view/${mailList.sendNum}">${mailList.sendTitle }</a>
 			<tr>
 				<td>${mailList.sender}</td>
-				<td>${mailList.recipient}</td>
 				<td><a href="/send/view/${mailList.sendNum}">${mailList.sendTitle}</a></td>
 				<td>${mailList.sendDate}</td>
-				<c:if test="${mailList.memberNum = 'S0001' }">
-					<th><a href="/send/delete" class="delete">삭제</a></th>
-				</c:if>
+				<td><a href="/send/delete/${mailList.sendNum }" class="delete">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -37,9 +30,11 @@
 
 <script>
 	$(".delete").click(function(){
-		$.ajax({
-			
-		});
+		if(confirm("삭제하시겠습니까?")){
+			return true;
+		} else{
+			return false;
+		}
 	});
 </script>
 </html>
