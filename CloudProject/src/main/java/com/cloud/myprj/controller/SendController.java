@@ -91,9 +91,10 @@ public class SendController {
 		}
 	}
 	
-	@RequestMapping(value="/send/delete")
-	public void mailDelete(int sendNum) {
+	@RequestMapping(value="/send/delete/{sendNum}")
+	public String mailDelete(@PathVariable int sendNum) {
 		fileSendService.delete(sendNum);
+		return "redirect:/send/list";
 	}
 
 }
