@@ -9,7 +9,9 @@
 </head>
 <body>
 <%@ include file= "../up.jsp"%>
+<c:if test="${memberVO.memberNum eq 'S0001'}" >
 <a href='<c:url value="/board/boardInsert"/>'>공지사항 쓰기</a>
+</c:if>
 <table>
 <c:forEach var="board" items="${boardList}">
 <tr>

@@ -35,26 +35,32 @@ public class BoardController {
 	IUserService userService;
 
 	@RequestMapping(value = "/board/boardList")
-	public String boardList(Model model, HttpServletRequest req) {
+	public String boardList(Model model, HttpServletRequest req, MemberVO memberVO) {
 		if (userService.logincheck(req) == 1) {
 			List<BoardVO> lstBaord= boardService.getAllBoard();
+			HttpSession session = req.getSession();
+			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
 			for(BoardVO board :lstBaord) {
 				if(board.getBoardContent().length()>20) {
 					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
 				}
 			}
 			model.addAttribute("boardList", lstBaord);
+			model.addAttribute("memberVO", memberVO);
 			return "board/boardList";
 		} else
 			return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
-	public String board(@PathVariable String contentNum, Model model, HttpServletRequest req) {
+	public String board(@PathVariable String contentNum, Model model, HttpServletRequest req, MemberVO memberVO) {
 		if (userService.logincheck(req) == 1) {
 			logger.info("글 출력");
+			HttpSession session = req.getSession();
+			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
 			model.addAttribute("board", boardService.getBoard(contentNum));
 			model.addAttribute("commentList", boardService.getComment(contentNum));
+			model.addAttribute("memberVO", memberVO);
 			return "board/boardReply";
 		} else
 			return "redirect:/home";

@@ -11,9 +11,10 @@
 ${board.boardTitle}<br>
 ${board.boardContent}<br>
 ${board.boardDate}<br>
-
+<c:if test="${memberVO.memberNum eq 'S0001'}" >
 <a href='<c:url value="/board/boardUpdate/${board.contentNum }"/>'>수정하기</a> 
 <a href='<c:url value="/board/boardDelete?contentNum=${board.contentNum }"/>'>삭제하기</a>
+</c:if>
 <br>
 -----댓글------<br>
 <table>
@@ -22,7 +23,9 @@ ${board.boardDate}<br>
 <td>${comment.commentContent }</td>
 <td>${comment.memberNum }</td>
 <td>${comment.commentDate }</td>
+<c:if test="${memberVO.memberNum eq 'S0001'}" >
 <td><a href='<c:url value="/board/boardCommentDelete?commentNum=${comment.commentNum }&contentNum=${comment.contentNum }"/>'>삭제</a></td>
+</c:if>
 </tr>
 </c:forEach>
 </table>
