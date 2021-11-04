@@ -27,8 +27,6 @@
 			<div class="menu__wrap">
 			<a href="/logout">로그아웃 하기</a><p>
 	<a href="/board/boardList">공지사항 보기</a><p>
-	<a href="/list">사원 리스트 보기</a><p>
-	<a href="/signup">사원 추가하기</a><p>
 	<a href="/send">전송하기</a><p>
 	<a href="/upload">파일 올리기</a><p>
 			</div>
