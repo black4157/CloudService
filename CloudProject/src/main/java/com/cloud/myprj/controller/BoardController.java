@@ -46,7 +46,7 @@ public class BoardController {
 			model.addAttribute("boardList", lstBaord);
 			return "board/boardList";
 		} else
-			return "home";
+			return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class BoardController {
 			model.addAttribute("commentList", boardService.getComment(contentNum));
 			return "board/boardReply";
 		} else
-			return "home";
+			return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/board/boardReply", method = RequestMethod.POST)
@@ -83,7 +83,7 @@ public class BoardController {
 			}
 			return "redirect:/board/boardReply/" + contentNum;
 		} else
-			return "home";
+			return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/board/boardInsert", method = RequestMethod.GET)

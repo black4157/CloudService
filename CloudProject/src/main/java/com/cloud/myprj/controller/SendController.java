@@ -22,6 +22,7 @@ import com.cloud.myprj.member.MemberVO;
 import com.cloud.myprj.member.SendVO;
 import com.cloud.myprj.service.IFileSendService;
 import com.cloud.myprj.service.IFileUploadService;
+import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class SendController {
@@ -33,22 +34,31 @@ public class SendController {
 
 	@Autowired
 	IFileUploadService fileUploadService;
+	
+	@Autowired
+	IUserService userService;
 
 	@RequestMapping(value = "/send")
-	public String sendHome() {
-		return "send/sendhome";
+	public String sendHome(HttpServletRequest req) {
+		if(userService.logincheck(req) == 1) {
+			return "send/sendhome";
+		}
+		else return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/send/write")
 	public String send(Model model, HttpServletRequest req, MemberVO memberVO) {
-		HttpSession session = req.getSession();
-
-		memberVO = (MemberVO) session.getAttribute("memberVO");
-		model.addAttribute("memberVO", memberVO);
-		model.addAttribute("userList", fileSendService.userList());
-		model.addAttribute("fileList", fileUploadService.getPersonalFileList(memberVO.getMemberNum()));
-
-		return "send/write";
+		if(userService.logincheck(req) == 1) {
+			HttpSession session = req.getSession();
+	
+			memberVO = (MemberVO) session.getAttribute("memberVO");
+			model.addAttribute("memberVO", memberVO);
+			model.addAttribute("userList", fileSendService.userList());
+			model.addAttribute("fileList", fileUploadService.getPersonalFileList(memberVO.getMemberNum()));
+	
+			return "send/write";
+		}
+		else return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/send/write", method = RequestMethod.POST)
@@ -61,40 +71,52 @@ public class SendController {
 
 	@RequestMapping(value = "/send/list", method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest req, MemberVO memberVO) {
-		HttpSession session = req.getSession();
-		memberVO = (MemberVO) session.getAttribute("memberVO");
-		model.addAttribute("memberVO", memberVO);
-
-		model.addAttribute("recivedMail", fileSendService.receivedMail(memberVO.getMemberNum()));
-		
-		return "send/list";
+		if(userService.logincheck(req) == 1) {
+			HttpSession session = req.getSession();
+			memberVO = (MemberVO) session.getAttribute("memberVO");
+			model.addAttribute("memberVO", memberVO);
+	
+			model.addAttribute("recivedMail", fileSendService.receivedMail(memberVO.getMemberNum()));
+			
+			return "send/list";
+		}
+		else return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/send/view/{sendNum}", method = RequestMethod.GET)
-	public String view(@PathVariable int sendNum, Model model) {
-		model.addAttribute("viewMail", fileSendService.viewMail(sendNum));
-		fileSendService.readCheck(sendNum);
-
-		return "send/view";
+	public String view(@PathVariable int sendNum, Model model, HttpServletRequest req) {
+		if(userService.logincheck(req) == 1) {
+			model.addAttribute("viewMail", fileSendService.viewMail(sendNum));
+			fileSendService.readCheck(sendNum);
+	
+			return "send/view";
+		}
+		else return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/send/view/download/{sendNum}")
-	public ResponseEntity<byte[]> viewMailDownload(@PathVariable int sendNum) {
-		JoinVO vo = fileSendService.viewMail(sendNum);
-		final HttpHeaders headers = new HttpHeaders();
-		if (vo != null) {
-			headers.setContentDispositionFormData("attachment", vo.getFileName(), Charset.forName("UTF-8"));
-
-			return new ResponseEntity<byte[]>(vo.getFileContent(), headers, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<byte[]> viewMailDownload(@PathVariable int sendNum, HttpServletRequest req) {
+		if(userService.logincheck(req) == 1) {
+			JoinVO vo = fileSendService.viewMail(sendNum);
+			final HttpHeaders headers = new HttpHeaders();
+			if (vo != null) {
+				headers.setContentDispositionFormData("attachment", vo.getFileName(), Charset.forName("UTF-8"));
+	
+				return new ResponseEntity<byte[]>(vo.getFileContent(), headers, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+			}
 		}
+		else return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(value="/send/delete/{sendNum}")
-	public String mailDelete(@PathVariable int sendNum) {
-		fileSendService.delete(sendNum);
-		return "redirect:/send/list";
+	public String mailDelete(@PathVariable int sendNum, HttpServletRequest req) {
+		if(userService.logincheck(req) == 1) {
+			fileSendService.delete(sendNum);
+			return "redirect:/send/list";
+		}
+		else return "redirect:/home";
 	}
 
 }
