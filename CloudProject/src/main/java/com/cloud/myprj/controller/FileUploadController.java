@@ -30,24 +30,24 @@ public class FileUploadController {
 
 	@Autowired
 	IFileUploadService fileUploadService;
-	
+
 	@Autowired
 	IUserService userService;
 
 	static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
-	@RequestMapping(value="/upload")
+	@RequestMapping(value = "/upload")
 	public String mainPage() {
 		logger.info("홈 ~안녕");
 		return "upload/uploadhome";
 	}
-	
-	@RequestMapping(value="/upload/upload", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/upload/upload", method = RequestMethod.GET)
 	public String uploadFile() {
 		return "upload/upload";
 	}
-	
-	@RequestMapping(value = "/upload/upload", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/upload/upload", method = RequestMethod.POST)
 	public String uploadFile(@RequestParam(value = "dir", required = false, defaultValue = "/") String dir,
 			@RequestParam MultipartFile file, RedirectAttributes redirectAttrs) {
 		logger.info(file.getOriginalFilename());
@@ -60,102 +60,92 @@ public class FileUploadController {
 				saveFile.setFileName(file.getOriginalFilename());
 				saveFile.setFileContent(file.getBytes());
 				saveFile.setFileExplanation("");
-				
+
 				fileUploadService.uploadFile(saveFile);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return "redirect:/upload/personal";
 	}
 
-	
-	@RequestMapping(value="/upload/personal")
+	@RequestMapping(value = "/upload/personal")
 	public String getPersonalFile(Model model, MemberVO vo) {
 		model.addAttribute("personalFile", fileUploadService.getPersonalFileList("S0000"));
 		return "upload/personal";
-		
+
 	}
-	
-/*	@RequestMapping(value="/upload/movdToShare", method=RequestMethod.GET)
-	public 
-	*/
-	
-	@RequestMapping(value="/upload/movetoshare")
-	public String moveToShare(@RequestParam(value="fileCode", required=false, defaultValue="/") String fileCode) {
-//		FileSaveVO vo = new FileSaveVO();
-//		vo = fileUploadService.getSelectFile(fileCode);
-//		vo.setFileManagedCode("s");
-//		fileUploadService.uploadFile(vo);
+
+	@RequestMapping(value = "/upload/movetoshare")
+	public String moveToShare(@RequestParam(value = "fileCode", required = false, defaultValue = "/") String fileCode) {
 		List<String> lstFileCode = new ArrayList<String>();
-		String add="";
-		for(int i=0;i<fileCode.length();i++) {
-			if(",".equals(fileCode.substring(i,i+1))) {
-				lstFileCode.add(add);	
-				System.out.println("----------------------------"+add);
-				add="";
-			}else {
-				add=add+fileCode.substring(i,i+1);
+		String add = "";
+		for (int i = 0; i < fileCode.length(); i++) {
+			if (",".equals(fileCode.substring(i, i + 1))) {
+				lstFileCode.add(add);
+				System.out.println("----------------------------" + add);
+				add = "";
+			} else {
+				add = add + fileCode.substring(i, i + 1);
 			}
 		}
 		lstFileCode.add(add);
 		fileUploadService.uploadShareFile(lstFileCode);
 		return "upload/shareok";
 	}
-	
-	@RequestMapping(value="/upload/share")
+
+	@RequestMapping(value = "/upload/share")
 	public String getShareFile(Model model, MemberVO vo) {
-		model.addAttribute("shareFile",fileUploadService.getShareFileList("s"));
+		model.addAttribute("shareFile", fileUploadService.getShareFileList("s"));
 		return "upload/share";
 	}
-	
-	@RequestMapping(value="/upload/delete/{fileCode}")
+
+	@RequestMapping(value = "/upload/delete/{fileCode}")
 	public String deletePersonalFile(@PathVariable String fileCode) {
 		fileUploadService.deletePersonalFile(fileCode);
 		return "redirect:/upload/personal";
 	}
-	
-	@RequestMapping(value="/upload/sharedelete/{fileCode}")
-	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo) {
-		String memberNum= "S0002";
+
+	@RequestMapping(value = "/upload/sharedelete/{fileCode}")
+	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo, RedirectAttributes attrs) {
+		String memberNum = "S0002";
 		vo = new MemberVO();
 		try {
 			vo = userService.getMemberInfo(memberNum);
 			// 최고 권한자
-			if("S".equals(vo.getMemberAuth())) {
+			if ("S".equals(vo.getMemberAuth()) || "A".equals(vo.getMemberAuth())) {
 				fileUploadService.deletePersonalFile(fileCode);
-			// 모두 삭제 가능
-			} else if("A".equals(vo.getMemberAuth())) {
-				fileUploadService.deletePersonalFile(fileCode);
-			// 자신것만 삭제 가능
-			} else if("B".equals(vo.getMemberAuth())) {
+				attrs.addFlashAttribute("msg", "<script type=\"text/javascript\"> alert(\"삭제완료\")</script>");
+
+				// 모두 삭제 가능
+			} else if ("B".equals(vo.getMemberAuth())) {
+				// 파일의 권한 취득
 				FileSaveVO file = fileUploadService.getSelectFile(fileCode);
-				if(file.getMemberNum().equals(vo.getMemberNum())) {
+				// 파일 작성자와 사용자가 동일한경우 삭제
+				if (file.getMemberNum().equals(vo.getMemberNum())) {
 					fileUploadService.deletePersonalFile(fileCode);
-				}else {
-					return "upload/delete";//삭제불가능인 경우 이동하는 jsp
+					attrs.addFlashAttribute("msg", "<script type=\"text/javascript\"> alert(\"삭제완료\")</script>");
+				} else {
+					attrs.addFlashAttribute("msg", "<script type=\"text/javascript\"> alert(\"삭제 권한이 없습니다. 관리자에게 문의 해 주세요\")</script>");
+					return "redirect:/upload/share";
 				}
-			} 
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
-		
 		return "redirect:/upload/share";
 	}
-	@RequestMapping(value="/dowload/{fileCode}")
+
+	@RequestMapping(value = "/dowload/{fileCode}")
 	public ResponseEntity<byte[]> getImageFile(@PathVariable String fileCode) {
 		FileSaveVO file = fileUploadService.getSelectFile(fileCode);
 		final HttpHeaders headers = new HttpHeaders();
-		if(file != null) {
+		if (file != null) {
 			logger.info("getFile " + file.toString());
-//			String[] mtypes = file.getFileContentType().split("/");
-//			headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
-//			headers.setContentLength(file.getFileSize());
 			headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
-			
+
 			return new ResponseEntity<byte[]>(file.getFileContent(), headers, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);

@@ -15,8 +15,8 @@ import com.cloud.myprj.member.MemberVO;
 //UserRepositoryImpl
 @Repository
 public class UserRepository implements IUserRepository {
-	
 
+	static final String admin ="S0001";
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
@@ -80,7 +80,7 @@ public class UserRepository implements IUserRepository {
 	
 	@Override
 	public List<MemberVO> getMemberList() {
-		String sql = "select * from member where member_num not in('S0001') and retire = 'F' order by member_num";
+		String sql = "select * from member where member_num not in(?) and retire = 'F' order by member_num";
 		return jdbcTemplate.query(sql, new RowMapper<MemberVO>() {
 
 			@Override
@@ -96,7 +96,7 @@ public class UserRepository implements IUserRepository {
 				memberVO.setRetire(rs.getString("retire"));
 				return memberVO;
 			}
-		});
+		},admin);
 	}
 
 	@Override

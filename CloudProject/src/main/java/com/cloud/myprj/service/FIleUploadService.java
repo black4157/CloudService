@@ -51,10 +51,4 @@ public class FIleUploadService implements IFileUploadService {
 		}
 	}
 
-	
-//	@Override
-//	public List<FileSaveVO> getSelectFileGroup(String fileCode) {
-//		return fileUploadRepository.getSelectFileGroup(fileCode);
-//	}
-
 }

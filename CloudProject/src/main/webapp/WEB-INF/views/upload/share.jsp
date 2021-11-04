@@ -8,7 +8,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".delete").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
+	})
+});
 
+</script>
 </head>
 <body>
 <c:url var="actionURL" value="/upload/movetoshare"/>
@@ -32,6 +44,7 @@
 			</c:forEach>
 		</table>
 		</form>
+		${msg}
 		<form action="/upload">
 			<input type="submit" value="돌아가기">
 		</form>

@@ -1,6 +1,5 @@
 package com.cloud.myprj.repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.cloud.myprj.member.FileSaveVO;
@@ -18,9 +17,6 @@ public interface IFileUploadRepository {
 
 	// 개인 파일 업로드
 	void uploadFile(FileSaveVO file);
-	
-	// 공유 파일 업로드
-//	void uploadShareFile(HashMap<String, Object> map);
 
 	// 데이터 서버에 있는 파일 가져오기
 	List<FileSaveVO> getPersonalFileList(String memberNum);

@@ -20,6 +20,7 @@ import com.cloud.myprj.service.IUserService;
 @Controller
 public class UserController {
 	
+	static final String admin="S0001";
 	@Autowired
 	IUserService userService;
 	
@@ -82,7 +83,7 @@ public class UserController {
 		List<MemberVO> memberList;
 		try {
 			HttpSession session = req.getSession();
-			if(session.getAttribute("memberNum").equals("S0001")) {
+			if(admin.equals(session.getAttribute("memberNum"))) {
 				memberList = userService.getMemberList();
 				model.addAttribute("memberList", memberList);
 				return "admin/list";
@@ -101,7 +102,7 @@ public class UserController {
 		
 		try {
 			HttpSession session = req.getSession();
-			if(session.getAttribute("memberNum").equals("S0001")) {
+			if(admin.equals(session.getAttribute("memberNum"))) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/info";
@@ -119,7 +120,7 @@ public class UserController {
 	public String adminhome(HttpServletRequest req, MemberVO memberVO) {
 		HttpSession session = req.getSession();
 		memberVO = (MemberVO)session.getAttribute("memberVO");
-		if(session.getAttribute("memberNum").equals("S0001")) {
+		if(admin.equals(session.getAttribute("memberNum"))) {
 			return "admin/adminhome";
 		}
 		else {
@@ -130,7 +131,7 @@ public class UserController {
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signup(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		if(session.getAttribute("memberNum").equals("S0001")) {
+		if(admin.equals(session.getAttribute("memberNum"))) {
 			return "admin/insertform";
 		}
 		else {
@@ -154,7 +155,7 @@ public class UserController {
 	public String update(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
 		try {
 			HttpSession session = req.getSession();
-			if(session.getAttribute("memberNum").equals("S0001")) {
+			if(admin.equals(session.getAttribute("memberNum"))) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/updateform";
@@ -187,7 +188,7 @@ public class UserController {
 	public String delete(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
 		try {
 			HttpSession session = req.getSession();
-			if(session.getAttribute("memberNum").equals("S0001")) {
+			if(admin.equals(session.getAttribute("memberNum"))) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/deleteform";
@@ -215,13 +216,3 @@ public class UserController {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
