@@ -21,26 +21,22 @@ import com.cloud.myprj.member.BoardCommentVO;
 import com.cloud.myprj.member.BoardVO;
 import com.cloud.myprj.member.MemberVO;
 import com.cloud.myprj.service.IBoardService;
+import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class BoardController {
 	static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	static final String admin="S0001";
 
-	public int logincheck(HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		if (session.getAttribute("memberVO") != null) {
-			return 1;
-		} else
-			return 0;
-	}
-
 	@Autowired
 	IBoardService boardService;
+	
+	@Autowired
+	IUserService userService;
 
 	@RequestMapping(value = "/board/boardList")
 	public String boardList(Model model, HttpServletRequest req) {
-		if (logincheck(req) == 1) {
+		if (userService.logincheck(req) == 1) {
 			List<BoardVO> lstBaord= boardService.getAllBoard();
 			for(BoardVO board :lstBaord) {
 				if(board.getBoardContent().length()>20) {
@@ -55,7 +51,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
 	public String board(@PathVariable String contentNum, Model model, HttpServletRequest req) {
-		if (logincheck(req) == 1) {
+		if (userService.logincheck(req) == 1) {
 			logger.info("글 출력");
 			model.addAttribute("board", boardService.getBoard(contentNum));
 			model.addAttribute("commentList", boardService.getComment(contentNum));
@@ -67,7 +63,7 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardReply", method = RequestMethod.POST)
 	public String insertReply(@RequestParam String comment, @RequestParam String contentNum,
 			RedirectAttributes redirectAttrs, HttpServletRequest req, MemberVO memberVO, Model model) {
-		if (logincheck(req) == 1) {
+		if (userService.logincheck(req) == 1) {
 			try {
 				HttpSession session = req.getSession();
 				model.addAttribute("memberVO", memberVO);

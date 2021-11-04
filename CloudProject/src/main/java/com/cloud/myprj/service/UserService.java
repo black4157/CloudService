@@ -2,6 +2,9 @@ package com.cloud.myprj.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,4 +49,12 @@ public class UserService implements IUserService {
 		return userRepository.getMemberInfo(memberNum);
 	}
 	
+	@Override
+	public int logincheck(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("memberVO") != null) {
+			return 1;
+		}
+		else return 0;
+	}
 }

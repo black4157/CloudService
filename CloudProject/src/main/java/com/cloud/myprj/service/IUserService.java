@@ -2,6 +2,8 @@ package com.cloud.myprj.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cloud.myprj.member.MemberVO;
 
 public interface IUserService {
@@ -22,4 +24,8 @@ public interface IUserService {
 	
 	// memberInfo
 	public MemberVO getMemberInfo(String memberNum) throws Exception;
+
+	// 세션이 있는지 (로그인 되었는지) 확인
+	public int logincheck(HttpServletRequest req);
+
 }

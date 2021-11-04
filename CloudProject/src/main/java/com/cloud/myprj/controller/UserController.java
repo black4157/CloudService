@@ -19,21 +19,14 @@ import com.cloud.myprj.service.IUserService;
 
 @Controller
 public class UserController {
-	
 	static final String admin="S0001";
+	
 	@Autowired
 	IUserService userService;
 	
-	public int logincheck(HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		if(session.getAttribute("memberVO") != null) {
-			return 1;
-		}
-		else return 0;
-	}
-	
+	// 로그인
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(MemberVO memberVO, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+	public String login(MemberVO memberVO, Model model, HttpServletRequest req) {
 		try {
 			memberVO = userService.memberLogin(memberVO);
 			HttpSession session = req.getSession();
@@ -50,7 +43,7 @@ public class UserController {
 //				session.setAttribute("department", memberVO.getDepartment());
 //				session.setAttribute("memberAuth", memberVO.getMemberAuth());
 				
-				return "member/memberhome";
+				return "redirect:/positioncheck";
 			}
 			else {
 				session.setAttribute("memberVO", null);
@@ -62,10 +55,11 @@ public class UserController {
 		}
 	}
 	
+	// 로그아웃
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, HttpServletRequest req) {
 		try {
-			if(logincheck(req) == 1) {
+			if(userService.logincheck(req) == 1) {
 				session.invalidate();
 				return "home";
 			}
@@ -75,15 +69,48 @@ public class UserController {
 			e.printStackTrace();
 			return "member/logoutfail";
 		}
-
+	}
+	
+	// 사원, 관리자 계정 체크 후 홈페이지 구분
+	@RequestMapping(value="/positioncheck")
+	public String positioncheck(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("memberNum").equals(admin)) {
+			return "redirect:/adminhome";
+		}
+		else return "redirect:/memberhome";
+	}
+	
+	// 멤버 홈페이지로 이동
+	@RequestMapping(value="/memberhome")
+	public String memberhome(HttpServletRequest req) {
+		if(userService.logincheck(req) == 1) {
+			return "member/memberhome";
+		}
+		else return "home";
+	}
+	
+	// 관리자 홈페이지로 이동
+	@RequestMapping(value="/adminhome")
+	public String adminhome(HttpServletRequest req, MemberVO memberVO, Model model) {
+		HttpSession session = req.getSession();
+		memberVO = (MemberVO)session.getAttribute("memberVO");
+		if(session.getAttribute("memberNum").equals(admin)) {
+			model.addAttribute("memberVO", memberVO);
+			return "admin/adminhome";
+		}
+		else {
+			return "member/memberhome";
+		}
 	}
 
+	// 전체 사원 조회 리스트
 	@RequestMapping(value="/list")
 	public String list(HttpServletRequest req, MemberVO memberVO, Model model) {
 		List<MemberVO> memberList;
 		try {
 			HttpSession session = req.getSession();
-			if(admin.equals(session.getAttribute("memberNum"))) {
+			if(session.getAttribute("memberNum").equals(admin)) {
 				memberList = userService.getMemberList();
 				model.addAttribute("memberList", memberList);
 				return "admin/list";
@@ -97,12 +124,13 @@ public class UserController {
 		}
 	}
 	
+	// 사원 상세 정보 조회
 	@RequestMapping(value="/info/{memberNum}")
 	public String info(HttpServletRequest req, @PathVariable String memberNum, Model model, MemberVO memberVO) {
 		
 		try {
 			HttpSession session = req.getSession();
-			if(admin.equals(session.getAttribute("memberNum"))) {
+			if(session.getAttribute("memberNum").equals(admin)) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/info";
@@ -116,22 +144,11 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/adminhome")
-	public String adminhome(HttpServletRequest req, MemberVO memberVO) {
-		HttpSession session = req.getSession();
-		memberVO = (MemberVO)session.getAttribute("memberVO");
-		if(admin.equals(session.getAttribute("memberNum"))) {
-			return "admin/adminhome";
-		}
-		else {
-			return "member/memberhome";
-		}
-	}
-	
+	// 사원 추가_Get
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public String signup(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		if(admin.equals(session.getAttribute("memberNum"))) {
+		if(session.getAttribute("memberNum").equals(admin)) {
 			return "admin/insertform";
 		}
 		else {
@@ -139,23 +156,25 @@ public class UserController {
 		}
 	}
 
+	// 사원 추가_Post
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signup(MemberVO memberVO) {
 		try {
 			userService.memberSignUp(memberVO);
-			return "admin/adminhome";
+			return "redirect:/adminhome";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return "admin/adminhome";
+			return "redirect:/adminhome";
 		}
 		
 	}
 	
+	// 사원 정보 수정_Get
 	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.GET)
 	public String update(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
 		try {
 			HttpSession session = req.getSession();
-			if(admin.equals(session.getAttribute("memberNum"))) {
+			if(session.getAttribute("memberNum").equals(admin)) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/updateform";
@@ -170,8 +189,7 @@ public class UserController {
 		}
 	} 
 
-
-	
+	// 사원 정보 수정_Post
 	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.POST)
 	public String update(MemberVO memberVO, @PathVariable String memberNum) {
 		try {
@@ -184,11 +202,12 @@ public class UserController {
 		
 	}
 	
+	// 사원 삭제(T로 세팅)_Get
 	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.GET)
 	public String delete(HttpServletRequest req, @PathVariable String memberNum, MemberVO memberVO, Model model) {
 		try {
 			HttpSession session = req.getSession();
-			if(admin.equals(session.getAttribute("memberNum"))) {
+			if(session.getAttribute("memberNum").equals(admin)) {
 				memberVO = userService.getMemberInfo(memberNum);
 				model.addAttribute("memberVO", memberVO);
 				return "admin/deleteform";
@@ -204,6 +223,7 @@ public class UserController {
 
 	}
 	
+	// 사원 삭제(T로 세팅)_Post
 	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.POST)
 	public String delete(MemberVO memberVO, @PathVariable String memberNum) {
 		try {
@@ -214,5 +234,4 @@ public class UserController {
 			return "admin/deleteform";
 		}
 	}
-	
 }
