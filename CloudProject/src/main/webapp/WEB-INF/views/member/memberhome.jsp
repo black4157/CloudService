@@ -11,8 +11,6 @@
 	${memberVO.name } 님 로그인 되었습니다.<p>
 	
 	<a href="/logout">로그아웃 하기</a><p>
-	<a href="/adminhome">관리자 홈페이지로 이동</a><p>
-
 	<a href="/board/boardList">공지사항 보기</a><p>
 	<a href="/send">전송하기</a><p>
 	<a href="/upload/personal">개인폴더</a><p>
