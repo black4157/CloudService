@@ -6,15 +6,13 @@
 <html>
 <head>
 <title>Home</title>
-</head>
-<body>
-	${viewMail[0].send_num}
-	${viewMail[0].sender}
-	${viewMail[0].recipient}
-	${viewMail[0].file_name}
-	${viewMail[0].file_content}
 
-	
+</head>
+<h1>제목 : ${viewMail.sendTitle}</h1>
+<body>
+	${viewMail.fileName}
+	<a href="<c:url value='/send/view/download/${viewMail.sendNum}' />">파일 다운로드</a>
 
 </body>
+
 </html>

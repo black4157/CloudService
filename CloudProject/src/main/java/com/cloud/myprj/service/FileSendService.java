@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloud.myprj.member.JoinVO;
 import com.cloud.myprj.member.SendVO;
 import com.cloud.myprj.repository.IFileSendRepository;
 
@@ -33,13 +34,23 @@ public class FileSendService implements IFileSendService {
 	}
 
 	@Override
-	public List<Map<String, Object>> receivedMail(String recipient) {
+	public List<JoinVO> receivedMail(String recipient) {
 		return fileSendRepository.receivedMail(recipient);
 	}
 
 	@Override
-	public Object viewMail(int sendNum) {
+	public JoinVO viewMail(int sendNum) {
 		return fileSendRepository.viewMail(sendNum);
+	}
+
+	@Override
+	public void readCheck(int sendNum) {
+		fileSendRepository.readCheck(sendNum);
+	}
+
+	@Override
+	public void delete(int sendNum) {
+		fileSendRepository.delete(sendNum);
 	}
 	
 }

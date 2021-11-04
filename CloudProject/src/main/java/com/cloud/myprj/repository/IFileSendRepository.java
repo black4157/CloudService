@@ -3,6 +3,7 @@ package com.cloud.myprj.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.cloud.myprj.member.JoinVO;
 import com.cloud.myprj.member.SendVO;
 
 public interface IFileSendRepository {
@@ -17,8 +18,12 @@ public interface IFileSendRepository {
 	List<Map<String, Object>> userList();
 	
 	//받은 메일함
-	List<Map<String, Object>> receivedMail(String recipient);
+	List<JoinVO> receivedMail(String recipient);
 	
 	//메일 확인
-	Object viewMail(int sendNum);
+	JoinVO viewMail(int sendNum);
+	
+	void readCheck(int sendNum);
+	
+	void delete(int sendNum);
 }

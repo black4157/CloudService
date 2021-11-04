@@ -24,8 +24,12 @@
 				</c:forEach>
 			</select>
 		</p>
-
+		
+		<p> 제목 : 
+			<input type="text" name="sendTitle" />
+		</p>
 		<p>
+		
 			파일 : 
 			<select name="fileCode">
 				<c:forEach var="fileList" items="${fileList }">

@@ -1,8 +1,9 @@
 package com.cloud.myprj.member;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
-public class SendVO {
+public class JoinVO {
 	private int sendNum;
 	private String sender;
 	private String recipient;
@@ -11,6 +12,12 @@ public class SendVO {
 	private String sendContent;
 	private String readCheck;
 	private Timestamp sendDate;
+
+	private String fileManagedCode;
+	private String fileName;
+	private byte[] fileContent;
+	private String fileExplanation;
+	private String deleteTF;
 	public int getSendNum() {
 		return sendNum;
 	}
@@ -59,12 +66,44 @@ public class SendVO {
 	public void setSendDate(Timestamp sendDate) {
 		this.sendDate = sendDate;
 	}
+	public String getFileManagedCode() {
+		return fileManagedCode;
+	}
+	public void setFileManagedCode(String fileManagedCode) {
+		this.fileManagedCode = fileManagedCode;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public byte[] getFileContent() {
+		return fileContent;
+	}
+	public void setFileContent(byte[] fileContent) {
+		this.fileContent = fileContent;
+	}
+	public String getFileExplanation() {
+		return fileExplanation;
+	}
+	public void setFileExplanation(String fileExplanation) {
+		this.fileExplanation = fileExplanation;
+	}
+	public String getDeleteTF() {
+		return deleteTF;
+	}
+	public void setDeleteTF(String deleteTF) {
+		this.deleteTF = deleteTF;
+	}
 	@Override
 	public String toString() {
-		return "SendVO [sendNum=" + sendNum + ", sender=" + sender + ", recipient=" + recipient + ", sendTitle="
+		return "JoinVO [sendNum=" + sendNum + ", sender=" + sender + ", recipient=" + recipient + ", sendTitle="
 				+ sendTitle + ", fileCode=" + fileCode + ", sendContent=" + sendContent + ", readCheck=" + readCheck
-				+ ", sendDate=" + sendDate + "]";
+				+ ", sendDate=" + sendDate + ", fileManagedCode=" + fileManagedCode + ", fileName=" + fileName
+				+ ", fileContent=" + Arrays.toString(fileContent) + ", fileExplanation=" + fileExplanation
+				+ ", deleteTF=" + deleteTF + "]";
 	}
 	
-	
+
 }
