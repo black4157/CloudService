@@ -24,6 +24,15 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	
+	// 홈
+	@RequestMapping(value="/home")
+	public String home(HttpServletRequest req) {
+		if(userService.logincheck(req) == 1){
+			return "redirect:/positioncheck";
+		}
+		else return "member/login";
+	}
+
 	// 로그인
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(MemberVO memberVO, Model model, HttpServletRequest req) {
@@ -47,11 +56,11 @@ public class UserController {
 			}
 			else {
 				session.setAttribute("memberVO", null);
-				return "home";
+				return "redirect:/home";
 			}
 		}
 		catch(Exception e) {
-			return "home";
+			return "redirect:/home";
 		}
 	}
 	
@@ -61,7 +70,7 @@ public class UserController {
 		try {
 			if(userService.logincheck(req) == 1) {
 				session.invalidate();
-				return "home";
+				return "redirect:/home";
 			}
 			else return "member/logoutfail";
 		} catch (Exception e) {
@@ -87,7 +96,7 @@ public class UserController {
 		if(userService.logincheck(req) == 1) {
 			return "member/memberhome";
 		}
-		else return "home";
+		else return "redirect:/home";
 	}
 	
 	// 관리자 홈페이지로 이동

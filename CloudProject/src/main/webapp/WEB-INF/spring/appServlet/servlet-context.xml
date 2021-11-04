@@ -30,6 +30,5 @@
 		<beans:property name="maxUploadSize" value="100000000" />
 	</beans:bean>
 	
-	<view-controller path="/WEB-INF/views/home.jsp" view-name="home"/>
-	
 </beans:beans>
+
