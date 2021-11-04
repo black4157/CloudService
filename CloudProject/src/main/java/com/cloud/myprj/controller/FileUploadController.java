@@ -39,15 +39,16 @@ public class FileUploadController {
 
 	static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 	
+	// 파일 업로드 홈
 	@RequestMapping(value = "/upload")
 	public String mainPage(HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
-			logger.info("홈 ~안녕");
-			return "upload/uploadhome";
+			return "redirect:/home";
 		}
 		else return "redirect:/home";
 	}
 
+	// 파일 업로드_Get
 	@RequestMapping(value = "/upload/upload", method = RequestMethod.GET)
 	public String uploadFile(HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
@@ -56,8 +57,9 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 파일 업로드_Post
 	@RequestMapping(value = "/upload/upload", method = RequestMethod.POST)
-	public String uploadFile(@RequestParam(value = "dir", required = false, defaultValue = "/") String dir,
+	public String uploadFile(@RequestParam(value = "text1", required = false, defaultValue = "") String fileExplanation, 
 			@RequestParam MultipartFile file, HttpServletRequest req) {
 		logger.info(file.getOriginalFilename());
 		try {
@@ -69,7 +71,7 @@ public class FileUploadController {
 				saveFile.setMemberNum((String) session.getAttribute("memberNum"));
 				saveFile.setFileName(file.getOriginalFilename());
 				saveFile.setFileContent(file.getBytes());
-				saveFile.setFileExplanation("");
+				saveFile.setFileExplanation(fileExplanation);
 
 				fileUploadService.uploadFile(saveFile);
 			}
@@ -80,6 +82,7 @@ public class FileUploadController {
 		return "redirect:/upload/personal";
 	}
 
+	// 개인 폴더
 	@RequestMapping(value = "/upload/personal")
 	public String getPersonalFile(Model model, MemberVO vo, HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
@@ -90,6 +93,7 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 공유 폴더로 옮기기
 	@RequestMapping(value = "/upload/movetoshare")
 	public String moveToShare(@RequestParam(value = "fileCode", required = false, defaultValue = "/") String fileCode, HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
@@ -111,6 +115,7 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 공유 폴더
 	@RequestMapping(value = "/upload/share")
 	public String getShareFile(Model model, MemberVO vo, HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
@@ -120,6 +125,7 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 개인 폴더의 파일 삭제
 	@RequestMapping(value = "/upload/delete/{fileCode}")
 	public String deletePersonalFile(@PathVariable String fileCode, HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {
@@ -129,6 +135,7 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 공유 폴더의 파일 삭제
 	@RequestMapping(value = "/upload/sharedelete/{fileCode}")
 	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo, RedirectAttributes attrs, HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -163,6 +170,7 @@ public class FileUploadController {
 		else return "redirect:/home";
 	}
 
+	// 파일 다운로드
 	@RequestMapping(value = "/download/{fileCode}")
 	public ResponseEntity<byte[]> getImageFile(@PathVariable String fileCode, HttpServletRequest req) {
 		if(userService.logincheck(req) == 1) {

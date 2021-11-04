@@ -32,7 +32,8 @@
 	<a href="/list">사원 리스트 보기</a><p>
 	<a href="/signup">사원 추가하기</a><p>
 	<a href="/send">전송하기</a><p>
-	<a href="/upload">파일 올리기</a><p>
+	<a href="/upload/personal">개인폴더</a><p>
+	<a href="/upload/share">공유폴더</a><p>
 	<p>
 	<p>
 	<a href="/memberhome">사원 홈 페이지로 이동</a><p>
