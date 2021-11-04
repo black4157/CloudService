@@ -19,8 +19,6 @@ ${board.boardDate}<br>
 <table>
 <c:forEach var="comment" items="${commentList}">
 <tr>
-<td>${comment.commentNum }</td>
-<td>${comment.contentNum }</td>
 <td>${comment.commentContent }</td>
 <td>${comment.memberNum }</td>
 <td>${comment.commentDate }</td>
