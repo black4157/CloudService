@@ -189,5 +189,16 @@
 		}
 		else alert("사원 정보 저장 조건을 모두 만족해주세요.");
 	});
+	
+	$(document).ready(function(){
+		$(".btn").click(function(){
+			if(confirm("수정하시겠습니까?")){
+				return true;
+			} else {
+				return false;
+			}
+		})
+	});
+
 </script>
 </html>

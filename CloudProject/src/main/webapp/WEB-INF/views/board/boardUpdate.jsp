@@ -13,8 +13,19 @@
 		제목 <input type="text" name="boardTitle" id="boardTitle"value="${board.boardTitle}"><br> 
 		내용<textArea rows="5" cols="30" name="boardContent" id="boardContent"> ${board.boardContent}</textArea>
 		<input type="hidden" name="boardcontentNum" id="boardcontentNum" value="${board.contentNum}"><br> 
-		<input type="submit" value="등록">
+		<input type="submit" value="등록" class="update_check">
 	</form>
 <%@ include file= "../down.jsp"%>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".update_check").click(function(){
+		if(confirm("수정하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
+	})
+});
+</script>
 </html>

@@ -45,9 +45,21 @@
 			설명
 			<textarea name="sendContent" rows="5" cols="100"></textarea>
 		</p>
-		<input type="submit" value="전송">
+		<input type="submit" value="전송" class="send_check">
 		<input type="reset" value="뒤로가기" onclick="history.go(-1);">
 	</form>
 <%@ include file= "../down.jsp"%>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".send_check").click(function(){
+		if(confirm("전송하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
+	})
+});
+</script>
 </html>

@@ -110,7 +110,7 @@ public class FileUploadController {
 			}
 			lstFileCode.add(add);
 			fileUploadService.uploadShareFile(lstFileCode);
-			return "upload/shareok";
+			return "redirect:/upload/personal";
 		}
 		else return "redirect:/home";
 	}

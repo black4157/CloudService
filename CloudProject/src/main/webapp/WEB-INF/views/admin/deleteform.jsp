@@ -31,10 +31,23 @@
 			<td><input type="text" name="retire" value="T" readonly></td>
 		</tr>
 	</table>
-	<input type="submit" value="퇴사 승인"> 
+	<input type="submit" value="퇴사 승인" class="delete_check"> 
 	<input type="reset" value="취소">
 	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </form>
 <%@ include file= "../down.jsp"%>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".delete_check").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
+	})
+});
+
+</script>
 </html>

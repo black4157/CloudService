@@ -8,18 +8,6 @@
 <head>
 <%@ include file= "../headBack.jsp"%>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".delete").click(function(){
-		if(confirm("삭제하시겠습니까?")){
-			return true;
-		} else {
-			return false;
-		}
-	})
-});
-
-</script>
 </head>
 <body>
 <%@ include file= "../up.jsp"%>
@@ -50,4 +38,17 @@ $(document).ready(function(){
 		</form>
 			<%@ include file= "../downback.jsp"%>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".delete").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
+	})
+});
+
+</script>
 </html>

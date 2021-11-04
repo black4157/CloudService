@@ -31,15 +31,30 @@
 			</tr>
 			</c:forEach>
 		</table>
-			<input type="submit" value="공유하기">
+			<input type="submit" value="공유하기" class="share_check">
+		</form>
+		<form action="/upload/upload" method="post" enctype="multipart/form-data">
+			<input type="file" name="file"><p>
+			 파일 설명 : <input type="text" name="text1">
+			<input type="submit" value="파일업로드" class="upload_check">
 		</form>
 		<form action="/upload">
 			<input type="submit" value="돌아가기">
 		</form>
-		<form action="/upload/upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="file">
-			<input type="submit" value="파일업로드">
-		</form>
 		<%@ include file= "../downback.jsp"%>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".share_check").click(function(){
+		alert("공유 완료했습니다.");
+	})
+});
+
+/* $(document).ready(function(){
+	$(".upload_check").click(function(){
+		alert("파일을 올려주세요.");
+	})
+}); */
+</script>
 </html>
