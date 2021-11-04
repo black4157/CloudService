@@ -3,9 +3,9 @@
 </div>
 	</div>
 <!-- /view -->
-	<script src="js/classie.js"></script>
-	<script src="js/dummydata.js"></script>
-	<script src="js/main.js"></script>
+	<script src="../js/classie.js"></script>
+	<script src="../js/dummydata.js"></script>
+	<script src="../js/main.js"></script>
 	<script>
 		(function() {
 			var menuEl = document.getElementById('ml-menu'), mlmenu = new MLMenu(

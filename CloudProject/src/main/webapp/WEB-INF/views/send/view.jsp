@@ -9,7 +9,7 @@
 
 <html>
 <head>
-<title>Home</title>
+<%@ include file= "../head.jsp"%>
 
 </head>
 

@@ -66,9 +66,12 @@ public class SendController {
 
 		fileSendService.uploadSend(sendVO);
 
-		return "send/sendhome";
+		return "redirect:/send/sendhome";
 	}
-
+	@RequestMapping(value = "/send/sendhome")
+	public String getSendHome() {
+		return "send/list";
+	}
 	@RequestMapping(value = "/send/list", method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest req, MemberVO memberVO) {
 		if(userService.logincheck(req) == 1) {

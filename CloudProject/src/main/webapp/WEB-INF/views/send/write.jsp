@@ -5,9 +5,10 @@
 
 <html>
 <head>
-<title>Home</title>
+<%@ include file= "../headBack.jsp"%>
 </head>
 <body>
+<%@ include file= "../up.jsp"%>
 	<form action="/send/write" method="post" enctype="multipart/form-data">
 		<%-- <input type="text" name="send" value="${memberVO.name }" readonly> --%>
 		<p>
@@ -47,6 +48,6 @@
 		<input type="submit" value="전송">
 		<input type="reset" value="뒤로가기" onclick="history.go(-1);">
 	</form>
-
+<%@ include file= "../down.jsp"%>
 </body>
 </html>
