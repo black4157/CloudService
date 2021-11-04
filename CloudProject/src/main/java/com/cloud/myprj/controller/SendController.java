@@ -1,16 +1,21 @@
 package com.cloud.myprj.controller;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cloud.myprj.member.FileSaveVO;
+import com.cloud.myprj.member.MemberVO;
 import com.cloud.myprj.member.SendVO;
 import com.cloud.myprj.service.IFileSendService;
 import com.cloud.myprj.service.IFileUploadService;
@@ -27,17 +32,47 @@ public class SendController {
 	IFileUploadService fileUploadService;
 	
 	@RequestMapping(value="/send")
-	public String send(Model model) {
-		model.addAttribute("fileList", fileUploadService.getPersonalFileList("S0000"));
+	public String sendHome() {
+		return "send/sendhome";
+	}
+	
+	@RequestMapping(value="/send/write")
+	public String send(Model model, HttpServletRequest req, MemberVO memberVO) {
+		HttpSession session = req.getSession();
+		
+		memberVO = (MemberVO)session.getAttribute("memberVO");
+		model.addAttribute("memberVO", memberVO);
+		model.addAttribute("userList", fileSendService.userList());
+		model.addAttribute("fileList", fileUploadService.getPersonalFileList(memberVO.getMemberNum()));
 
 		return "send/write";
 	}
 	
+
 	@RequestMapping(value="/send/write", method=RequestMethod.POST)
 	public String write(SendVO sendVO /*http세션으로 membernum받기*/) {
 		
 		fileSendService.uploadSend(sendVO);
 		
+		return "send/sendhome";
+	}
+	
+	@RequestMapping(value="/send/list", method=RequestMethod.GET)
+	public String list(Model model, HttpServletRequest req, MemberVO memberVO) {
+		HttpSession session = req.getSession();
+		memberVO = (MemberVO)session.getAttribute("memberVO");
+		model.addAttribute("memberVO", memberVO);
+		
+		model.addAttribute("recivedMail", fileSendService.receivedMail(memberVO.getMemberNum()));
 		return "send/list";
+	}
+	
+	@RequestMapping(value="/send/view/{sendNum}", method=RequestMethod.GET)
+	public String view(@PathVariable int sendNum, Model model) {
+		model.addAttribute("viewMail", fileSendService.viewMail(sendNum));
+		
+		System.out.println(fileSendService.viewMail(sendNum));
+		
+		return "send/view";
 	}
 }

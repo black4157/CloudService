@@ -8,30 +8,38 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Hello world!</h1>
 	<form action="/send/write" method="post" enctype="multipart/form-data">
 		<%-- <input type="text" name="send" value="${memberVO.name }" readonly> --%>
 		<p>
-			보낸이 : <input type="text" name="sender" />
+			보낸이 : <input type="text" name="sender" readonly value="${memberVO.memberNum}" />
 		</p>
 		<p>
-			받는이 : <input type="text" name="recipient" />
+			받는이 : 
+			<select name="recipient">
+				<c:forEach var="userList" items="${userList }">
+					<c:if test="${userList.name != memberVO.name }">
+						<option value="${userList.memberNum }">${userList.name }</option>
+					</c:if>
+					
+				</c:forEach>
+			</select>
 		</p>
 
 		<p>
 			파일 : 
-			<datalist>
-				<c:forEach var="List" items="${fileList }">
-					<option>${List.fileName}</option>
+			<select name="fileCode">
+				<c:forEach var="fileList" items="${fileList }">
+					<option value="${fileList.fileCode }">${fileList.fileName }</option>
 				</c:forEach>
-			</datalist>
+			</select>
 
 		</p>
 		<p>
 			설명
-			<textarea name="sendcontent" rows="5" cols="100"></textarea>
+			<textarea name="sendContent" rows="5" cols="100"></textarea>
 		</p>
 		<input type="submit" value="전송">
+		<input type="reset" value="뒤로가기" onclick="history.go(-1);">
 	</form>
 
 </body>
