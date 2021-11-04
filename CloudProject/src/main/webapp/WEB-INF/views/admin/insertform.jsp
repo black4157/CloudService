@@ -67,6 +67,7 @@
 		
 		<input type="button" value="저장" class="btn"> 
 		<input type="reset" value="취소">
+		<input type="button" value="뒤로가기" onclick="history.go(-1);">
 	</form> 
 	<%@ include file= "../down.jsp"%>
 </body>

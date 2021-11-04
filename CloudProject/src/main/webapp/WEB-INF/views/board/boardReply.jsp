@@ -34,7 +34,7 @@ ${board.boardDate}<br>
 	<textArea rows="5" cols="30" name="comment"> </textArea>
 	<input type="hidden" name="contentNum" value="${board.contentNum}">
 	<input type="submit" value="입력" >
-
+	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </form>
 <%@ include file= "../downback2.jsp"%>
 </body>

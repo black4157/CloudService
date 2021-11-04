@@ -23,7 +23,7 @@
 </tr>
 </c:forEach>
 </table>
-
+<input type="button" value="뒤로가기" onclick="history.go(-1);">
 <%@ include file= "../down.jsp"%>
 
 </body>

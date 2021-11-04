@@ -12,7 +12,8 @@
 	<h1>send home</h1>
 	
 	<a href="/send/write">보내기</a><br>
-	<a href="/send/list">받은 메일함</a>
+	<a href="/send/list">받은 메일함</a><p>
+	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 	<%@ include file= "../down.jsp"%>
 </body>
 </html>

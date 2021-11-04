@@ -107,6 +107,7 @@
 
 		<input type="button" value="수정" class="btn"> 
 		<input type="reset" value="취소">
+		<input type="button" value="뒤로가기" onclick="history.go(-1);">
 	</form>
 </body>
 <script>

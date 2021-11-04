@@ -33,6 +33,7 @@
 	</table>
 	<input type="submit" value="퇴사 승인"> 
 	<input type="reset" value="취소">
+	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </form>
 <%@ include file= "../down.jsp"%>
 </body>

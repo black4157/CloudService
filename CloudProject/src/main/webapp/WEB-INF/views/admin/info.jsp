@@ -38,6 +38,7 @@
 	</table>
 	<a href="/update/${memberVO.memberNum}">수정</a>
 	<a href="/delete/${memberVO.memberNum}">삭제</a>
+	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 	<%@ include file= "../down.jsp"%>
 </body>
 </html>
