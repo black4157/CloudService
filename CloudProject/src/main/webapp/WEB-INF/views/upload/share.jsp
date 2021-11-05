@@ -13,7 +13,7 @@
 <%@ include file= "../include/menu.jsp"%>
 	<div class="inbox-body">
 		<div class="mail-option">	
-		<h1>공유 폴더</h1>	
+		<h2>공유 폴더</h2>	
 		<c:url var="actionURL" value="/upload/movetoshare"/>
 		<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
 		<table class="table table-inbox table-hover">

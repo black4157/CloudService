@@ -38,12 +38,10 @@ public class UserController {
 	public String login(MemberVO memberVO, Model model, HttpSession session) {
 		try {
 			memberVO = userService.memberLogin(memberVO);
-
 			if(memberVO.getName() != null) {
 				model.addAttribute("memberVO", memberVO);
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
-			
 				return "redirect:/positioncheck";
 			}
 			else {

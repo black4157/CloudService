@@ -14,8 +14,8 @@
 	
 	 <div class="inbox-body">
 		<div class="mail-option">	
-		<h1 style="display:inline-block;">개인 폴더</h1>	
-		<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 30px; width: 10%; float:right; height: 30px; padding: 0;">
+		<h2 style="display:inline-block;">개인 폴더</h2>	
+		<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
 			<c:url var="actionURL" value="/upload/movetoshare"/>
 			<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
 				<table class="table table-inbox table-hover">

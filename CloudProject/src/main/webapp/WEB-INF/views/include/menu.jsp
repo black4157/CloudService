@@ -36,10 +36,10 @@
 	                   <a href="/upload/personal"><i class="fa fa-inbox"></i> 개인폴더 </a>
 	               </li>
 	               <li>
-	                   <a href="/upload/share"><i class=" fa fa-external-link"></i> 공유폴더</a>
+	                   <a href="/upload/share"><i class=" fa fa-external-link"></i> 공유폴더 </a>
 	               </li>
 	               <li>
-	                   <a href="/send/write"><i class="fa fa-envelope-o"></i> 메일 쓰기 </a>
+	                   <a href="/send/write"><i class="fa fa-envelope-o"></i> 파일 보내기 </a>
 	               </li>
 	               <li>
 	                   <a href="/send/list"><i class="fa fa-envelope-o"></i> 받은 메일함 <span class="label label-danger pull-right">2</span></a>
