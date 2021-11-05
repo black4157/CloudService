@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -41,8 +39,8 @@ public class FileUploadController {
 	
 	// 파일 업로드 홈
 	@RequestMapping(value = "/upload")
-	public String mainPage(HttpServletRequest req, HttpSession session) {
-		if(userService.logincheck(req) == 1) {
+	public String mainPage(HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			return "redirect:/home";
 		}
 		else return "redirect:/home";
@@ -50,8 +48,8 @@ public class FileUploadController {
 
 	// 파일 업로드_Get
 	@RequestMapping(value = "/upload/upload", method = RequestMethod.GET)
-	public String uploadFile(HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String uploadFile(HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			return "upload/upload";
 		}
 		else return "redirect:/home";
@@ -60,10 +58,9 @@ public class FileUploadController {
 	// 파일 업로드_Post
 	@RequestMapping(value = "/upload/upload", method = RequestMethod.POST)
 	public String uploadFile(@RequestParam(value = "text1", required = false, defaultValue = "") String fileExplanation, 
-			@RequestParam MultipartFile file, HttpServletRequest req) {
+			@RequestParam MultipartFile file,HttpSession session) {
 		logger.info(file.getOriginalFilename());
 		try {
-			HttpSession session = req.getSession();
 			if (file != null && !file.isEmpty()) {
 				logger.info("upload/ : " + file.getOriginalFilename());
 				FileSaveVO saveFile = new FileSaveVO();
@@ -84,10 +81,19 @@ public class FileUploadController {
 
 	// 개인 폴더
 	@RequestMapping(value = "/upload/personal")
-	public String getPersonalFile(Model model, MemberVO vo, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
-			HttpSession session = req.getSession();
+	public String getPersonalFile(Model model, MemberVO vo, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			model.addAttribute("personalFile", fileUploadService.getPersonalFileList((String) session.getAttribute("memberNum")));
+			return "upload/personal";
+		}
+		else return "redirect:/home";
+	}
+	
+	// 개인 폴더 검색_파일 이름
+	@RequestMapping(value = "/upload/personal", method=RequestMethod.POST)
+	public String searchPersonalFileByFileName(String fileName, Model model, MemberVO vo, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
+			model.addAttribute("personalFile", fileUploadService.searchPersonalFileByFileName(((String) session.getAttribute("memberNum")), fileName));
 			return "upload/personal";
 		}
 		else return "redirect:/home";
@@ -95,8 +101,8 @@ public class FileUploadController {
 
 	// 공유 폴더로 옮기기
 	@RequestMapping(value = "/upload/movetoshare")
-	public String moveToShare(@RequestParam(value = "fileCode", required = false, defaultValue = "/") String fileCode, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String moveToShare(@RequestParam(value = "fileCode", required = false, defaultValue = "/") String fileCode, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			List<String> lstFileCode = new ArrayList<String>();
 			String add = "";
 			for (int i = 0; i < fileCode.length(); i++) {
@@ -117,9 +123,19 @@ public class FileUploadController {
 
 	// 공유 폴더
 	@RequestMapping(value = "/upload/share")
-	public String getShareFile(Model model, MemberVO vo, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String getShareFile(Model model, MemberVO vo, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			model.addAttribute("shareFile", fileUploadService.getShareFileList("s"));
+			return "upload/share";
+		}
+		else return "redirect:/home";
+	}
+	
+	// 공유 폴더 검색_파일 이름
+	@RequestMapping(value = "/upload/share", method=RequestMethod.POST)
+	public String getShareFile(String fileName, Model model, MemberVO vo, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
+			model.addAttribute("shareFile", fileUploadService.searchShareFileByFileName("s", fileName));
 			return "upload/share";
 		}
 		else return "redirect:/home";
@@ -127,8 +143,8 @@ public class FileUploadController {
 
 	// 개인 폴더의 파일 삭제
 	@RequestMapping(value = "/upload/delete/{fileCode}")
-	public String deletePersonalFile(@PathVariable String fileCode, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String deletePersonalFile(@PathVariable String fileCode, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			fileUploadService.deletePersonalFile(fileCode);
 			return "redirect:/upload/personal";
 		}
@@ -137,10 +153,9 @@ public class FileUploadController {
 
 	// 공유 폴더의 파일 삭제
 	@RequestMapping(value = "/upload/sharedelete/{fileCode}")
-	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo, RedirectAttributes attrs, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+	public String deleteShareFile(@PathVariable String fileCode, MemberVO vo, RedirectAttributes attrs, HttpSession session) {
 		vo = new MemberVO();
-		if(userService.logincheck(req) == 1) {
+		if(userService.logincheck(session) == 1) {
 			try {
 				vo = userService.getMemberInfo((String) session.getAttribute("memberNum"));
 				// 최고 권한자
@@ -172,11 +187,12 @@ public class FileUploadController {
 
 	// 파일 다운로드
 	@RequestMapping(value = "/download/{fileCode}")
-	public ResponseEntity<byte[]> getImageFile(@PathVariable String fileCode, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public ResponseEntity<byte[]> getImageFile(@PathVariable String fileCode, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			FileSaveVO file = fileUploadService.getSelectFile(fileCode);
 			final HttpHeaders headers = new HttpHeaders();
 			if (file != null) {
+				logger.info("getFile " + file.toString());
 				headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
 	
 				return new ResponseEntity<byte[]>(file.getFileContent(), headers, HttpStatus.OK);

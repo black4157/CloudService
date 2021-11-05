@@ -20,6 +20,7 @@ public class UserRepository implements IUserRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	// memberNum 하나씩 증가해서 자동 부여
    @Override
    public String getMemberNum() {
       String sql = "select nvl(max(SUBSTR(member_num,length(member_num)-3,length(member_num))),0) as member_num"
@@ -29,12 +30,14 @@ public class UserRepository implements IUserRepository {
       return "S" + strResult;
    }
 	
+   // 사원 추가
 	@Override
 	public void memberRegister(MemberVO memberVO) throws Exception {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 'F')";
 		jdbcTemplate.update(sql, memberVO.getMemberNum(), memberVO.getPwd(), memberVO.getName(), memberVO.getPhone(), memberVO.getPosition(), memberVO.getDepartment(), memberVO.getMemberAuth());
 	}
 
+	// 로그인
 	@Override
 	public MemberVO memberLogin(MemberVO memberVO) throws Exception {
 		String sql = "select * from member where member_num = ? and pwd = ?";
@@ -57,6 +60,7 @@ public class UserRepository implements IUserRepository {
 		});
 	}
 	
+	// 사원 정보 업데이트
 	@Override
 	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception {
 		String sql = "update member set member_num=?, pwd=?, name=?, phone=?, position=?, department=?, member_auth=?, retire=? where member_num=?";
@@ -71,13 +75,14 @@ public class UserRepository implements IUserRepository {
 								 memberNum);	
 	}
 
+	// 사원 정보 삭제(T로 세팅)
 	@Override
 	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception {
 		String sql = "update member set retire=? where member_num=?";
 		jdbcTemplate.update(sql, memberVO.getRetire(), memberNum);
 	}
 
-	
+	// 전체 사원 정보 조회
 	@Override
 	public List<MemberVO> getMemberList() {
 		String sql = "select * from member where member_num not in(?) and retire = 'F' order by member_num";
@@ -99,6 +104,7 @@ public class UserRepository implements IUserRepository {
 		},admin);
 	}
 
+	// 사원 상세 정보 조회
 	@Override
 	public MemberVO getMemberInfo(String memberNum) throws Exception {
 		String sql = "select member_num, pwd, name, phone, "
@@ -122,4 +128,28 @@ public class UserRepository implements IUserRepository {
 			}
 		}, memberNum);
 	}
+
+	// 사원 검색_이름
+	@Override
+	public List<MemberVO> searchMemberName(String memberName) throws Exception {
+		String sql = "select * from member where member_num not in(?) and retire = 'F' and name like ? order by member_num";
+		return jdbcTemplate.query(sql, new RowMapper<MemberVO>() {
+
+			@Override
+			public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				MemberVO memberVO = new MemberVO();
+				memberVO.setMemberNum(rs.getString("member_num"));
+				memberVO.setPwd(rs.getString("pwd"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setPhone(rs.getString("phone"));
+				memberVO.setPosition(rs.getString("position"));
+				memberVO.setDepartment(rs.getString("department"));
+				memberVO.setMemberAuth(rs.getString("member_auth"));
+				memberVO.setRetire(rs.getString("retire"));
+				return memberVO;
+			}
+		},admin, "%" + memberName + "%");
+	}
+	
+	
 }

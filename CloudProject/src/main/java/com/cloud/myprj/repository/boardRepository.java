@@ -17,6 +17,7 @@ public class boardRepository implements IBoardRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	// 게시판 리스트 출력
 	@Override
 	public List<BoardVO> getAllBoard() {
 		String sql = "select * from BOARD ORDER BY CONTENT_NUM";
@@ -34,7 +35,44 @@ public class boardRepository implements IBoardRepository {
 			}
 		});
 	}
+	
+	// 검색_게시글 제목
+	@Override
+	public List<BoardVO> searchBoardByTitle(String boardTitle) {
+		String sql = "select * from BOARD where board_title like ? ORDER BY CONTENT_NUM";
+		return jdbcTemplate.query(sql, new RowMapper<BoardVO>() {
 
+			@Override
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BoardVO board = new BoardVO();
+				board.setContentNum(rs.getString("CONTENT_NUM"));
+				board.setBoardTitle(rs.getString("BOARD_TITLE"));
+				board.setBoardContent(rs.getString("BOARD_CONTENT"));
+				board.setBoardDate(rs.getTimestamp("BOARD_DATE"));
+				return board;
+			}
+		}, "%" + boardTitle + "%");
+	}
+	
+	// 검색_게시글 내용
+	@Override
+	public List<BoardVO> searchBoardByContent(String boardContent) {
+		String sql = "select * from BOARD where board_content like ? ORDER BY CONTENT_NUM";
+		return jdbcTemplate.query(sql, new RowMapper<BoardVO>() {
+
+			@Override
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BoardVO board = new BoardVO();
+				board.setContentNum(rs.getString("CONTENT_NUM"));
+				board.setBoardTitle(rs.getString("BOARD_TITLE"));
+				board.setBoardContent(rs.getString("BOARD_CONTENT"));
+				board.setBoardDate(rs.getTimestamp("BOARD_DATE"));
+				return board;
+			}
+		}, "%" + boardContent + "%");
+	}
+
+	// 게시글 하나 보기
 	@Override
 	public BoardVO getBoard(String contentNum) {
 		String sql = "select * from BOARD where CONTENT_NUM=?";
@@ -54,6 +92,7 @@ public class boardRepository implements IBoardRepository {
 		}, contentNum);
 	}
 
+	// 게시글 번호 +1 자동 생성
 	@Override
 	public String getBoardNum() {
 		String sql = "select NVL(MAX(CONTENT_NUM),0) from BOARD";
@@ -61,6 +100,7 @@ public class boardRepository implements IBoardRepository {
 		return String.valueOf(Integer.parseInt(num) + 1);
 	}
 
+	// 게시글 쓰기
 	@Override
 	public void insertBoard(BoardVO board) {
 		String sql = "insert into board(CONTENT_NUM, BOARD_TITLE, BOARD_CONTENT,BOARD_DATE) values(?,?,?,?)";
@@ -69,6 +109,7 @@ public class boardRepository implements IBoardRepository {
 
 	}
 
+	// 댓글 번호 +1 자동 생성
 	@Override
 	public String getCommentNum() {
 		String sql = "select NVL(MAX(COMMENT_NUM),0) from BOARD_COMMENT";
@@ -76,6 +117,7 @@ public class boardRepository implements IBoardRepository {
 		return String.valueOf(Integer.parseInt(num) + 1);
 	}
 
+	// 댓글 보기
 	@Override
 	public List<BoardCommentVO> getComment(String contentNum) {
 		String sql = "select * from BOARD_COMMENT where CONTENT_NUM=? ORDER BY COMMENT_NUM";
@@ -95,6 +137,7 @@ public class boardRepository implements IBoardRepository {
 		}, contentNum);
 	}
 
+	// 댓글 쓰기
 	@Override
 	public void insertComment(BoardCommentVO boardComment) {
 		String sql = "insert into BOARD_COMMENT(COMMENT_NUM, CONTENT_NUM, COMMENT_CONTENT,MEMBER_NUM,COMMENT_DATE) values(?,?,?,?,?)";
@@ -103,6 +146,7 @@ public class boardRepository implements IBoardRepository {
 
 	}
 
+	// 댓글 삭제
 	@Override
 	public void deleteComment(String commentNum) {
 		String sql = "DELETE FROM BOARD_COMMENT WHERE COMMENT_NUM= ?";
@@ -110,6 +154,7 @@ public class boardRepository implements IBoardRepository {
 
 	}
 
+	// 게시글 수정
 	@Override
 	public void updateBoard(BoardVO board) {
 		String sql = "Update board set board_title=?, board_content=?,board_date=? where content_num=?";
@@ -117,6 +162,7 @@ public class boardRepository implements IBoardRepository {
 				board.getContentNum());
 	}
 
+	// 게시글 삭제
 	@Override
 	public void deleteBoard(String contentNum) {
 		//공지사항을 삭제

@@ -27,4 +27,7 @@ public interface IUserRepository {
 	// memberInfo 회원상세정보 조회
 	public MemberVO getMemberInfo(String memberNum) throws Exception;
 	
+	// 사원 검색_이름
+	public List<MemberVO> searchMemberName(String memberName) throws Exception;
+	
 }

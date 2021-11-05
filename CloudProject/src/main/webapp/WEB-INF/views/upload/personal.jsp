@@ -40,13 +40,15 @@
 					</c:forEach>
 					</tbody>
 				</table>
-					
-				
 			</form>
 			<form action="/upload/upload" method="post" enctype="multipart/form-data" style="margin-top:20px;">
 				<input type="file" name="file" style="display:inline;">파일 설명
 				<input type="text" name="text1">
 				<input type="submit" value="파일업로드" class="upload_check">
+			</form>
+			<form action = "/upload/personal" method="post">
+				<input type="text" name="fileName" placeholder="파일 이름">
+				<input type="submit" value="검색">
 			</form>
 		</div>
 	</div>

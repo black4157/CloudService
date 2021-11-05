@@ -27,7 +27,6 @@ import com.cloud.myprj.service.IUserService;
 public class BoardController {
 	static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	static final String admin="S0001";
-	
 
 	@Autowired
 	IBoardService boardService;
@@ -35,12 +34,13 @@ public class BoardController {
 	@Autowired
 	IUserService userService;
 
-	@RequestMapping(value = "/board/boardList")
-	public String boardList(Model model, HttpServletRequest req, MemberVO memberVO) {
-		if (userService.logincheck(req) == 1) {
+	// 공지사항 목록 가져오기_Get
+	@RequestMapping(value = "/board/boardList", method=RequestMethod.GET)
+	public String boardList(Model model, HttpSession session, MemberVO memberVO) {
+		if (userService.logincheck(session) == 1) {
 			List<BoardVO> lstBaord= boardService.getAllBoard();
-			HttpSession session = req.getSession();
-			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
+//			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
+			memberVO = (MemberVO) session.getAttribute("memberVO");
 			for(BoardVO board :lstBaord) {
 				if(board.getBoardContent().length()>20) {
 					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
@@ -53,11 +53,35 @@ public class BoardController {
 			return "redirect:/home";
 	}
 
+	// 공지사항 목록 가져오기_Post (검색 : 제목, 내용)
+	@RequestMapping(value = "/board/boardList", method=RequestMethod.POST)
+	public String searchBoardList(String boardTitle, String boardContent, HttpSession session, Model model, MemberVO memberVO) {
+		if(userService.logincheck(session) == 1) {
+			List<BoardVO> lstBaord = null;
+			if(boardContent == null) {
+				lstBaord= boardService.searchBoardByTitle(boardTitle);
+			}
+			else {
+				lstBaord= boardService.searchBoardByContent(boardContent);
+			}
+			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
+			for(BoardVO board :lstBaord) {
+				if(board.getBoardContent().length()>20) {
+					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
+				}
+			}
+			model.addAttribute("boardList", lstBaord);
+			model.addAttribute("memberVO", memberVO);
+			return "board/boardList";
+		}
+		else return "redirect:/home";
+	}
+	
+	// 공지사항 내용 하나 가져오기
 	@RequestMapping(value = "/board/boardReply/{contentNum}", method = RequestMethod.GET)
-	public String board(@PathVariable String contentNum, Model model, HttpServletRequest req, MemberVO memberVO) {
-		if (userService.logincheck(req) == 1) {
+	public String board(@PathVariable String contentNum, Model model, HttpSession session, MemberVO memberVO) {
+		if (userService.logincheck(session) == 1) {
 			logger.info("글 출력");
-			HttpSession session = req.getSession();
 			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
 			model.addAttribute("board", boardService.getBoard(contentNum));
 			model.addAttribute("commentList", boardService.getComment(contentNum));
@@ -67,12 +91,12 @@ public class BoardController {
 			return "redirect:/home";
 	}
 
+	// 댓글 작성
 	@RequestMapping(value = "/board/boardReply", method = RequestMethod.POST)
 	public String insertReply(@RequestParam String comment, @RequestParam String contentNum,
-			RedirectAttributes redirectAttrs, HttpServletRequest req, MemberVO memberVO, Model model) {
-		if (userService.logincheck(req) == 1) {
+			RedirectAttributes redirectAttrs, HttpSession session, MemberVO memberVO, Model model) {
+		if (userService.logincheck(session) == 1) {
 			try {
-				HttpSession session = req.getSession();
 				model.addAttribute("memberVO", memberVO);
 				logger.info("댓글 등록" + comment + contentNum);
 				BoardCommentVO boardComment = new BoardCommentVO();
@@ -93,15 +117,16 @@ public class BoardController {
 			return "redirect:/home";
 	}
 
+	// 게시글 번호 +1 증가 하기 위한 클래스
 	@RequestMapping(value = "/board/boardInsert", method = RequestMethod.GET)
-	public String getBoardNum(Model model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+	public String getBoardNum(Model model, HttpSession session) {
 		if (admin.equals(session.getAttribute("memberNum"))) {
 			return "board/boardInsert";
 		} else
 			return "redirect:/board/boardList";
 	}
 
+	// 게시글 작성
 	@RequestMapping(value = "/board/boardInsert", method = RequestMethod.POST)
 	public String insertBoard(@RequestParam String boardTitle, @RequestParam String boardContent,
 			RedirectAttributes redirectAttrs) {
@@ -126,8 +151,7 @@ public class BoardController {
 
 	// 댓글 삭제
 	@RequestMapping(value = "/board/boardCommentDelete")
-	public String deleteBoardComment(Model model, String commentNum, String contentNum, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+	public String deleteBoardComment(Model model, String commentNum, String contentNum, HttpSession session) {
 		if (admin.equals(session.getAttribute("memberNum"))) {
 			boardService.deleteComment(commentNum);
 			return "redirect:/board/boardReply/" + contentNum;
@@ -137,8 +161,7 @@ public class BoardController {
 
 	// 공지사항 수정하기,get
 	@RequestMapping(value = "/board/boardUpdate/{contentNum}", method = RequestMethod.GET)
-	public String getUpdateBoard(@PathVariable String contentNum, Model model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+	public String getUpdateBoard(@PathVariable String contentNum, Model model, HttpSession session) {
 		if (admin.equals(session.getAttribute("memberNum"))) {
 			BoardVO boardLoad = boardService.getBoard(contentNum);
 			boardLoad.setBoardContent(boardLoad.getBoardContent().replace("<br>", "\r\n"));
@@ -173,8 +196,7 @@ public class BoardController {
 
 	// 공지사항 삭제
 	@RequestMapping(value = "/board/boardDelete")
-	public String deleteBoard(Model model, String contentNum, HttpServletRequest req) {
-		HttpSession session = req.getSession();
+	public String deleteBoard(Model model, String contentNum, HttpSession session) {
 		if (admin.equals(session.getAttribute("memberNum"))) {
 			logger.info("공지사항 삭제" + contentNum);
 			boardService.deleteBoard(contentNum);

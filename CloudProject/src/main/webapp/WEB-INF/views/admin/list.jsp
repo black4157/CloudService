@@ -7,7 +7,8 @@
 <%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<jsp:include page= "../include/menu.jsp">
+	<%@ include file= "../include/menu.jsp"%>
+	<form action="/list" method="post">
 			<h1>사원 목록</h1>
 	<table border="1">
 		<tr>
@@ -28,6 +29,9 @@
 		</tr>
 		</c:forEach>
 	</table>
+		<input type="text" name="name" placeholder="사원 이름">
+		<input type="submit" value="검색">
+	</form>
 	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </body>
 </html>

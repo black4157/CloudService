@@ -38,18 +38,10 @@ public class SendController {
 	@Autowired
 	IUserService userService;
 
-	@RequestMapping(value = "/send")
-	public String sendHome(HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
-			return "send/sendhome";
-		}
-		else return "redirect:/home";
-	}
-
+	// 파일 전송_Get
 	@RequestMapping(value = "/send/write")
-	public String send(Model model, HttpServletRequest req, MemberVO memberVO) {
-		if(userService.logincheck(req) == 1) {
-			HttpSession session = req.getSession();
+	public String send(Model model, HttpSession session, MemberVO memberVO) {
+		if(userService.logincheck(session) == 1) {
 	
 			memberVO = (MemberVO) session.getAttribute("memberVO");
 			model.addAttribute("memberVO", memberVO);
@@ -61,21 +53,19 @@ public class SendController {
 		else return "redirect:/home";
 	}
 
+	// 파일 전송_Post
 	@RequestMapping(value = "/send/write", method = RequestMethod.POST)
 	public String write(SendVO sendVO /* http세션으로 membernum받기 */) {
 
 		fileSendService.uploadSend(sendVO);
 
-		return "redirect:/send/sendhome";
+		return "redirect:/send/list";
 	}
-	@RequestMapping(value = "/send/sendhome")
-	public String getSendHome() {
-		return "send/list";
-	}
+	
+	// 받은 메일함 리스트 출력
 	@RequestMapping(value = "/send/list", method = RequestMethod.GET)
-	public String list(Model model, HttpServletRequest req, MemberVO memberVO) {
-		if(userService.logincheck(req) == 1) {
-			HttpSession session = req.getSession();
+	public String list(Model model, HttpSession session, MemberVO memberVO) {
+		if(userService.logincheck(session) == 1) {
 			memberVO = (MemberVO) session.getAttribute("memberVO");
 			model.addAttribute("memberVO", memberVO);
 	
@@ -85,10 +75,31 @@ public class SendController {
 		}
 		else return "redirect:/home";
 	}
+	
+	// 메일 검색(제목, 내용)
+	@RequestMapping(value = "/send/list", method = RequestMethod.POST)
+	public String searchMailByTitle(String sendTitle, String sendContent, Model model, HttpSession session, MemberVO memberVO) {
+		if(userService.logincheck(session) == 1) {
+			memberVO = (MemberVO) session.getAttribute("memberVO");
+			model.addAttribute("memberVO", memberVO);
+			if(sendContent == null) {
+				model.addAttribute("recivedMail", fileSendService.searchMailByTitle(memberVO.getMemberNum(), sendTitle));
+			}
+			else if(sendTitle == null){
+				model.addAttribute("recivedMail", fileSendService.searchMailByContent(memberVO.getMemberNum(), sendContent));
+			}
+			else if(sendContent == "") {
+				model.addAttribute("recivedMail", fileSendService.searchMailByContent(memberVO.getMemberNum(), " "));
+			}
+			return "send/list";
+		}
+		else return "redirect:/home";
+	}
 
+	// 메일 하나 상세 조회
 	@RequestMapping(value = "/send/view/{sendNum}", method = RequestMethod.GET)
-	public String view(@PathVariable int sendNum, Model model, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String view(@PathVariable int sendNum, Model model, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			model.addAttribute("viewMail", fileSendService.viewMail(sendNum));
 			fileSendService.readCheck(sendNum);
 	
@@ -97,9 +108,10 @@ public class SendController {
 		else return "redirect:/home";
 	}
 
+	// 받은 파일 다운로드
 	@RequestMapping(value = "/send/view/download/{sendNum}")
-	public ResponseEntity<byte[]> viewMailDownload(@PathVariable int sendNum, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public ResponseEntity<byte[]> viewMailDownload(@PathVariable int sendNum, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			JoinVO vo = fileSendService.viewMail(sendNum);
 			final HttpHeaders headers = new HttpHeaders();
 			if (vo != null) {
@@ -113,9 +125,10 @@ public class SendController {
 		else return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 	}
 	
+	// 받은 메일 삭제
 	@RequestMapping(value="/send/delete/{sendNum}")
-	public String mailDelete(@PathVariable int sendNum, HttpServletRequest req) {
-		if(userService.logincheck(req) == 1) {
+	public String mailDelete(@PathVariable int sendNum, HttpSession session) {
+		if(userService.logincheck(session) == 1) {
 			fileSendService.delete(sendNum);
 			return "redirect:/send/list";
 		}

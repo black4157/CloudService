@@ -37,6 +37,10 @@
 			</tbody>
 		</table>
 		</form>
+		<form action = "/upload/share" method="post">
+			<input type="text" name="fileName" placeholder="파일 이름">
+			<input type="submit" value="검색">
+		</form>
 		${msg}
 		</div>
 	</div>

@@ -6,7 +6,7 @@
 <%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<jsp:include page= "../include/menu.jsp">
+	<%@ include file= "../include/menu.jsp"%>
 	<h1>사원 정보 수정</h1>
 	<form action="/update/${memberVO.memberNum}" method="post" class="update">
 		<table>

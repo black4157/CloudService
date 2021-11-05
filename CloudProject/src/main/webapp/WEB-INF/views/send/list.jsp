@@ -15,6 +15,7 @@
 	<div class="inbox-body">
 		              <div class="mail-option">		
 		              	<h3>받은 메일함</h3>
+		              	<form action="/send/list" method="post">
 		                <table class="table table-inbox table-hover">
 		                 <tbody>
 		                   <tr class="unread">
@@ -41,7 +42,16 @@
 		                   
 						</tbody>
 		               </table> 
-		               <input type="button" value="뒤로가기" onclick="history.go(-1);">
+		               	<select id="sel">
+							<option value="title">메일 제목</option>
+							<option value="content">메일 내용</option>
+						</select>
+						<div class="input">
+							<input type="text" name="sendTitle" placeholder="메일 제목">
+						</div>
+							<input type="submit" value="검색">
+		              		<input type="button" value="뒤로가기" onclick="history.go(-1);">
+		               </form>
 		           	</div>
 		           </div>
 <%-- 	<table border="1">
@@ -64,6 +74,18 @@
 
 </body>
 <script>
+	$("select[id=sel]").change(function(){
+
+		 if($(this).val() == "title"){
+			$(".input").html("");
+			$(".input").html('<input type="text" name="sendTitle" placeholder="메일 제목">');
+			
+		} else if ($(this).val() == "content") {
+			$(".input").html("");
+			$(".input").html('<input type="text" name="sendContent" placeholder="메일 내용">');
+		}
+	});
+
 	$(".delete").click(function(){
 		if(confirm("삭제하시겠습니까?")){
 			return true;

@@ -12,6 +12,7 @@
 	<div class="inbox-body">
 	<div class="mail-option">	
 	<h2>공지사항</h2>	
+	<form action="/board/boardList" method="post">
 	  <table class="table table-inbox table-hover">
 	   <tbody>
 	     <tr class="unread">
@@ -30,12 +31,19 @@
 		</tr>
 		</c:forEach>
 		</tbody>
-	    </table> 
+	    </table>
+	    <select id="sel">
+			<option value="title">게시글 제목</option>
+			<option value="content">게시글 내용</option>
+		</select>
+		<div class="input">
+			<input type="text" name="boardTitle" placeholder="게시글 제목">
+		</div>
+
+		<input type="submit" value="검색">
+		</form> 
 		</div>
 	</div>
- 		      </aside>
-		 </div>
-	</div> 
 <%-- <jsp:include page = "../include/menu.jsp" />
 <c:if test="${memberVO.memberNum eq 'S0001'}" >
 <a href='<c:url value="/board/boardInsert"/>'>공지사항 쓰기</a>
@@ -54,4 +62,17 @@
 <input type="button" value="뒤로가기" onclick="history.go(-1);"> --%>
 
 </body>
+<script>
+ 	$("select[id=sel]").change(function(){
+
+ 		 if($(this).val() == "title"){
+ 			$(".input").html("");
+ 			$(".input").html('<input type="text" name="boardTitle" placeholder="게시글 제목">');
+ 			
+ 		} else if ($(this).val() == "content") {
+ 			$(".input").html("");
+ 			$(".input").html('<input type="text" name="boardContent" placeholder="게시글 내용">');
+ 		}
+ 	});
+</script>
 </html>

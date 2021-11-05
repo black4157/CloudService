@@ -6,10 +6,9 @@
 <%@ include file = "../include/head.jsp" %>
 </head>
 <body>
-<jsp:include page= "../include/menu.jsp">
+	<%@ include file= "../include/menu.jsp"%>
 	<div class="container">
 		 <div class="mail-box">
-			<jsp:include page = "../include/menu.jsp" />
 
 		 </div>
 	</div>

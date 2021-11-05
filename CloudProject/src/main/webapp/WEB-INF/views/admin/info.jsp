@@ -7,7 +7,7 @@
 <%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<jsp:include page= "../include/menu.jsp">
+	<%@ include file= "../include/menu.jsp"%>
 	<h1>사원 상세 정보 조회</h1>
 	<table border="1">
 		<tr>
