@@ -23,33 +23,34 @@
 				     <tr class="unread">
 				     	<td class="inbox-small-cells"></td>
 						<td class="view-message ">파일이름</td>
-						<td class="view-message ">업데이트 날짜</td>
 						<td class="view-message ">파일 설명</td>
+						<td class="view-message ">업데이트 날짜</td>
 						<td class="view-message ">삭제</td>
 					</tr>
 					<c:forEach var="personalFile" items="${personalFile}">
-					<tr class="unread">
+					<tr class="">
 						<td class="inbox-small-cells">
                         	<input type="checkbox" class="mail-checkbox">
                         </td>
 						<td class="view-message "><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
-						<td class="view-message "><fmt:formatDate value="${personalFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td class="view-message ">${personalFile.fileExplanation}</td>
+						<td class="view-message "><fmt:formatDate value="${personalFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td class="view-message "><a href="<c:url value='/upload/delete/${personalFile.fileCode}'/>" class = "delete">삭제</a>
 					</tr>
 					</c:forEach>
 					</tbody>
 				</table>
 			</form>
+			<hr class="my-2" style="border-top: 2px solid #eee">
 			<form action="/upload/upload" method="post" enctype="multipart/form-data" style="margin-top:20px;">
 				<input type="file" name="file" style="display:inline;">파일 설명
 				<input type="text" name="text1">
 				<input type="submit" value="파일업로드" class="upload_check">
 			</form>
-			<form action = "/upload/personal" method="post">
+			<!-- <form action="/upload/personal" method="post">
 				<input type="text" name="fileName" placeholder="파일 이름">
 				<input type="submit" value="검색">
-			</form>
+			</form> -->
 		</div>
 	</div>
 </body>
@@ -61,11 +62,15 @@ $(document).ready(function(){
 	});
 });
 
-/* $(document).ready(function(){
+$(document).ready(function(){
 	$(".upload_check").click(function(){
-		if(input[id=s] == null)
+		if(!$("input[name=file]").val()){
 			alert("파일을 올려주세요.");
+			return false;
+		}
+			
+		
 	});
-}); */
+}); 
 </script>
 </html>

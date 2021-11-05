@@ -7,7 +7,7 @@
 <html>
 <head>
 <%@ include file= "../include/head.jsp"%>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
 </head>
 <body>
 <%@ include file= "../include/menu.jsp"%>
@@ -19,18 +19,22 @@
 		<table class="table table-inbox table-hover">
 			<tbody>
 		     <tr class="unread">
-				<td class="view-message ">파일코드</td>
 				<td class="view-message ">파일이름</td>
-				<td class="view-message ">업데이트 날짜</td>
 				<td class="view-message ">파일 설명</td>
+				<td class="view-message ">업데이트 날짜</td>
 				<td class="view-message ">삭제</td>
 			</tr>
 			<c:forEach var="shareFile" items="${shareFile}">
 			<tr class="">
-				<td class="view-message ">${shareFile.fileCode}</td>
 				<td class="view-message "><a href="<c:url value='/download/${shareFile.fileCode}'/>">${shareFile.fileName}</a></td>
-				<td class="view-message ">${shareFile.updateDate}</td>
-				<td class="view-message ">${shareFile.fileExplanation}</td>
+				<c:if test="${shareFile.fileExplanation == null}">
+					<td class="view-message ">설명이 없어요ㅠ</td>
+				</c:if>
+				<c:if test="${shareFile.fileExplanation != null}">
+					<td class="view-message ">${shareFile.fileExplanation}</td>
+				</c:if>
+				
+				<td class="view-message "><fmt:formatDate value="${shareFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td class="view-message "><a href="<c:url value='/upload/sharedelete/${shareFile.fileCode}'/>" class = "delete">삭제</a>
 			</tr>
 			</c:forEach>

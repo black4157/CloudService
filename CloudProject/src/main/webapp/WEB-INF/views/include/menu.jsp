@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <link href="/css/home.css" rel="stylesheet">
 <link rel="stylesheet prefetch" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-<div class="container">
+	<div class="container">
 		 <div class="mail-box">
 			 
 		<!-- 메뉴바 -->
@@ -16,7 +16,7 @@
 	                   <img  width="64" hieght="60" src="http://bootsnipp.com/img/avatars/ebeb306fd7ec11ab68cbcaa34282158bd80361a7.jpg">
 	               </a>
 	               <div class="user-name">
-	                   <h5>${sessionScope.memberVO.name }님 반갑습니다.</h5>
+	                   <h5>${memberVO.name }님 반갑습니다.</h5>
 	                  
 	               </div>
 <!--                           <a class="mail-dropdown pull-right" href="javascript:;">
@@ -49,17 +49,17 @@
 	               </li>
 	           </ul>
 	
-	           <ul class="nav nav-pills nav-stacked labels-info ">
-	               <li> <h4>Buddy online</h4> </li>
-	               <li> <a href="#"> <i class=" fa fa-circle text-success"></i>name <p>I do not think</p></a>  </li>
-	               <li> <a href="#"> <i class=" fa fa-circle text-danger"></i>name<p>Busy with coding</p></a> </li>
-	               <li> <a href="#"> <i class=" fa fa-circle text-muted "></i>name <p>I out of control</p></a>
-	               </li><li> <a href="#"> <i class=" fa fa-circle text-muted "></i>name<p>I am not here</p></a>
-	               </li><li> <a href="#"> <i class=" fa fa-circle text-muted "></i>name<p>I do not think</p></a>
-	               </li>
+	           <ul class="nav nav-pills nav-stacked labels-info" style="display: block; margin-top: 50px;">
+	           	   <li style="text-align:center;"><h4>소중한 팀원들</h4></li>
+	               <li> <a href="#"> <i class=" fa fa-circle text-success"></i>김주성</a></li>
+	               <li> <a href="#"> <i class=" fa fa-circle text-success"></i>김동영</a></li>
+	               <li> <a href="#"> <i class=" fa fa-circle text-success "></i>박주희 </a></li>
+	               <li> <a href="#"> <i class=" fa fa-circle text-success "></i>임윤정</a></li>
+	               <li> <a href="#"> <i class=" fa fa-circle text-success "></i>신동현</a></li>
+	              
 	           </ul>
 	
-	           <div class="inbox-body text-center">
+	           <!-- <div class="inbox-body text-center">
 	               <div class="btn-group">
 	                   <a class="btn mini btn-primary" href="javascript:;">
 	                       <i class="fa fa-plus"></i>
@@ -75,20 +75,25 @@
 	                       <i class="fa fa-cog"></i>
 	                   </a>
 	               </div>
-	           </div>
+	           </div> -->
 	       </aside>
 	       
 	       <!-- 본문내용 -->
 	       <aside class="lg-side">
 	           <div class="inbox-head">
               <!--  <h3>공지사항</h3> -->
-	               <form action="#" class="pull-right position">
+	               <form action="/upload/personal" method="post" class="pull-right position" id="searchForm">
 	                   <div class="input-append">
-	                       <input type="text" class="sr-input" placeholder="Search Mail">
-	                       <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
+	                       <input type="text" name="fileName" class="sr-input" placeholder="Search File">
+	                       <button type="button" class="btn sr-btn" id="searchBtn"><i class="fa fa-search"></i></button>
 	                   </div>
 	               </form>
 	           </div>
+	           <script>
+	           	$("#searchBtn").click(function(){
+	           		$("#searchForm").submit();
+	           	});
+	           </script>
 	           <!-- 
 	           <div class="inbox-body">
 	              <div class="mail-option">		

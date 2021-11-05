@@ -190,6 +190,11 @@ ul.labels-info li a i {
     background: none repeat scroll 0 0 #f7f7f7;
     font-weight: 600;
 }
+
+.table-inbox tr.unread td:last-of-type, .table-inbox tr td:last-of-type {
+	text-align: right;	
+}
+
 ul.inbox-pagination {
     float: right;
 }
