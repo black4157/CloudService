@@ -3,11 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../head.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<%@ include file= "../include/menu.jsp"%>
 	로그인에 실패했습니다.
-	<%@ include file= "../down.jsp"%>
 </body>
 </html>

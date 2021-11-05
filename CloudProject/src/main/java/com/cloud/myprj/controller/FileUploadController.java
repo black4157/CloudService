@@ -41,7 +41,7 @@ public class FileUploadController {
 	
 	// 파일 업로드 홈
 	@RequestMapping(value = "/upload")
-	public String mainPage(HttpServletRequest req) {
+	public String mainPage(HttpServletRequest req, HttpSession session) {
 		if(userService.logincheck(req) == 1) {
 			return "redirect:/home";
 		}
@@ -177,7 +177,6 @@ public class FileUploadController {
 			FileSaveVO file = fileUploadService.getSelectFile(fileCode);
 			final HttpHeaders headers = new HttpHeaders();
 			if (file != null) {
-				logger.info("getFile " + file.toString());
 				headers.setContentDispositionFormData("attachment", file.getFileName(), Charset.forName("UTF-8"));
 	
 				return new ResponseEntity<byte[]>(file.getFileContent(), headers, HttpStatus.OK);

@@ -7,54 +7,63 @@
 <meta charset="UTF-8">
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+	<%@ include file= "../include/head.jsp"%>    
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
-		<c:url var="actionURL" value="/upload/movetoshare"/>
-		<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
-		<table border="1">
-			<tr>
-				<th>파일코드</th>
-				<th>파일이름</th>
-				<th>업데이트 날짜</th>
-				<th>파일 설명</th>
-				<th>삭제</th>
-			</tr>
-			<c:forEach var="personalFile" items="${personalFile}">
-			<tr>
-				<td><input type="checkbox" name="fileCode" value="${personalFile.fileCode}">${personalFile.fileCode}</td>
-				<td><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
-				<td>${personalFile.updateDate}</td>
-				<td>${personalFile.fileExplanation}</td>
-				<td><a href="<c:url value='/upload/delete/${personalFile.fileCode}'/>" class = "delete">삭제</a>
-			</tr>
-			</c:forEach>
-		</table>
-			<input type="submit" value="공유하기" class="share_check">
-		</form>
-		<form action="/upload/upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="file"><p>
-			 파일 설명 : <input type="text" name="text1">
-			<input type="submit" value="파일업로드" class="upload_check">
-		</form>
-		<form action="/upload">
-			<input type="submit" value="돌아가기">
-		</form>
-		<%@ include file= "../downback.jsp"%>
+	<%@ include file= "../include/menu.jsp"%>
+	
+	 <div class="inbox-body">
+		<div class="mail-option">	
+		<h1 style="display:inline-block;">개인 폴더</h1>	
+		<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 30px; width: 10%; float:right; height: 30px; padding: 0;">
+			<c:url var="actionURL" value="/upload/movetoshare"/>
+			<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
+				<table class="table table-inbox table-hover">
+					<tbody>
+				     <tr class="unread">
+				     	<td class="inbox-small-cells"></td>
+						<td class="view-message ">파일이름</td>
+						<td class="view-message ">업데이트 날짜</td>
+						<td class="view-message ">파일 설명</td>
+						<td class="view-message ">삭제</td>
+					</tr>
+					<c:forEach var="personalFile" items="${personalFile}">
+					<tr class="unread">
+						<td class="inbox-small-cells">
+                        	<input type="checkbox" class="mail-checkbox">
+                        </td>
+						<td class="view-message "><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
+						<td class="view-message "><fmt:formatDate value="${personalFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td class="view-message ">${personalFile.fileExplanation}</td>
+						<td class="view-message "><a href="<c:url value='/upload/delete/${personalFile.fileCode}'/>" class = "delete">삭제</a>
+					</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+					
+				
+			</form>
+			<form action="/upload/upload" method="post" enctype="multipart/form-data" style="margin-top:20px;">
+				<input type="file" name="file" style="display:inline;">파일 설명
+				<input type="text" name="text1">
+				<input type="submit" value="파일업로드" class="upload_check">
+			</form>
+		</div>
+	</div>
 </body>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function(){
-	$(".share_check").click(function(){
+	$("#share_check").click(function(){
 		alert("공유 완료했습니다.");
-	})
+	});
 });
 
 /* $(document).ready(function(){
 	$(".upload_check").click(function(){
-		alert("파일을 올려주세요.");
-	})
+		if(input[id=s] == null)
+			alert("파일을 올려주세요.");
+	});
 }); */
 </script>
 </html>

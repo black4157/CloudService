@@ -70,7 +70,7 @@ public class FileUploadRepository implements IFileUploadRepository {
 
 	@Override
 	public List<FileSaveVO> getShareFileList(String fileManagedCode) {
-		String sql = "select * from file_save where file_managed_code = ?";
+		String sql = "select * from file_save where file_managed_code = ? order by update_date desc";
 
 		return jdbcTemplate.query(sql, new RowMapper<FileSaveVO>() {
 			@Override

@@ -35,18 +35,17 @@ public class UserController {
 
 	// 로그인
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(MemberVO memberVO, Model model, HttpServletRequest req) {
+	public String login(MemberVO memberVO, Model model, HttpSession session) {
 		try {
 			memberVO = userService.memberLogin(memberVO);
-			HttpSession session = req.getSession();
 
 			if(memberVO.getName() != null) {
 				model.addAttribute("memberVO", memberVO);
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
-				
+
 //				session.setAttribute("pwd", memberVO.getPwd());
-//				session.setAttribute("name", memberVO.getName());
+				session.setAttribute("name", memberVO.getName());
 //				session.setAttribute("phone", memberVO.getPhone());
 //				session.setAttribute("position", memberVO.getPosition());
 //				session.setAttribute("department", memberVO.getDepartment());

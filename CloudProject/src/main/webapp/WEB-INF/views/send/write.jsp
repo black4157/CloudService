@@ -5,27 +5,37 @@
 
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+	<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
-	<form action="/send/write" method="post" enctype="multipart/form-data">
-		<%-- <input type="text" name="send" value="${memberVO.name }" readonly> --%>
-		<p>
-			보낸이 : <input type="text" name="sender" readonly value="${memberVO.memberNum}" />
-		</p>
-		<p>
-			받는이 : 
-			<select name="recipient">
+	<%@ include file= "../include/menu.jsp"%>
+	
+	<form action="/send/write" method="post" enctype="multipart/form-data" style="padding: 40px 0px 40px 40px;">
+		<div style="width:100%;">
+			<input type="text" name="sender" class="form-control mt-4 mb-2" value="${memberVO.name}" readonly style="width:30%; display:inline-block;"/>
+			<select name="recipient" class="selectpicker" style="width:30%;">
 				<c:forEach var="userList" items="${userList }">
 					<c:if test="${userList.name != memberVO.name }">
 						<c:if test="${userList.name != 'Admin'}"> 
 							<option value="${userList.memberNum }">${userList.name }</option>
 						</c:if>
 					</c:if>
-					
 				</c:forEach>
 			</select>
+		</div>
+	
+	
+	<div class="form-group">
+		<textarea class="form-control" rows="10" name="bdContent"
+			placeholder="내용을 입력해주세요" required
+		></textarea>
+	</div>
+	<button type="submit" class="btn btn-secondary mb-3">제출하기</button>
+</form>	
+
+		<p>
+			받는이 : 
+			
 		</p>
 		
 		<p> 제목 : 
@@ -47,8 +57,7 @@
 		</p>
 		<input type="submit" value="전송" class="send_check">
 		<input type="reset" value="뒤로가기" onclick="history.go(-1);">
-	</form>
-<%@ include file= "../down.jsp"%>
+
 </body>
 
 <script type="text/javascript">
@@ -60,6 +69,12 @@ $(document).ready(function(){
 			return false;
 		}
 	})
+});
+
+$('.selectpicker').selectpicker();
+$('.selectpicker').selectpicker({
+    style: 'btn-info',
+    size: 4
 });
 </script>
 </html>

@@ -5,15 +5,15 @@
 
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+
+<jsp:include page= "../include/menu.jsp">
 
 <form action="/upload/upload" method="post" enctype="multipart/form-data">
 	<input type="file" name="file" />
 	<input type="submit" value="전송">
 </form>
-<%@ include file= "../downback.jsp"%>
 </body>
 </html>

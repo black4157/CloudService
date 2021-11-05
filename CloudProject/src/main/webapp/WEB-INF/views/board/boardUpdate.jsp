@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<jsp:include page= "../include/menu.jsp">
 	<c:url var="actionURL" value='/board/boardUpdate' />
 	<form action="${actionURL}" method="post">
 		제목 <input type="text" name="boardTitle" id="boardTitle"value="${board.boardTitle}"><br> 
@@ -15,7 +15,6 @@
 		<input type="hidden" name="boardcontentNum" id="boardcontentNum" value="${board.contentNum}"><br> 
 		<input type="submit" value="등록" class="update_check">
 	</form>
-<%@ include file= "../down.jsp"%>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){

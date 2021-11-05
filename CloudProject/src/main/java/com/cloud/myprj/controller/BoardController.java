@@ -27,6 +27,7 @@ import com.cloud.myprj.service.IUserService;
 public class BoardController {
 	static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	static final String admin="S0001";
+	
 
 	@Autowired
 	IBoardService boardService;

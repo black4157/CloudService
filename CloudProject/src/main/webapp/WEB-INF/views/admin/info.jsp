@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<jsp:include page= "../include/menu.jsp">
 	<h1>사원 상세 정보 조회</h1>
 	<table border="1">
 		<tr>
@@ -39,6 +39,5 @@
 	<a href="/update/${memberVO.memberNum}">수정</a>
 	<a href="/delete/${memberVO.memberNum}">삭제</a>
 	<input type="button" value="뒤로가기" onclick="history.go(-1);">
-	<%@ include file= "../down.jsp"%>
 </body>
 </html>

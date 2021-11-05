@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../headBack.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<jsp:include page= "../include/menu.jsp">
 	<h1>사원 정보 수정</h1>
 	<form action="/update/${memberVO.memberNum}" method="post" class="update">
 		<table>

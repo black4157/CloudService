@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../head.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<jsp:include page= "../include/menu.jsp">
 	<h1>사원 정보 입력</h1>
 	<form action="/signup" method="post" class="signup">
 		<table>
@@ -69,7 +69,6 @@
 		<input type="reset" value="취소">
 		<input type="button" value="뒤로가기" onclick="history.go(-1);">
 	</form> 
-	<%@ include file= "../down.jsp"%>
 </body>
 <script>
 	var pwdR = /^[A-Za-z0-9]{8,20}/;

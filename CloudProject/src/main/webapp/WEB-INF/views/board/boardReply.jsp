@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../headBack2.jsp"%>
+<%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<%@ include file= "../up.jsp"%>
+<jsp:include page= "../include/menu.jsp">
 ${board.boardTitle}<br>
 ${board.boardContent}<br>
 ${board.boardDate}<br>
@@ -36,6 +36,5 @@ ${board.boardDate}<br>
 	<input type="submit" value="입력" >
 	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </form>
-<%@ include file= "../downback2.jsp"%>
 </body>
 </html>
