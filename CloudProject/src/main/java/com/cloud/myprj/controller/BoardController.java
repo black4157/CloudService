@@ -38,15 +38,18 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardList", method=RequestMethod.GET)
 	public String boardList(Model model, HttpSession session, MemberVO memberVO) {
 		if (userService.logincheck(session) == 1) {
-			List<BoardVO> lstBaord= boardService.getAllBoard();
-//			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
+			List<BoardVO> lstBoard= boardService.getAllBoard();
 			memberVO = (MemberVO) session.getAttribute("memberVO");
-			for(BoardVO board :lstBaord) {
+			for(BoardVO board :lstBoard) {
 				if(board.getBoardContent().length()>20) {
 					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
 				}
 			}
-			model.addAttribute("boardList", lstBaord);
+			if(lstBoard == null) {
+				String msg = "조회된 공지사항이 없습니다.";
+				model.addAttribute("msg", msg);
+			}
+			model.addAttribute("boardList", lstBoard);
 			model.addAttribute("memberVO", memberVO);
 			return "board/boardList";
 		} else
@@ -57,20 +60,20 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardList", method=RequestMethod.POST)
 	public String searchBoardList(String boardTitle, String boardContent, HttpSession session, Model model, MemberVO memberVO) {
 		if(userService.logincheck(session) == 1) {
-			List<BoardVO> lstBaord = null;
+			List<BoardVO> lstBoard = null;
 			if(boardContent == null) {
-				lstBaord= boardService.searchBoardByTitle(boardTitle);
+				lstBoard= boardService.searchBoardByTitle(boardTitle);
 			}
 			else {
-				lstBaord= boardService.searchBoardByContent(boardContent);
+				lstBoard= boardService.searchBoardByContent(boardContent);
 			}
 			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
-			for(BoardVO board :lstBaord) {
+			for(BoardVO board :lstBoard) {
 				if(board.getBoardContent().length()>20) {
 					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
 				}
 			}
-			model.addAttribute("boardList", lstBaord);
+			model.addAttribute("boardList", lstBoard);
 			model.addAttribute("memberVO", memberVO);
 			return "board/boardList";
 		}

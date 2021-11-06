@@ -6,46 +6,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../include/head.jsp"%>
-
+<title>공유폴더</title>
 </head>
 <body>
-<%@ include file= "../include/menu.jsp"%>
-	<div class="inbox-body">
-		<div class="mail-option">	
-		<h2>공유 폴더</h2>	
-		<c:url var="actionURL" value="/upload/movetoshare"/>
-		<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
-		<table class="table table-inbox table-hover">
-			<tbody>
-		     <tr class="unread">
-				<td class="view-message ">파일이름</td>
-				<td class="view-message ">파일 설명</td>
-				<td class="view-message ">업데이트 날짜</td>
-				<td class="view-message ">삭제</td>
-			</tr>
-			<c:forEach var="shareFile" items="${shareFile}">
-			<tr class="">
-				<td class="view-message "><a href="<c:url value='/download/${shareFile.fileCode}'/>">${shareFile.fileName}</a></td>
-				<c:if test="${shareFile.fileExplanation == null}">
-					<td class="view-message ">설명이 없어요ㅠ</td>
-				</c:if>
-				<c:if test="${shareFile.fileExplanation != null}">
-					<td class="view-message ">${shareFile.fileExplanation}</td>
-				</c:if>
-				
-				<td class="view-message "><fmt:formatDate value="${shareFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-				<td class="view-message "><a href="<c:url value='/upload/sharedelete/${shareFile.fileCode}'/>" class = "delete">삭제</a>
-			</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		</form>
-		<form action = "/upload/share" method="post">
-			<input type="text" name="fileName" placeholder="파일 이름">
-			<input type="submit" value="검색">
-		</form>
-		${msg}
+	<div class="container">
+		<div class="mail-box">
+			 
+			<jsp:include page = "../include/menu.jsp" />
+			<aside class="lg-side">
+			    <div class="inbox-head">
+				    <form action="/upload/share" method="post" class="pull-right position" id="searchForm">
+				        <div class="input-append" id="inputappendDiv">
+				            <input type="text" name="fileName" class="sr-input" placeholder="파일이름 검색">
+				            <input type="submit" class="btn sr-btn" value="검색">
+				        </div>
+				    </form>
+				</div>
+				<div class="inbox-body">
+					<div class="mail-option">	
+					<h2>공유 폴더</h2>	
+					<c:url var="actionURL" value="/upload/movetoshare"/>
+					<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<table class="table table-inbox table-hover">
+						<tbody>
+					     <tr class="unread">
+							<td class="view-message ">파일이름</td>
+							<td class="view-message ">파일 설명</td>
+							<td class="view-message ">업데이트 날짜</td>
+							<td class="view-message ">삭제</td>
+						</tr>
+						<c:forEach var="shareFile" items="${shareFile}">
+						<tr class="">
+							<td class="view-message "><a href="<c:url value='/download/${shareFile.fileCode}'/>">${shareFile.fileName}</a></td>
+							<c:if test="${shareFile.fileExplanation == null}">
+								<td class="view-message ">설명이 없어요ㅠ</td>
+							</c:if>
+							<c:if test="${shareFile.fileExplanation != null}">
+								<td class="view-message ">${shareFile.fileExplanation}</td>
+							</c:if>
+							
+							<td class="view-message "><fmt:formatDate value="${shareFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+							<td class="view-message "><a href="<c:url value='/upload/sharedelete/${shareFile.fileCode}'/>" class = "delete">삭제</a>
+						</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+					</form>
+					<form action = "/upload/share" method="post">
+						<input type="text" name="fileName" placeholder="파일 이름">
+						<input type="submit" value="검색">
+					</form>
+					${msg}
+					</div>
+				</div>
+			</aside>
 		</div>
 	</div>
 </body>

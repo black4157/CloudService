@@ -5,6 +5,8 @@
 <head>
 <%@ include file= "../include/head.jsp"%>
 <link href="css/login.css" rel="stylesheet">
+<title>클라우드 서비스</title>
+
 </head>
 <body>
 	<div class="wrapper fadeInDown">
@@ -26,7 +28,7 @@
 	
 	    <!-- Remind Passowrd -->
 	    <div id="formFooter">
-	      <a class="underlineHover" href="#">Go to the Site</a>
+	      <a href="#" class="underlineHover" style="text-decoration: none;">환영합니다.</a>
 	    </div>
 	
 	  </div>

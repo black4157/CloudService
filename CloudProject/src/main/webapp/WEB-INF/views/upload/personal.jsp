@@ -7,50 +7,64 @@
 <meta charset="UTF-8">
 <html>
 <head>
-	<%@ include file= "../include/head.jsp"%>    
+<title>개인 폴더</title>
 </head>
 <body>
-	<%@ include file= "../include/menu.jsp"%>
-	
-	 <div class="inbox-body">
-		<div class="mail-option">	
-		<h2 style="display:inline-block;">개인 폴더</h2>	
-		<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
-			<c:url var="actionURL" value="/upload/movetoshare"/>
-			<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
-				<table class="table table-inbox table-hover">
-					<tbody>
-				     <tr class="unread">
-				     	<td class="inbox-small-cells"></td>
-						<td class="view-message ">파일이름</td>
-						<td class="view-message ">파일 설명</td>
-						<td class="view-message ">업데이트 날짜</td>
-						<td class="view-message ">삭제</td>
-					</tr>
-					<c:forEach var="personalFile" items="${personalFile}">
-					<tr class="">
-						<td class="inbox-small-cells">
-                        	<input type="checkbox" class="mail-checkbox">
-                        </td>
-						<td class="view-message "><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
-						<td class="view-message ">${personalFile.fileExplanation}</td>
-						<td class="view-message "><fmt:formatDate value="${personalFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td class="view-message "><a href="<c:url value='/upload/delete/${personalFile.fileCode}'/>" class = "delete">삭제</a>
-					</tr>
-					</c:forEach>
-					</tbody>
-				</table>
-			</form>
-			<hr class="my-2" style="border-top: 2px solid #eee">
-			<form action="/upload/upload" method="post" enctype="multipart/form-data" style="margin-top:20px;">
-				<input type="file" name="file" style="display:inline;">파일 설명
-				<input type="text" name="text1">
-				<input type="submit" value="파일업로드" class="upload_check">
-			</form>
-			<!-- <form action="/upload/personal" method="post">
-				<input type="text" name="fileName" placeholder="파일 이름">
-				<input type="submit" value="검색">
-			</form> -->
+	<div class="container">
+		<div class="mail-box">
+			 
+			<jsp:include page = "../include/menu.jsp" />
+			<aside class="lg-side">
+			    <div class="inbox-head">
+				    <form action="/upload/personal" method="post" class="pull-right position" id="searchForm">
+				        <div class="input-append" id="inputappendDiv">
+				            <input type="text" name="fileName" class="sr-input" placeholder="파일이름 검색">
+				            <input type="submit" class="btn sr-btn" value="검색">
+				        </div>
+				    </form>
+				</div>
+				 <div class="inbox-body">
+					<div class="mail-option">	
+					<h2 style="display:inline-block;">개인 폴더</h2>	
+					<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+						<c:url var="actionURL" value="/upload/movetoshare"/>
+						<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
+							<table class="table table-inbox table-hover">
+								<tbody>
+							     <tr class="unread">
+							     	<td class="inbox-small-cells"></td>
+									<td class="view-message ">파일이름</td>
+									<td class="view-message ">파일 설명</td>
+									<td class="view-message ">업데이트 날짜</td>
+									<td class="view-message ">삭제</td>
+								</tr>
+								<c:forEach var="personalFile" items="${personalFile}">
+								<tr class="">
+									<td class="inbox-small-cells">
+			                        	<input type="checkbox" class="mail-checkbox">
+			                        </td>
+									<td class="view-message "><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
+									<td class="view-message ">${personalFile.fileExplanation}</td>
+									<td class="view-message "><fmt:formatDate value="${personalFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+									<td class="view-message "><a href="<c:url value='/upload/delete/${personalFile.fileCode}'/>" class = "delete">삭제</a>
+								</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</form>
+						<hr class="my-2" style="border-top: 2px solid #eee">
+						<form action="/upload/upload" method="post" enctype="multipart/form-data" style="margin-top:20px;">
+							<input type="file" name="file" style="display:inline;">파일 설명
+							<input type="text" name="text1">
+							<input type="submit" value="파일업로드" class="upload_check">
+						</form>
+						<!-- <form action="/upload/personal" method="post">
+							<input type="text" name="fileName" placeholder="파일 이름">
+							<input type="submit" value="검색">
+						</form> -->
+					</div>
+				</div>
+			</aside>
 		</div>
 	</div>
 </body>
