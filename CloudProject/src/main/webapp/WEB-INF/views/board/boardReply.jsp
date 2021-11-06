@@ -17,6 +17,7 @@
 	table tr td{
 		width: 70%;
 	}
+
 </style>
 </head>
 <body style="overflow: visible;">
@@ -64,22 +65,22 @@
 					</div>
 				</div>
 				<c:if test="${memberVO.memberNum eq 'S0001'}">
-					<a href='<c:url value="/board/boardUpdate/${board.contentNum }"/>'>수정하기</a>
-					<a href='<c:url value="/board/boardDelete?contentNum=${board.contentNum }"/>'>삭제하기</a>
+					<input type="button" value="수정하기" class="btn btn-compose" onclick="location.href='/board/boardUpdate/${board.contentNum }'" style="margin: 10px 5px 0px 40px; width: 10%; height: 30px; padding: 0;">
+					<input type="button" value="삭제하기" class="btn btn-compose" onclick="location.href='/board/boardDelete?contentNum=${board.contentNum }'" style="margin: 10px 5px 0px 10px; width: 10%; height: 30px; padding: 0;">
 				</c:if>
 				
 				<div style="padding: 20px 0px 20px 40px;">
 					<c:url var="actionURL" value='/board/boardReply' />
 					<form action="${actionURL}" method="post">
 						<h4>댓글</h4>
-						<textArea rows="2" cols="50" name="comment"></textArea>
+						<textArea rows="2" cols="100" name="comment" style="resize: none;"></textArea>
 						<input type="hidden" name="contentNum" value="${board.contentNum}">
-						<input type="submit" value="댓글쓰기"> 
+						<input type="submit" value="댓글쓰기" class="btn btn-compose" style="margin-top: 10px; width: 10%; height: 30px; padding: 0; display: block;"> 
 					</form>
 				</div>
 				
 				
-				<div style="padding: 20px 0px 20px 40px; height:100%;">
+				<div style="padding: 20px 0px 20px 40px;">
 					<table>
 						<tr  style="width:90%;">
 							<th style="width:15%;">작성자</th>
@@ -89,12 +90,17 @@
 						<c:forEach var="comment" items="${commentList}">
 						<!-- <img src="/img/member.png" width="32"/> -->
 							<tr style="width:90%;">
-								<td style="width:15%;">${comment.memberNum }</td>
+								<td style="width:10%;">${comment.memberNum }</td>
 								<td style="width:60%;">${comment.commentContent }</td>
-								<td style="width:15%;"><fmt:formatDate value="${comment.commentDate }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-								<c:if test="${memberVO.memberNum eq 'S0001'}">
-									<td><a href='<c:url value="/board/boardCommentDelete?commentNum=${comment.commentNum }&contentNum=${comment.contentNum }"/>'>삭제</a></td>
-								</c:if>
+								<td style="width:10%;"><fmt:formatDate value="${comment.commentDate }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+								
+								<td>
+									<c:if test="${memberVO.memberNum eq 'S0001'}">
+										<input type="button" value="삭제하기" class="btn btn-compose" 
+											onclick="location.href='/board/boardCommentDelete?commentNum=${comment.commentNum }&contentNum=${comment.contentNum }'" 
+											style="height: 30px; padding:0px;">
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>

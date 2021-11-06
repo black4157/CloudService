@@ -7,7 +7,7 @@
 <%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-<jsp:include page= "../include/menu.jsp">
+<jsp:include page= "../include/menu.jsp" />
 	<c:url var="actionURL" value='/board/boardUpdate' />
 	<form action="${actionURL}" method="post">
 		제목 <input type="text" name="boardTitle" id="boardTitle"value="${board.boardTitle}"><br> 
