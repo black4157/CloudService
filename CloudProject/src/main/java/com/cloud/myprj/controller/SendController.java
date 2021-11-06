@@ -2,7 +2,6 @@ package com.cloud.myprj.controller;
 
 import java.nio.charset.Charset;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -56,8 +55,13 @@ public class SendController {
 	// 파일 전송_Post
 	@RequestMapping(value = "/send/write", method = RequestMethod.POST)
 	public String write(SendVO sendVO /* http세션으로 membernum받기 */) {
-
-		fileSendService.uploadSend(sendVO);
+		String msg = "";
+		try {
+			fileSendService.uploadSend(sendVO);
+			msg = "전송이 완료되었습니다.";
+		} catch (Exception e) {
+			msg = "전송을 실패했습니다.";
+		}
 
 		return "redirect:/send/list";
 	}

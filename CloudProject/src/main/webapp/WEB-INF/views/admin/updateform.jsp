@@ -88,8 +88,7 @@
 				<td>수정할 권한</td>
 				<td><select name="memberAuth" required>
 						<option>A</option>
-						<option>B</option>
-						<option selected>C</option>
+						<option selected>B</option>
 				</select></td>
 			</tr>
 			<tr>

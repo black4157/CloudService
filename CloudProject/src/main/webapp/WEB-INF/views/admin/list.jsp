@@ -1,37 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file= "../include/head.jsp"%>
 </head>
 <body>
-	<%@ include file= "../include/menu.jsp"%>
-	<form action="/list" method="post">
-			<h1>사원 목록</h1>
-	<table border="1">
-		<tr>
-			<th>사원번호</th>
-			<th>이름</th>
-			<th>전화번호</th>
-			<th>직급</th>
-			<th>부서</th>
-		</tr>
-		<c:forEach var="member" items="${memberList}"> <!-- var와 items 변경시 컨트롤+F 로 변경 -->
-		<tr>
-							<!-- @PathVariable -->
-			<td><a href="/info/${member.memberNum}">${member.memberNum}</a></td>
-			<td>${member.name}</td>
-			<td>${member.phone}</td>
-			<td>${member.position}</td>
-			<td>${member.department}</td>
-		</tr>
-		</c:forEach>
-	</table>
-		<input type="text" name="name" placeholder="사원 이름">
-		<input type="submit" value="검색">
-	</form>
-	<input type="button" value="뒤로가기" onclick="history.go(-1);">
+<div class="container">
+      <div class="mail-box">
+         <%@ include file= "../include/menu.jsp"%>
+         <aside class="lg-side">
+             <div class="inbox-head">
+                <form action="/list" method="post" class="pull-right position" id="searchForm">
+                    <div class="input-append" id="inputappendDiv">
+                        <input type="text" name="name" class="sr-input" placeholder="사원이름 검색">
+                        <input type="submit" class="btn sr-btn" value="검색">
+                    </div>
+                </form>
+            </div>
+             <div class="inbox-body">
+               <div class="mail-option">   
+                  <h2 style="display:inline-block;">사원 관리</h2>   
+                  <input type="button" value="사원 추가" onclick="location.href='/signup'" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+                     <table class="table table-inbox table-hover">
+                        <tbody>
+                          <tr class="unread">
+                           <td class="view-message ">사원번호</td>
+                           <td class="view-message ">이름</td>
+                           <td class="view-message ">전화번호</td>
+                           <td class="view-message ">직급</td>
+                           <td class="view-message ">부서</td>
+                        </tr>
+                        <c:forEach var="member" items="${memberList}">
+                        <tr class="">
+                           <td class="view-message "><a href="/info/${member.memberNum}">${member.memberNum}</a></td>
+                           <td class="view-message ">${member.name}</td>
+                           <td class="view-message ">${member.phone}</td>
+                           <td class="view-message ">${member.position}</td>
+                           <td class="view-message ">${member.department}</td>
+                        </tr>
+                        </c:forEach>
+                        </tbody>
+                     </table>
+               </div>
+            </div>
+         </aside>
+      </div>
+   </div>
 </body>
+
+<script>
+$(document).ready(function(){
+   $("#add_person").click(function(){
+      $("#shareForm").submit();
+   });
+});
+</script>
 </html>

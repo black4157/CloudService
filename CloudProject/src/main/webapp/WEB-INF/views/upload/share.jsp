@@ -30,6 +30,7 @@
 					<table class="table table-inbox table-hover">
 						<tbody>
 					     <tr class="unread">
+					  	    <td class="view-message ">올린사람</td>
 							<td class="view-message ">파일이름</td>
 							<td class="view-message ">파일 설명</td>
 							<td class="view-message ">업데이트 날짜</td>
@@ -37,6 +38,7 @@
 						</tr>
 						<c:forEach var="shareFile" items="${shareFile}">
 						<tr class="">
+							<td class="view-message ">${shareFile.memberNum }</td>
 							<td class="view-message "><a href="<c:url value='/download/${shareFile.fileCode}'/>">${shareFile.fileName}</a></td>
 							<c:if test="${shareFile.fileExplanation == null}">
 								<td class="view-message ">설명이 없어요ㅠ</td>
@@ -47,6 +49,7 @@
 							
 							<td class="view-message "><fmt:formatDate value="${shareFile.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 							<td class="view-message "><a href="<c:url value='/upload/sharedelete/${shareFile.fileCode}'/>" class = "delete">삭제</a>
+							<input type="hidden" value="${shareFile.fileCode }">
 						</tr>
 						</c:forEach>
 						</tbody>
@@ -56,7 +59,7 @@
 						<input type="text" name="fileName" placeholder="파일 이름">
 						<input type="submit" value="검색">
 					</form>
-					${msg}
+						${msg}
 					</div>
 				</div>
 			</aside>

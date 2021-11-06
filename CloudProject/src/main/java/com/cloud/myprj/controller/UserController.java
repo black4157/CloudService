@@ -2,8 +2,6 @@ package com.cloud.myprj.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,8 @@ public class UserController {
 
 	// 로그인
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(MemberVO memberVO, Model model, HttpSession session) {
+	public String login(MemberVO memberVO, Model model, HttpSession session, RedirectAttributes attr) {
+		String msg = "로그인에 실패하였습니다.";
 		try {
 			memberVO = userService.memberLogin(memberVO);
 			if(memberVO.getName() != null) {
@@ -46,10 +45,12 @@ public class UserController {
 			}
 			else {
 				session.setAttribute("memberVO", null);
+				attr.addFlashAttribute("msg", msg);
 				return "redirect:/home";
 			}
 		}
 		catch(Exception e) {
+			attr.addFlashAttribute("msg", msg);
 			return "redirect:/home";
 		}
 	}

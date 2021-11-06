@@ -9,66 +9,56 @@
 
 <html>
 <head>
-<%@ include file= "../include/head.jsp"%>
+<title>받은 파일 확인</title>
 </head>
 
 <body>
-<%@ include file= "../include/menu.jsp"%>
-
-
-<div class="inbox-body">
-    <div class="mail-option">	
-    <h1>제목 : ${viewMail.sendTitle}</h1>
-    	
-      <table class="table table-inbox table-hover">
-  <!--      <tbody>
-         <tr class="unread">
-             <td class="inbox-small-cells">
-                 <input type="checkbox" class="mail-checkbox">
-             </td>
-             <td class="view-message  dont-show">순번</td>
-             <td class="view-message ">제목</td>
-             <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-             <td class="view-message  text-right">올린시간</td>
-         </tr>
-         <tr class="unread">
-             <td class="inbox-small-cells">
-                 <input type="checkbox" class="mail-checkbox">
-             </td>
-             <td class="view-message dont-show">Google Webmaster </td>
-             <td class="view-message">Improve the search presence of WebSite</td>
-             <td class="view-message inbox-small-cells"></td>
-             <td class="view-message text-right">March 15</td>
-         </tr>
-    	 </tbody>
-     </table> 
- 	</div>
- </div>
-
-
-	<table> -->
-		<tr class="unread">
-			<td class="view-message"> 보낸이</td>
-			<td class="view-message">${viewMail.sender}</td>
-		</tr>
-		<tr class="unread">
-			<td class="view-message">보낸시간</td>
-			<td class="view-message"><fmt:formatDate value="${viewMail.sendDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-		</tr>
-		<tr class="unread">
-			<td class="view-message">내용</td>
-			<td class="view-message">${viewMail.sendContent}</td>
-		</tr>
+	<div class="container">
+		<div class="mail-box">
+			 
+		<jsp:include page = "../include/menu.jsp" />
 		
-		<tr class="unread">
-			<td class="view-message">받은 파일</td>
-			<td class="view-message"><a href="<c:url value='/send/view/download/${viewMail.sendNum}' />">${viewMail.fileName}</a></td>
-		</tr>
-	</table>
-</div>
- </div>
-
+		<aside class="lg-side">
+			    <div class="inbox-head">
+				    <form action="/send/list" method="post" class="pull-right position" id="searchForm">
+				        <div class="input" id="searchDiv">
+							<select id="sel" class="custom-select custom-select-lg mb-2">
+								<option value="title">메일 제목</option>
+								<option value="content">메일 내용</option>
+							</select>
+				    	</div>
+				        <div class="input-append" id="inputappendDiv">
+				            <input type="text" name="sendTitle" class="sr-input" placeholder="메일 제목">
+				            <input type="submit" class="btn sr-btn" value="검색">
+				        </div>
+				    </form>
+				</div>
+				<div class="inbox-body">
+				    <div class="mail-option">	
+					    <h1>${viewMail.sendTitle}</h1>
+					    <table style="width: 100%; height: 500px;">
+						<tr>
+							<th class="view-message">보낸이</th>
+							<td class="view-message"><input type="text" name="sender" class="form-control mt-4 mb-2" value="${viewMail.sender}" readonly style="width: 30%;"></td>
+						</tr>
+						<tr>
+							<th class="view-message">받는이</th>
+							<td class="view-message"><input type="text" name="recipient" class="form-control mt-4 mb-2" value="${viewMail.recipient}" readonly style="width: 30%;"></td>
+						</tr>
+						<tr>
+							<th class="view-message">제목</th>
+							<td class="view-message"><input type="text" name="sendTitle" class="form-control mt-4 mb-2" style="width: 100%; display: inline-block;" /></td>
+						</tr>
+						<tr>
+							<th class="view-message">파일</th>
+							<td class="view-message"><a href="<c:url value='/send/view/download/${viewMail.sendNum}' />">${viewMail.fileName}</a></td>
+						</tr>
+					</table>
+					</div>
+				</div>
+			</aside>
+		</div>
+	</div>
 </body>
 	
 </html>
-

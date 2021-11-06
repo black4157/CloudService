@@ -25,10 +25,10 @@
 				</div>
 				 <div class="inbox-body">
 					<div class="mail-option">	
-					<h2 style="display:inline-block;">개인 폴더</h2>	
-					<input type="submit" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+						<h2 style="display:inline-block;">개인 폴더</h2>	
+						<input type="button" value="공유하기" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
 						<c:url var="actionURL" value="/upload/movetoshare"/>
-						<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal">
+						<form action="${actionURL}" method="post" enctype="multipart/form-data" class="form-horizontal" id="shareForm">
 							<table class="table table-inbox table-hover">
 								<tbody>
 							     <tr class="unread">
@@ -41,7 +41,7 @@
 								<c:forEach var="personalFile" items="${personalFile}">
 								<tr class="">
 									<td class="inbox-small-cells">
-			                        	<input type="checkbox" class="mail-checkbox">
+			                        	<input type="checkbox" class="mail-checkbox" value="${personalFile.fileCode}" name="fileCode">
 			                        </td>
 									<td class="view-message "><a href="<c:url value='/download/${personalFile.fileCode }'/>">${personalFile.fileName}</a></td>
 									<td class="view-message ">${personalFile.fileExplanation}</td>
@@ -58,10 +58,6 @@
 							<input type="text" name="text1">
 							<input type="submit" value="파일업로드" class="upload_check">
 						</form>
-						<!-- <form action="/upload/personal" method="post">
-							<input type="text" name="fileName" placeholder="파일 이름">
-							<input type="submit" value="검색">
-						</form> -->
 					</div>
 				</div>
 			</aside>
@@ -72,6 +68,7 @@
 <script>
 $(document).ready(function(){
 	$("#share_check").click(function(){
+		$("#shareForm").submit();
 		alert("공유 완료했습니다.");
 	});
 });
@@ -82,8 +79,6 @@ $(document).ready(function(){
 			alert("파일을 올려주세요.");
 			return false;
 		}
-			
-		
 	});
 }); 
 </script>

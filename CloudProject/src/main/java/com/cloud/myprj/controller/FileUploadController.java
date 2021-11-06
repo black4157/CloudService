@@ -58,7 +58,7 @@ public class FileUploadController {
 	// 파일 업로드_Post
 	@RequestMapping(value = "/upload/upload", method = RequestMethod.POST)
 	public String uploadFile(@RequestParam(value = "text1", required = false, defaultValue = "") String fileExplanation, 
-			@RequestParam MultipartFile file,HttpSession session) {
+			@RequestParam MultipartFile file, HttpSession session) {
 		logger.info(file.getOriginalFilename());
 		try {
 			if (file != null && !file.isEmpty()) {
@@ -81,7 +81,7 @@ public class FileUploadController {
 
 	// 개인 폴더
 	@RequestMapping(value = "/upload/personal")
-	public String getPersonalFile(Model model, MemberVO vo, HttpSession session) {
+	public String getPersonalFile(Model model, HttpSession session) {
 		if(userService.logincheck(session) == 1) {
 			model.addAttribute("personalFile", fileUploadService.getPersonalFileList((String) session.getAttribute("memberNum")));
 			return "upload/personal";
@@ -91,7 +91,7 @@ public class FileUploadController {
 	
 	// 개인 폴더 검색_파일 이름
 	@RequestMapping(value = "/upload/personal", method=RequestMethod.POST)
-	public String searchPersonalFileByFileName(String fileName, Model model, MemberVO vo, HttpSession session) {
+	public String searchPersonalFileByFileName(String fileName, Model model, HttpSession session) {
 		if(userService.logincheck(session) == 1) {
 			model.addAttribute("personalFile", fileUploadService.searchPersonalFileByFileName(((String) session.getAttribute("memberNum")), fileName));
 			return "upload/personal";
@@ -123,7 +123,7 @@ public class FileUploadController {
 
 	// 공유 폴더
 	@RequestMapping(value = "/upload/share")
-	public String getShareFile(Model model, MemberVO vo, HttpSession session) {
+	public String getShareFile(Model model, HttpSession session) {
 		if(userService.logincheck(session) == 1) {
 			model.addAttribute("shareFile", fileUploadService.getShareFileList("s"));
 			return "upload/share";
@@ -133,7 +133,7 @@ public class FileUploadController {
 	
 	// 공유 폴더 검색_파일 이름
 	@RequestMapping(value = "/upload/share", method=RequestMethod.POST)
-	public String getShareFile(String fileName, Model model, MemberVO vo, HttpSession session) {
+	public String getShareFile(String fileName, Model model, HttpSession session) {
 		if(userService.logincheck(session) == 1) {
 			model.addAttribute("shareFile", fileUploadService.searchShareFileByFileName("s", fileName));
 			return "upload/share";

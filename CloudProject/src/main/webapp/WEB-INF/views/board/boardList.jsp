@@ -47,7 +47,7 @@
 							    <c:forEach var="board" items="${boardList}">
 								<tr class="">
 									<td class="view-message dont-show">${board.contentNum }</td>
-									<td class="view-message" style="width:25%"><a href='<c:url value="/board/boardReply/${board.contentNum }"/>'>${board.boardTitle }</a></td>
+									<td class="view-message" style="width:25%"><a href="/board/boardReply/${board.contentNum }">${board.boardTitle }</a></td>
 									<td class="view-message" style="width:25%">${board.boardContent }</td>
 									<td class="view-message">관리자</td>
 									<td class="view-message" style="text-align:left"><fmt:formatDate value="${board.boardDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -75,7 +75,6 @@
 				'<input type="submit" class="btn sr-btn" value="검색">'
  			);
  		}
-
  	});
 </script>
 </html>

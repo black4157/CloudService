@@ -15,6 +15,11 @@ table tr {
 table tr th {
 	width: 20%;
 }
+#fileSelect{
+	width: 50%; 
+	padding: 6px 12px; 
+	font-size: 14px;
+}
 </style>
 <body>
 	<div class="container">
@@ -45,7 +50,7 @@ table tr th {
 										<c:forEach var="userList" items="${userList }">
 											<c:if test="${userList.name != memberVO.name }">
 												<c:if test="${userList.name != 'Admin'}">
-													<option value="${userList.memberNum }">${userList.name }</option>
+													<option value="${userList.name}">${userList.name }(${userList.memberNum })</option>
 												</c:if>
 											</c:if>
 										</c:forEach>
@@ -63,7 +68,7 @@ table tr th {
 						<tr>
 							<th>파일</th>
 							<td>
-								<select name="fileCode">
+								<select name="fileCode" id="fileSelect">
 									<c:forEach var="fileList" items="${fileList }">
 										<option value="${fileList.fileCode }">${fileList.fileName }</option>
 									</c:forEach>
@@ -71,7 +76,7 @@ table tr th {
 							</td>
 						</tr>
 					</table>
-					<button type="submit" class="btn btn-secondary mb-3" id="send_check" style="float: right;">제출하기</button>
+					<button type="submit" class="btn btn-secondary mb-3" id="send_check" style="float: right;">파일 보내기</button>
 				</form>
 			</aside>
 		</div>
