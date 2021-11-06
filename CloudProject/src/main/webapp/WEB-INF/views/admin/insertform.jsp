@@ -75,7 +75,7 @@
                      <td>권한</td>
                      <td><select name="memberAuth" required>
                            <option>A</option>
-                           <option>B</option>
+                           <option selected>B</option>
                         </select>
                      </td>
                      <td></td>

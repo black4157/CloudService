@@ -31,7 +31,10 @@
 				</div>
 				<div class="inbox-body">
 					<div class="mail-option">	
-					<h2>공지사항</h2>	
+						<h2 style="display: inline-block;">공지사항</h2>	
+						<c:if test="${memberVO.memberNum == 'S0001' }">
+							<input type="button" value="공지사항 작성" id="share_check" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+						</c:if>
 						<table class="table table-inbox table-hover">
 							<tbody>
 							    <tr class="unread">

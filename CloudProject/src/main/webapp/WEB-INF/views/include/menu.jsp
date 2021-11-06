@@ -45,11 +45,11 @@
        <li>
            <a href="/send/list"><i class="fa fa-envelope-o"></i> 받은 메일함 <span class="label label-danger pull-right">2</span></a>
        </li>
+       <c:if test="${memberVO.memberNum == 'S0001' }">
        <li>
-         <c:if test="${memberVO.memberNum == 'S0001' }">
-             <a href="/list"><i class="fa fa-envelope-o"></i> 사원 관리 <span class="label label-danger pull-right">2</span></a>
-         </c:if>
+           <a href="/list"><i class="fa fa-envelope-o"></i> 사원 관리 <span class="label label-danger pull-right">2</span></a>
        </li>
+       </c:if>
        <li>
            <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
        </li>
