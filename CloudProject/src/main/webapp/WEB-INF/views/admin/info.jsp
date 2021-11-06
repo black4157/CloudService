@@ -12,32 +12,32 @@
 	<table border="1">
 		<tr>
 			<th>사원번호</th>
-			<td>${memberVO.memberNum}</td>
+			<td>${member.memberNum}</td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td>${memberVO.name}</td>
+			<td>${member.name}</td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td>${memberVO.phone}</td>
+			<td>${member.phone}</td>
 		</tr>
 		<tr>
 			<th>직급</th>
-			<td>${memberVO.position}</td>
+			<td>${member.position}</td>
 		</tr>
 		<tr>
 			<th>부서</th>
-			<td>${memberVO.department}</td>
+			<td>${member.department}</td>
 		</tr>
 		<tr>
 			<th>권한</th>
-			<td>${memberVO.memberAuth}</td>		
+			<td>${member.memberAuth}</td>		
 		</tr>
 
 	</table>
-	<a href="/update/${memberVO.memberNum}">수정</a>
-	<a href="/delete/${memberVO.memberNum}">삭제</a>
+	<a href="/update/${member.memberNum}">수정</a>
+	<a href="/delete/${member.memberNum}">삭제</a>
 	<input type="button" value="뒤로가기" onclick="history.go(-1);">
 </body>
 </html>

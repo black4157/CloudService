@@ -8,52 +8,52 @@
 <body>
 	<%@ include file= "../include/menu.jsp"%>
 	<h1>사원 정보 수정</h1>
-	<form action="/update/${memberVO.memberNum}" method="post" class="update">
+	<form action="/update/${member.memberNum}" method="post" class="update">
 		<table>
 			<tr>
 				<td>사원번호</td>
-				<td>${memberVO.memberNum}</td>
+				<td>${member.memberNum}</td>
 			</tr>
 			<tr>
 				<td>수정할 사원번호</td>
 				<td><input type="text" name="memberNum"
-					value="${memberVO.memberNum}" readonly></td>
+					value="${member.memberNum}" readonly></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
-				<td>${memberVO.pwd}</td>
+				<td>${member.pwd}</td>
 			</tr>
 			<tr>
 				<td>수정할 비밀번호</td>
-				<td><input type="password" name="pwd" value="${memberVO.pwd }"  id="pwd" required></td>
+				<td><input type="password" name="pwd" value="${member.pwd }"  id="pwd" required></td>
 				<td><div id="pwd_check"></div></td>
 			</tr>
 			<tr>
 				<td>수정할 비밀번호 확인</td>
-				<td><input type="password" name="pwd2" value="${memberVO.pwd }" id="pwd2"></td>
+				<td><input type="password" name="pwd2" value="${member.pwd }" id="pwd2"></td>
 				<td><div id="pwd2_check"></div></td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td>${memberVO.name}</td>
+				<td>${member.name}</td>
 			</tr>
 			<tr>
 				<td>수정할 이름</td>
-				<td><input type="text" name="name" value="${memberVO.name }" required></td>
+				<td><input type="text" name="name" value="${member.name }" required></td>
 			</tr>
 
 			<tr>
 				<td>전화번호</td>
-				<td>${memberVO.phone}</td>
+				<td>${member.phone}</td>
 			</tr>
 			<tr>
 				<td>수정할 전화번호</td>
-				<td><input type="text" name="phone" value="${memberVO.phone }" id="phone" required></td>
+				<td><input type="text" name="phone" value="${member.phone }" id="phone" required></td>
 				<td><div id="phone_check"></div></td>
 			</tr>
 			<tr>
 				<td>직급</td>
-				<td>${memberVO.position}</td>
+				<td>${member.position}</td>
 			</tr>
 			<tr>
 				<td>수정할 직급</td>
@@ -68,7 +68,7 @@
 			</tr>
 			<tr>
 				<td>부서</td>
-				<td>${memberVO.department}</td>
+				<td>${member.department}</td>
 			</tr>
 			<tr>
 				<td>수정할 부서</td>
@@ -82,7 +82,7 @@
 			</tr>
 			<tr>
 				<td>권한</td>
-				<td>${memberVO.memberAuth}</td>
+				<td>${member.memberAuth}</td>
 			</tr>
 			<tr>
 				<td>수정할 권한</td>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td>퇴사 여부</td>
-				<td>${memberVO.retire}</td>
+				<td>${member.retire}</td>
 			</tr>
 			<tr>
 				<td>수정할 퇴사 여부</td>

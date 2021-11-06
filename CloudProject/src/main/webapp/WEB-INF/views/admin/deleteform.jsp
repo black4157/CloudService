@@ -8,23 +8,23 @@
 <body>
 	<%@ include file= "../include/menu.jsp"%>
 <h1>사원 삭제</h1>
-<form action="/delete/${memberVO.memberNum}" method="post">
+<form action="/delete/${member.memberNum}" method="post">
 	<table border="1">
 		<tr>
 			<th>사원번호</th>
-			<td>${memberVO.memberNum}</td>
+			<td>${member.memberNum}</td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td>${memberVO.name }</td>
+			<td>${member.name }</td>
 		</tr>	
 		<tr>
 			<th>직급</th>
-			<td>${memberVO.position }</td>
+			<td>${member.position }</td>
 		</tr>
 		<tr>
 			<th>부서</th>
-			<td>${memberVO.department }</td>
+			<td>${member.department }</td>
 		</tr>
 		<tr>
 			<th>퇴사 승인</th>

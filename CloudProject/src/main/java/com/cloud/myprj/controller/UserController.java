@@ -124,7 +124,7 @@ public class UserController {
 
 	// 전체 사원 조회 리스트
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(HttpSession session, MemberVO memberVO, Model model) {
+	public String list(HttpSession session, Model model) {
 		List<MemberVO> memberList;
 		try {
 			if(session.getAttribute("memberNum").equals(admin)) {
@@ -143,12 +143,12 @@ public class UserController {
 	
 	// 사원 상세 정보 조회
 	@RequestMapping(value="/info/{memberNum}")
-	public String info(HttpSession session, @PathVariable String memberNum, Model model, MemberVO memberVO) {
+	public String info(HttpSession session, @PathVariable String memberNum, Model model) {
 		
 		try {
 			if(session.getAttribute("memberNum").equals(admin)) {
-				memberVO = userService.getMemberInfo(memberNum);
-				model.addAttribute("memberVO", memberVO);
+				MemberVO memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("member", memberVO);
 				return "admin/info";
 			}else {
 				return "redirect:/home";
@@ -186,11 +186,11 @@ public class UserController {
 	
 	// 사원 정보 수정_Get
 	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.GET)
-	public String update(HttpSession session, @PathVariable String memberNum, MemberVO memberVO, Model model) {
+	public String update(HttpSession session, @PathVariable String memberNum, Model model) {
 		try {
 			if(session.getAttribute("memberNum").equals(admin)) {
-				memberVO = userService.getMemberInfo(memberNum);
-				model.addAttribute("memberVO", memberVO);
+				MemberVO memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("member", memberVO);
 				return "admin/updateform";
 			}
 			else {
@@ -218,11 +218,11 @@ public class UserController {
 	
 	// 사원 삭제(T로 세팅)_Get
 	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.GET)
-	public String delete(HttpSession session, @PathVariable String memberNum, MemberVO memberVO, Model model) {
+	public String delete(HttpSession session, @PathVariable String memberNum, Model model) {
 		try {
 			if(session.getAttribute("memberNum").equals(admin)) {
-				memberVO = userService.getMemberInfo(memberNum);
-				model.addAttribute("memberVO", memberVO);
+				MemberVO memberVO = userService.getMemberInfo(memberNum);
+				model.addAttribute("member", memberVO);
 				return "admin/deleteform";
 			}
 			else {
