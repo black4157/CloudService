@@ -12,7 +12,7 @@
 <aside class="sm-side">
     <div class="user-head">
         <a class="inbox-avatar" href="javascript:;">
-            <img src="/img/member.png" width="64" height="64">
+            <img src="/img/member.png" width="64">
         </a>
         <div class="user-name">
             <h5>${memberVO.name }님 반갑습니다.</h5>
@@ -40,22 +40,19 @@
            <a href="/upload/share"><i class=" fa fa-external-link"></i> 공유폴더 </a>
        </li>
        <li>
-           <a href="/send/write"><i class="fa fa-envelope-o"></i> 파일 보내기 </a>
+           <a href="/send/write"><i class="fa fa-paper-plane-o"></i> 파일 보내기 </a>
        </li>
        <li>
-           <a href="/send/list"><i class="fa fa-envelope-o"></i> 받은 메일함 <span class="label label-danger pull-right">2</span></a>
+           <a href="/send/list"><i class="fa fa-envelope-o"></i> 받은 파일함 <span class="label label-danger pull-right">${notRead }</span></a>
        </li>
        <c:if test="${memberVO.memberNum == 'S0001' }">
        <li>
-           <a href="/list"><i class="fa fa-envelope-o"></i> 사원 관리 <span class="label label-danger pull-right">2</span></a>
+			<a href="/list"><i class="fa fa-user"></i> 사원 관리 </a>
        </li>
        </c:if>
-       <li>
-           <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
-       </li>
    </ul>
    
-   <ul class="nav nav-pills nav-stacked labels-info" style="display: block; margin-top: 50px;">
+   <ul class="nav nav-pills nav-stacked labels-info" style="display: block; margin-top: 100px;">
       <li style="text-align:center;"><h4>소중한 팀원들</h4></li>
        <li> <a href="#"> <i class=" fa fa-circle text-success"></i>김주성</a></li>
        <li> <a href="#"> <i class=" fa fa-circle text-success"></i>김동영</a></li>

@@ -3,27 +3,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file = "../include/head.jsp" %>
+<title>관리자 홈페이지</title>
 </head>
 <body>
    <div class="container">
       <div class="mail-box">
-   <%@ include file= "../include/menu.jsp"%>
-
-       </div>
-   </div>
-
-   <%-- 관리자의 홈 페이지 입니다.<p>
-   ${memberVO.name } 님 로그인 되었습니다.<p>
-   
-   <a href="/logout">로그아웃 하기</a><p>
-   <a href="/board/boardList">공지사항 보기</a><p>
-   <a href="/list">사원 리스트 보기</a><p>
-   <a href="/signup">사원 추가하기</a><p>
-   <a href="/send">전송하기</a><p>
-   <a href="/upload/personal">개인폴더</a><p>
-   <a href="/upload/share">공유폴더</a><p>   <p>
-   <p>
-   <a href="/memberhome">사원 홈 페이지로 이동</a><p>  --%>
+  		 <jsp:include page="../include/menu.jsp" />
+  		 
+  		 <aside class="lg-side">
+		    <div class="inbox-head">
+			    <form action="/send/list" method="post" class="pull-right position" id="searchForm">
+			        <div class="input" id="searchDiv">
+						<select id="sel" class="custom-select custom-select-lg mb-2">
+							<option value="title">메일 제목</option>
+							<option value="content">메일 내용</option>
+						</select>
+			    	</div>
+			        <div class="input-append" id="inputappendDiv">
+			            <input type="text" name="sendTitle" class="sr-input" placeholder="메일 제목">
+			            <input type="submit" class="btn sr-btn" value="검색">
+			        </div>
+			    </form>
+			</div>
+			</aside>
+		</div>
+	</div>
 </body>
 </html>

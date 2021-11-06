@@ -3,113 +3,166 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../include/head.jsp"%>
+<title>사원 변경</title>
 </head>
-<body>
-	<%@ include file= "../include/menu.jsp"%>
-	<h1>사원 정보 수정</h1>
-	<form action="/update/${member.memberNum}" method="post" class="update">
-		<table>
-			<tr>
-				<td>사원번호</td>
-				<td>${member.memberNum}</td>
-			</tr>
-			<tr>
-				<td>수정할 사원번호</td>
-				<td><input type="text" name="memberNum"
-					value="${member.memberNum}" readonly></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td>${member.pwd}</td>
-			</tr>
-			<tr>
-				<td>수정할 비밀번호</td>
-				<td><input type="password" name="pwd" value="${member.pwd }"  id="pwd" required></td>
-				<td><div id="pwd_check"></div></td>
-			</tr>
-			<tr>
-				<td>수정할 비밀번호 확인</td>
-				<td><input type="password" name="pwd2" value="${member.pwd }" id="pwd2"></td>
-				<td><div id="pwd2_check"></div></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td>${member.name}</td>
-			</tr>
-			<tr>
-				<td>수정할 이름</td>
-				<td><input type="text" name="name" value="${member.name }" required></td>
-			</tr>
-
-			<tr>
-				<td>전화번호</td>
-				<td>${member.phone}</td>
-			</tr>
-			<tr>
-				<td>수정할 전화번호</td>
-				<td><input type="text" name="phone" value="${member.phone }" id="phone" required></td>
-				<td><div id="phone_check"></div></td>
-			</tr>
-			<tr>
-				<td>직급</td>
-				<td>${member.position}</td>
-			</tr>
-			<tr>
-				<td>수정할 직급</td>
-				<td><select name="position" required>
-						<option value="S1">부장</option>
-						<option value="S2">차장</option>
-						<option value="S3">과장</option>
-						<option value="S4">대리</option>
-						<option value="S5" selected>사원</option>
-						<option value="S6">인턴</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>부서</td>
-				<td>${member.department}</td>
-			</tr>
-			<tr>
-				<td>수정할 부서</td>
-				<td><select name="department" required>
-						<option>개발</option>
-						<option>영업</option>
-						<option>마케팅</option>
-						<option>인사</option>
-						<option>기획</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>권한</td>
-				<td>${member.memberAuth}</td>
-			</tr>
-			<tr>
-				<td>수정할 권한</td>
-				<td><select name="memberAuth" required>
-						<option>A</option>
-						<option selected>B</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>퇴사 여부</td>
-				<td>${member.retire}</td>
-			</tr>
-			<tr>
-				<td>수정할 퇴사 여부</td>
-				<td><select name="retire" required>
-						<option>T</option>
-						<option selected>F</option>
-				</select></td>
-			</tr>
-		</table>
-
-		<input type="button" value="수정" class="btn"> 
-		<input type="reset" value="취소">
-		<input type="button" value="뒤로가기" onclick="history.go(-1);">
-	</form>
+<body style="overflow: visible;">
+	<div class="container">
+	   <div class="mail-box">
+	<jsp:include page="../include/menu.jsp" />
+	 <aside class="lg-side">
+             <div class="inbox-head">
+                <form action="/list" method="post" class="pull-right position" id="searchForm">
+                    <div class="input-append" id="inputappendDiv">
+                        <input type="text" name="name" class="sr-input" placeholder="사원이름 검색">
+                        <input type="submit" class="btn sr-btn" value="검색">
+                    </div>
+                </form>
+            </div>
+             <div class="inbox-body">
+               <div class="mail-option">
+               	     <form action="/update/${member.memberNum}" method="post" class="update">   
+                  <h2 style="display:inline-block;">사원 번호</h2>   
+                     <table class="table table-inbox table-hover">
+                        <tbody>
+                          <tr class="unread">
+                            <td class="view-message ">사원번호</td>
+							<td class="view-message ">${member.memberNum}</td>
+							<td></td>
+							<td></td>
+                          </tr>
+                         <tr class="unread">
+                          <td class="view-message ">수정할 사원번호</td>
+						  <td class="view-message "><input type="text" name="memberNum" value="${member.memberNum}" readonly></td>
+						  <td></td>
+						  <td></td>
+                         </tr>
+                         <tr class="unread">
+                            <td class="view-message ">비밀번호</td>
+							<td class="view-message ">${member.pwd}</td>
+							<td></td>
+							<td></td>
+                         </tr>
+                         <tr class="unread">
+                            <td class="view-message ">수정할 비밀번호</td>
+							<td class="view-message "><input type="password" name="pwd" value="${member.pwd }"  id="pwd" required></td>
+							<td class="view-message "><div id="pwd_check"></div></td>
+							<td></td>
+                         </tr>
+                         <tr class="unread">
+                            <td class="view-message ">수정할 비밀번호 확인</td>
+							<td class="view-message "><input type="password" name="pwd2" value="${member.pwd }" id="pwd2"></td>
+							<td class="view-message "><div id="pwd2_check"></div></td>
+							<td></td>
+                         </tr>
+                         <tr class="unread">
+							<td class="view-message ">이름</td>
+							<td class="view-message ">${member.name}</td>
+							<td></td>
+							<td></td>
+					  	 </tr>
+					  	 <tr class="unread">
+							<td class="view-message ">수정할 이름</td>
+							<td class="view-message "><input type="text" name="name" value="${member.name }" required></td>
+							<td></td>
+							<td></td>
+					 	 </tr>
+					 	 <tr class="unread">
+							<td class="view-message ">전화번호</td>
+							<td class="view-message ">${member.phone}</td>
+							<td></td>
+							<td></td>
+						 </tr>
+						 <tr class="unread">
+							<td class="view-message ">수정할 전화번호</td>
+							<td class="view-message "><input type="text" name="phone" value="${member.phone }" id="phone" required></td>
+							<td class="view-message "><div id="phone_check"></div></td>
+							<td></td>
+				 		 </tr>
+				 		 <tr class="unread">
+							<td class="view-message ">직급</td>
+							<td class="view-message ">${member.position}</td>
+							<td></td>
+							<td></td>
+						</tr>
+                        <tr class="unread">
+							<td class="view-message ">수정할 직급</td>
+							<td class="view-message "><select name="position" required>
+									<option value="S1">부장</option>
+									<option value="S2">차장</option>
+									<option value="S3">과장</option>
+									<option value="S4">대리</option>
+									<option value="S5" selected>사원</option>
+									<option value="S6">인턴</option>
+							</select></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">부서</td>
+							<td class="view-message ">${member.department}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">수정할 부서</td>
+							<td class="view-message "><select name="department" required>
+									<option>개발</option>
+									<option>영업</option>
+									<option>마케팅</option>
+									<option>인사</option>
+									<option>기획</option>
+							</select></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">권한</td>
+							<td class="view-message ">${member.memberAuth}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">수정할 권한</td>
+							<td class="view-message "><select name="memberAuth" required>
+									<option>A</option>
+									<option selected>B</option>
+							</select></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">퇴사 여부</td>
+							<td class="view-message ">${member.retire}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="unread">
+							<td class="view-message ">수정할 퇴사 여부</td>
+							<td class="view-message "><select name="retire" required>
+									<option>T</option>
+									<option selected>F</option>
+							</select></td>
+							<td></td>
+							<td></td>
+						</tr>
+                        </tbody>
+                     </table>
+                   </form>
+               </div>
+            </div>
+          <input type="button" value="저장" id="save" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:left; height: 30px; padding: 0;">
+          <input type="button" value="뒤로가기" id="back" onclick="history.go(-1);" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+         </aside>
+	   </div>
+	</div>
 </body>
 <script>
+/*
+	<input type="button" value="수정" class="btn"> 
+	<input type="reset" value="취소">
+	<input type="button" value="뒤로가기" onclick="history.go(-1);">
+</form> */
+
 	var pwdR = /^[A-Za-z0-9]{8,20}/;
 	var phoneR = /^01([0|1|6|7|8|9]?)?-([0-9]{4})-([0-9]{4})$/;
 	var phoneN = /^[A-Za-z | ㄱ-ㅎ | ㅏ-ㅣ | 가-힣 ]{1}/;
@@ -170,8 +223,8 @@
 			check_arr[2] = false;
 		}
 	});
-	
-	$(".btn").click(function(){
+
+	$("#save").click(function(){
 		for(var i = 0; i < check_arr.length; i++){
 			if(check_arr[i] == false){
 				validAll = false;
@@ -182,22 +235,17 @@
 				console.log(validAll);
 			}
 		}
-		
 		if(validAll == true){
-			$(".update").submit();
+			if(confirm("수정하시겠습니까?")){
+				$(".update").submit();
+				return true;
+			} else{
+				return false;
+			}
 		}
 		else alert("사원 정보 저장 조건을 모두 만족해주세요.");
 	});
-	
-	$(document).ready(function(){
-		$(".btn").click(function(){
-			if(confirm("수정하시겠습니까?")){
-				return true;
-			} else {
-				return false;
-			}
-		})
-	});
 
+	
 </script>
 </html>

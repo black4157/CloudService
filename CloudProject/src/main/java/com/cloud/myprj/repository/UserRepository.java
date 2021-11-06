@@ -40,7 +40,7 @@ public class UserRepository implements IUserRepository {
 	// 로그인
 	@Override
 	public MemberVO memberLogin(MemberVO memberVO) throws Exception {
-		String sql = "select * from member where member_num = ? and pwd = ?";
+		String sql = "select * from member where member_num = ? and pwd = ? and retire='F' ";
 		Object[] args = {memberVO.getMemberNum(), memberVO.getPwd()};
 		return jdbcTemplate.queryForObject(sql, args, new RowMapper<MemberVO>() {
 
@@ -77,9 +77,9 @@ public class UserRepository implements IUserRepository {
 
 	// 사원 정보 삭제(T로 세팅)
 	@Override
-	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception {
+	public void memberDelete(String retire, String memberNum) throws Exception {
 		String sql = "update member set retire=? where member_num=?";
-		jdbcTemplate.update(sql, memberVO.getRetire(), memberNum);
+		jdbcTemplate.update(sql, retire, memberNum);
 	}
 
 	// 전체 사원 정보 조회

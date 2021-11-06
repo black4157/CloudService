@@ -12,6 +12,9 @@
 <title>받은 파일 확인</title>
 <style>
 	table tr {
+		border-bottom: 1px solid #eee;
+	}
+	table tr th{
 		width: 20%;
 	}
 	
@@ -42,7 +45,7 @@
 			        </div>
 			    </form>
 			</div>
-			<div class="inbox-body">
+			<div class="inbox-body" style="padding: 20px 0px 20px 40px;">
 			    <div class="mail-option">	
 				    <h1>${viewMail.sendTitle}</h1>
 				    <table style="width: 100%; height: 300px;">
@@ -51,12 +54,12 @@
 							<td class="view-message">${viewMail.sender}</td>
 						</tr>
 						<tr>
-							<th class="view-message">내용</th>
-							<td class="view-message">${viewMail.sendContent}</td>
-						</tr>
-						<tr>
 							<th class="view-message ">받은 날짜</th>
 							<td class="view-message"><fmt:formatDate value="${viewMail.sendDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						</tr>
+						<tr>
+							<th class="view-message">내용</th>
+							<td class="view-message">${viewMail.sendContent}</td>
 						</tr>
 						<tr>
 							<th class="view-message">파일</th>

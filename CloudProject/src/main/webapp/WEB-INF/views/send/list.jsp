@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<title>받은 메일함</title>
+<title>받은 파일함</title>
 </head>
 <body>
 	<div class="container">
@@ -30,9 +30,9 @@
 				    </form>
 				</div>
 
-				<div class="inbox-body">
+				<div class="inbox-body" style="padding: 20px 0px 20px 40px;">
 					<div class="mail-option">
-						<h3>받은 메일함</h3>
+						<h3>받은 파일함</h3>
 						<table class="table table-inbox table-hover">
 							<tbody>
 								<tr class="unread">
@@ -42,10 +42,15 @@
 									<td class="view-message ">받은 날짜</td>
 									<td class="view-message  text-right">삭제</td>
 								</tr>
-		
+								
 								<c:forEach var="mailList" items="${recivedMail }">
 									<tr class="">
-										<td class="view-message dont-show">${mailList.sender}</td>
+										<c:if test="${mailList.readCheck == 'F' }">
+											<td class="view-message dont-show">***${mailList.sender}</td>
+										</c:if>
+										<c:if test="${mailList.readCheck == 'T' }">
+											<td class="view-message dont-show">${mailList.sender}</td>
+										</c:if>
 										<td class="view-message" style="width:25%;"><a href="/send/view/${mailList.sendNum}">${mailList.sendTitle}</a></td>
 										<td class="view-message" style="width:25%;">${mailList.sendContent}</td>
 										<td class="view-message"><fmt:formatDate value="${mailList.sendDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>

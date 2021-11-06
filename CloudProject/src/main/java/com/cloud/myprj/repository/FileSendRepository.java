@@ -36,7 +36,7 @@ public class FileSendRepository implements IFileSendRepository {
 	// 유저 목록 조회
 	@Override
 	public List<Map<String, Object>> userList(){
-		String sql = "select member_num as memberNum, name from member";
+		String sql = "select member_num as memberNum, name from member where retire='F'";
 		return jdbcTemplate.queryForList(sql);
 	}
 
@@ -97,7 +97,7 @@ public class FileSendRepository implements IFileSendRepository {
 				vo.setFileContent(rs.getBytes("file_content"));
 				vo.setFileExplanation(rs.getString("file_explanation"));
 				vo.setDeleteTF(rs.getString("delete_tf"));
-
+				
 				return vo;
 			}
 			
@@ -129,7 +129,6 @@ public class FileSendRepository implements IFileSendRepository {
 				vo.setFileContent(rs.getBytes("file_content"));
 				vo.setFileExplanation(rs.getString("file_explanation"));
 				vo.setDeleteTF(rs.getString("delete_tf"));
-
 				return vo;
 			}
 			
@@ -160,7 +159,7 @@ public class FileSendRepository implements IFileSendRepository {
 				vo.setFileContent(rs.getBytes("file_content"));
 				vo.setFileExplanation(rs.getString("file_explanation"));
 				vo.setDeleteTF(rs.getString("delete_tf"));
-
+				
 				return vo;
 			}
 		}, sendNum);
@@ -182,5 +181,13 @@ public class FileSendRepository implements IFileSendRepository {
 		String sql = "delete send where send_num = ?";
 		jdbcTemplate.update(sql, sendNum);
 	}
+
+	@Override
+	public int getNotRead(String recipient) {
+		String sql = "select count(*) from send where recipient = ? and read_check = 'F'";
+		return jdbcTemplate.queryForObject(sql, Integer.class, recipient);
+	}
+	
+	
 
 }

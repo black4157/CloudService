@@ -71,6 +71,9 @@ public class FileSendService implements IFileSendService {
 	public void delete(int sendNum) {
 		fileSendRepository.delete(sendNum);
 	}
-	
-	
+
+	@Override
+	public int getNotRead(String recipient) {
+		return fileSendRepository.getNotRead(recipient);
+	}
 }

@@ -16,7 +16,7 @@ public interface IUserRepository {
 	public void memberUpdate(MemberVO memberVO, String memberNum) throws Exception;
 	
 	// Admin이 회원 삭제
-	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception;
+	public void memberDelete(String retire, String memberNum) throws Exception;
 	
 	// memberNum +1씩 증가
 	public String getMemberNum() throws Exception;

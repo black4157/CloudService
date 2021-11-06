@@ -106,7 +106,12 @@ public class SendController {
 		if(userService.logincheck(session) == 1) {
 			model.addAttribute("viewMail", fileSendService.viewMail(sendNum));
 			fileSendService.readCheck(sendNum);
-	
+			if((Integer) session.getAttribute("notRead") <= 0) {
+				session.setAttribute("notRead", 0);
+			} else {
+				session.setAttribute("notRead", (Integer) session.getAttribute("notRead") - 1);
+			}
+			
 			return "send/view";
 		}
 		else return "redirect:/home";
@@ -120,7 +125,6 @@ public class SendController {
 			final HttpHeaders headers = new HttpHeaders();
 			if (vo != null) {
 				headers.setContentDispositionFormData("attachment", vo.getFileName(), Charset.forName("UTF-8"));
-	
 				return new ResponseEntity<byte[]>(vo.getFileContent(), headers, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);

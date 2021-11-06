@@ -50,7 +50,7 @@ table tr th {
 										<c:forEach var="userList" items="${userList }">
 											<c:if test="${userList.name != memberVO.name }">
 												<c:if test="${userList.name != 'Admin'}">
-													<option value="${userList.name}">${userList.name }(${userList.memberNum })</option>
+													<option value="${userList.memberNum}">${userList.name }(${userList.memberNum })</option>
 												</c:if>
 											</c:if>
 										</c:forEach>
@@ -63,7 +63,7 @@ table tr th {
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea class="form-control" rows="10" name="sendContent" placeholder="내용을 입력해주세요"></textarea></td>
+							<td><textarea class="form-control" rows="10" name="sendContent" placeholder="내용을 입력해주세요" style="resize: none;"></textarea></td>
 						</tr>
 						<tr>
 							<th>파일</th>

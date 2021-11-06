@@ -41,7 +41,7 @@
 							<td class="view-message ">${shareFile.memberNum }</td>
 							<td class="view-message "><a href="<c:url value='/download/${shareFile.fileCode}'/>">${shareFile.fileName}</a></td>
 							<c:if test="${shareFile.fileExplanation == null}">
-								<td class="view-message ">설명이 없어요ㅠ</td>
+								<td class="view-message ">설명이 없어요ㅠㅠ</td>
 							</c:if>
 							<c:if test="${shareFile.fileExplanation != null}">
 								<td class="view-message ">${shareFile.fileExplanation}</td>

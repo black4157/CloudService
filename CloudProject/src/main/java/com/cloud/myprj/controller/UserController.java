@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloud.myprj.member.MemberVO;
+import com.cloud.myprj.service.IFileSendService;
 import com.cloud.myprj.service.IUserService;
 
 @Controller
@@ -21,6 +22,9 @@ public class UserController {
 	
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IFileSendService fileSendService;
 	
 	// 홈
 	@RequestMapping(value="/home")
@@ -41,6 +45,7 @@ public class UserController {
 				model.addAttribute("memberVO", memberVO);
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
+				session.setAttribute("notRead", fileSendService.getNotRead( (String)memberVO.getMemberNum() ));
 				return "redirect:/positioncheck";
 			}
 			else {
@@ -176,14 +181,14 @@ public class UserController {
 	public String signup(MemberVO memberVO) {
 		try {
 			userService.memberSignUp(memberVO);
-			return "redirect:/adminhome";
+			return "redirect:/list";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return "redirect:/adminhome";
 		}
-		
+
 	}
-	
+
 	// 사원 정보 수정_Get
 	@RequestMapping(value="/update/{memberNum}", method=RequestMethod.GET)
 	public String update(HttpSession session, @PathVariable String memberNum, Model model) {
@@ -238,9 +243,9 @@ public class UserController {
 	
 	// 사원 삭제(T로 세팅)_Post
 	@RequestMapping(value="/delete/{memberNum}", method=RequestMethod.POST)
-	public String delete(MemberVO memberVO, @PathVariable String memberNum) {
+	public String delete(@PathVariable String memberNum, String retire) {
 		try {
-			userService.memberDelete(memberVO, memberNum);
+			userService.memberDelete(retire, memberNum);
 			return "redirect:/list";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

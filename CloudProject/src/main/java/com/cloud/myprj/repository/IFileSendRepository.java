@@ -34,4 +34,6 @@ public interface IFileSendRepository {
 	
 	// 받은 메일함 검색_내용
 	List<JoinVO> searchMailByContent(String recipient, String sendContent);
+	
+	int getNotRead(String recipient);
 }

@@ -84,10 +84,12 @@ public class BoardController {
 	public String board(@PathVariable String contentNum, Model model, HttpSession session, MemberVO memberVO) {
 		if (userService.logincheck(session) == 1) {
 			logger.info("글 출력");
+			System.out.println("member 세팅 전 : " + memberVO);
 			memberVO.setMemberNum((String) session.getAttribute("memberNum"));
 			model.addAttribute("board", boardService.getBoard(contentNum));
 			model.addAttribute("commentList", boardService.getComment(contentNum));
 			model.addAttribute("memberVO", memberVO);
+			System.out.println("member 세팅 후 : " + memberVO);
 			return "board/boardReply";
 		} else
 			return "redirect:/home";

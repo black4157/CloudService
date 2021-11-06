@@ -96,6 +96,7 @@ public class JoinVO {
 	public void setDeleteTF(String deleteTF) {
 		this.deleteTF = deleteTF;
 	}
+
 	@Override
 	public String toString() {
 		return "JoinVO [sendNum=" + sendNum + ", sender=" + sender + ", recipient=" + recipient + ", sendTitle="
@@ -105,5 +106,6 @@ public class JoinVO {
 				+ ", deleteTF=" + deleteTF + "]";
 	}
 	
+
 
 }

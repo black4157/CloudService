@@ -38,8 +38,8 @@ public class UserService implements IUserService {
 
 	// 사원 정보 삭제(T로 세팅)_admin
 	@Override
-	public void memberDelete(MemberVO memberVO, String memberNum) throws Exception {
-		userRepository.memberDelete(memberVO, memberNum);
+	public void memberDelete(String retire, String memberNum) throws Exception {
+		userRepository.memberDelete(retire, memberNum);
 	}
 	
 	// 전체 사원 조회

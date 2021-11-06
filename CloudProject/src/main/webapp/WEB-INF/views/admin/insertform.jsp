@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../include/head.jsp"%>
+<title>사원 입력</title>
 </head>
 <body>
 <div class="container">
    <div class="mail-box">
-       <%@ include file= "../include/menu.jsp"%>
+       <jsp:include page="../include/menu.jsp" />
         <aside class="lg-side">
              <div class="inbox-head">
                 <form action="/list" method="post" class="pull-right position" id="searchForm">
@@ -75,7 +75,7 @@
                      <td>권한</td>
                      <td><select name="memberAuth" required>
                            <option>A</option>
-                           <option selected>B</option>
+                           <option>B</option>
                         </select>
                      </td>
                      <td></td>
@@ -84,8 +84,8 @@
                      </table>
                </div>
             </div>
-          <input type="reset" value="취소" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:left; height: 30px; padding: 0;">
-          <input type="button" value="저장" onclick="location.href='/signup'" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+          <input type="reset" value="취소" class="btn btn-compose" id="cancle" onclick="location.href='/signup'" style="margin-top: 20px; width: 10%; float:left; height: 30px; padding: 0;">
+          <input type="button" value="저장" id="save" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
           </form>
           </aside>
       </div>
@@ -153,15 +153,16 @@
       }
    });
    
-   $(".btn").click(function(){
+   $("#save").click(function(){
+	  validAll = true;
       for(var i = 0; i < check_arr.length; i++){
          if(check_arr[i] == false){
             validAll = false;
-            console.log(check_arr[i]);
+            console.log("a" + check_arr[i]);
          }
          else {
-            console.log(check_arr[i]);
-            console.log(validAll);
+            console.log("b" + check_arr[i]);
+            console.log("c" + validAll);
          }
       }
       

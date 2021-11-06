@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file= "../include/head.jsp"%>
+<title>사원 리스트</title>
 </head>
 <body>
 <div class="container">
       <div class="mail-box">
-         <%@ include file= "../include/menu.jsp"%>
+        <jsp:include page="../include/menu.jsp" />
          <aside class="lg-side">
              <div class="inbox-head">
                 <form action="/list" method="post" class="pull-right position" id="searchForm">

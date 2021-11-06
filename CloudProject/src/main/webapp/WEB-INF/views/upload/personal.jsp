@@ -35,7 +35,7 @@
 							     	<td class="inbox-small-cells"></td>
 									<td class="view-message ">파일이름</td>
 									<td class="view-message ">파일 설명</td>
-									<td class="view-message ">업데이트 날짜</td>
+									<td class="view-message ">업로드 날짜</td>
 									<td class="view-message ">삭제</td>
 								</tr>
 								<c:forEach var="personalFile" items="${personalFile}">
