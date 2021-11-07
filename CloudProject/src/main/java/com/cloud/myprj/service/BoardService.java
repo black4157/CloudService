@@ -79,4 +79,10 @@ public class BoardService implements IBoardService {
 		boardRepository.deleteBoard(contentNum);
 
 	}
+	
+
+	@Override
+	public List<BoardVO> selectFive() {
+		return boardRepository.selectFive();
+	}
 }

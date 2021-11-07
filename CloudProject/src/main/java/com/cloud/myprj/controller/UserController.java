@@ -1,5 +1,6 @@
 package com.cloud.myprj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cloud.myprj.member.BoardVO;
 import com.cloud.myprj.member.MemberVO;
+import com.cloud.myprj.service.IBoardService;
 import com.cloud.myprj.service.IFileSendService;
 import com.cloud.myprj.service.IUserService;
 
@@ -25,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	IFileSendService fileSendService;
+	
+	@Autowired
+	IBoardService boardService;
 	
 	// 홈
 	@RequestMapping(value="/home")
@@ -43,11 +49,6 @@ public class UserController {
 			memberVO = userService.memberLogin(memberVO);
 			if(memberVO.getName() != null) {
 				model.addAttribute("memberVO", memberVO);
-				
-				System.out.println(userService.selectFive());
-				
-				model.addAttribute("selectFive", userService.selectFive());
-				
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
 				session.setAttribute("notRead", fileSendService.getNotRead( (String)memberVO.getMemberNum() ));
@@ -93,8 +94,9 @@ public class UserController {
 	
 	// 멤버 홈페이지로 이동
 	@RequestMapping(value="/memberhome")
-	public String memberHome(HttpSession session) {
+	public String memberHome(HttpSession session, Model model) {
 		if(userService.logincheck(session) == 1) {
+			model.addAttribute("selectFive", boardService.selectFive());
 			return "member/memberhome";
 		}
 		else return "redirect:/home";
@@ -106,6 +108,17 @@ public class UserController {
 		memberVO = (MemberVO)session.getAttribute("memberVO");
 		if(session.getAttribute("memberNum").equals(admin)) {
 			model.addAttribute("memberVO", memberVO);
+			
+			List<BoardVO> list = new ArrayList<BoardVO>();
+			list = boardService.selectFive();
+			for(BoardVO board : list ) {
+				if(board.getBoardContent().length()>20) {
+					board.setBoardContent(board.getBoardContent().substring(0, 20).replace("<br>", " "));
+				}
+			}
+			
+			
+			model.addAttribute("selectFive", list);
 			return "admin/adminhome";
 		}
 		else {

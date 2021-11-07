@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.cloud.myprj.member.BoardCommentVO;
 import com.cloud.myprj.member.BoardVO;
-import com.cloud.myprj.member.MemberVO;
 
 public interface IBoardRepository {
 	

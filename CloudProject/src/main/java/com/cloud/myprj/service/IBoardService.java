@@ -36,4 +36,6 @@ public interface IBoardService {
 	
 	// 검색_게시글 내용
 	public List<BoardVO> searchBoardByContent(String boardContent);
+	
+	List<BoardVO> selectFive();
 }

@@ -21,8 +21,8 @@
 			<div class="inbox-body">
 				<div class="mail-option">
 					<h2>최신글</h2>
-					<table style="width: 100%;">
-						<tr>
+					<table class="table table-inbox table-hover" style="width: 100%;">
+						<tr class="unread" style="background:#f7f7f7;">
 							<th class="view-message">작성자</th>
 							<th class="view-message">작성일</th>
 							<th class="view-message">제목</th>
@@ -30,10 +30,10 @@
 						</tr>
 						<c:forEach var="list" items="${selectFive }">
 						<tr>
-							<td class="view-message">${list }</td>
+							<td class="view-message">관리자</td>
 							<td class="view-message"><fmt:formatDate value="${list.boardDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-							<td class="view-message">${list.boardTitle}</td>
-							<td class="view-message">${list.boardContent}</td>
+							<td class="view-message"><a href="/board/boardReply/${list.contentNum }">${list.boardTitle}</a></td>
+							<td class="view-message" style="text-align:left;">${list.boardContent}</td>
 						</tr>
 						</c:forEach>
 					</table>

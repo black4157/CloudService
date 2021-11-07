@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.cloud.myprj.member.BoardVO;
 import com.cloud.myprj.member.MemberVO;
 
 public interface IUserService {
@@ -31,6 +30,5 @@ public interface IUserService {
 
 	// member 검색
 	public List<MemberVO> searchMemberName(String memberName) throws Exception;
-	
-	List<BoardVO> selectFive();
+
 }
