@@ -43,9 +43,15 @@ public class UserController {
 			memberVO = userService.memberLogin(memberVO);
 			if(memberVO.getName() != null) {
 				model.addAttribute("memberVO", memberVO);
+				
+				System.out.println(userService.selectFive());
+				
+				model.addAttribute("selectFive", userService.selectFive());
+				
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberNum", memberVO.getMemberNum());
 				session.setAttribute("notRead", fileSendService.getNotRead( (String)memberVO.getMemberNum() ));
+				
 				return "redirect:/positioncheck";
 			}
 			else {

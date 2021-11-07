@@ -2,13 +2,14 @@ package com.cloud.myprj.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloud.myprj.member.BoardVO;
 import com.cloud.myprj.member.MemberVO;
+import com.cloud.myprj.repository.IBoardRepository;
 import com.cloud.myprj.repository.IUserRepository;
 
 @Service
@@ -16,6 +17,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	IUserRepository userRepository;
+	
+	@Autowired
+	IBoardRepository boardRepository;
 	
 	// 로그인
 	@Override
@@ -67,6 +71,11 @@ public class UserService implements IUserService {
 			return 1;
 		}
 		else return 0;
+	}
+
+	@Override
+	public List<BoardVO> selectFive() {
+		return boardRepository.selectFive();
 	}
 
 }

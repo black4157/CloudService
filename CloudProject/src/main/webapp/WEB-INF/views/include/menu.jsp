@@ -31,7 +31,7 @@
 			</c:if>
 		</li>
 		<li>
-		    <a href="/board/boardList"><i class="fa fa-bookmark-o"></i> 공지사항 보기 </a>
+		    <a href="/board/boardList"><i class="fa fa-bookmark-o"></i> 공지사항 </a>
 		</li>
 		<li>
 		    <a href="/upload/personal"><i class="fa fa-folder-open-o" aria-hidden="true"></i> 개인폴더 </a>

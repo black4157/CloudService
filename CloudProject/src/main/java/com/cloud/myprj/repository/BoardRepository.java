@@ -13,14 +13,14 @@ import com.cloud.myprj.member.BoardCommentVO;
 import com.cloud.myprj.member.BoardVO;
 
 @Repository
-public class boardRepository implements IBoardRepository {
+public class BoardRepository implements IBoardRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
 	// 게시판 리스트 출력
 	@Override
 	public List<BoardVO> getAllBoard() {
-		String sql = "select * from BOARD ORDER BY CONTENT_NUM";
+		String sql = "select * from BOARD ORDER BY BOARD_DATE desc";
 
 		return jdbcTemplate.query(sql, new RowMapper<BoardVO>() {
 
@@ -95,7 +95,7 @@ public class boardRepository implements IBoardRepository {
 	// 게시글 번호 +1 자동 생성
 	@Override
 	public String getBoardNum() {
-		String sql = "select NVL(MAX(CONTENT_NUM),0) from BOARD";
+		String sql = "select NVL(MAX(CONTENT_NUM + 0),0) from BOARD";
 		String num = jdbcTemplate.queryForObject(sql, String.class);
 		return String.valueOf(Integer.parseInt(num) + 1);
 	}
@@ -112,7 +112,7 @@ public class boardRepository implements IBoardRepository {
 	// 댓글 번호 +1 자동 생성
 	@Override
 	public String getCommentNum() {
-		String sql = "select NVL(MAX(COMMENT_NUM),0) from BOARD_COMMENT";
+		String sql = "select NVL(MAX(COMMENT_NUM + 0),0) from BOARD_COMMENT";
 		String num = jdbcTemplate.queryForObject(sql, String.class);
 		return String.valueOf(Integer.parseInt(num) + 1);
 	}
@@ -171,5 +171,25 @@ public class boardRepository implements IBoardRepository {
 		//공지사항에 올라왔던 댓글 삭제
 		String sql2 = "DELETE FROM BOARD_COMMENT WHERE CONTENT_NUM= ?";
 		jdbcTemplate.update(sql2, contentNum);
+	}
+
+	@Override
+	public List<BoardVO> selectFive() {
+		String sql = "select content_num, board_title, board_content, board_date " + 
+				"from (select rownum,content_num, board_title, board_content, board_date from board order by board_date desc) " + 
+				"where rownum between 1 and 5";
+		return jdbcTemplate.query(sql, new RowMapper<BoardVO>() {
+
+			@Override
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BoardVO vo = new BoardVO();
+				vo.setContentNum(rs.getString("CONTENT_NUM"));
+				vo.setBoardTitle(rs.getString("BOARD_TITLE"));
+				vo.setBoardContent(rs.getString("BOARD_CONTENT"));
+				vo.setBoardDate(rs.getTimestamp("BOARD_DATE"));
+				return vo;
+			}
+			
+		});
 	}
 }

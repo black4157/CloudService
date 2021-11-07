@@ -66,7 +66,7 @@
 				</div>
 				<c:if test="${memberVO.memberNum eq 'S0001'}">
 					<input type="button" value="수정하기" class="btn btn-compose" onclick="location.href='/board/boardUpdate/${board.contentNum }'" style="margin: 10px 5px 0px 40px; width: 10%; height: 30px; padding: 0;">
-					<input type="button" value="삭제하기" class="btn btn-compose" onclick="location.href='/board/boardDelete?contentNum=${board.contentNum }'" style="margin: 10px 5px 0px 10px; width: 10%; height: 30px; padding: 0;">
+					<input type="button" value="삭제하기" class="btn btn-compose" id="delBtn" style="margin: 10px 5px 0px 10px; width: 10%; height: 30px; padding: 0;">
 				</c:if>
 				
 				<div style="padding: 20px 0px 20px 40px;">
@@ -109,4 +109,12 @@
 		</div>
 	</div>
 </body>
+<script>
+	$("#delBtn").click(function(){
+		if(confirm("삭제하시겠습니까 ?")){
+			location.href='/board/boardDelete?contentNum=${board.contentNum }';
+			return true;
+		} else false;
+	});
+</script>
 </html>

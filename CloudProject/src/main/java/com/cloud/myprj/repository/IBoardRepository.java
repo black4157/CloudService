@@ -43,4 +43,7 @@ public interface IBoardRepository {
 	
 	// 게시판 검색_내용
 	public List<BoardVO> searchBoardByContent(String boardContent);
+	
+	//최신글 5개 가져오기
+	List<BoardVO> selectFive();
 }

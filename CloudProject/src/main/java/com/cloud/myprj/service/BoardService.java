@@ -10,7 +10,7 @@ import com.cloud.myprj.member.BoardVO;
 import com.cloud.myprj.repository.IBoardRepository;
 
 @Service
-public class boardService implements IBoardService {
+public class BoardService implements IBoardService {
 	@Autowired
 	IBoardRepository boardRepository;
 
