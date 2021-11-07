@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cloud.myprj.member.JoinVO;
 import com.cloud.myprj.member.MemberVO;
@@ -54,9 +55,13 @@ public class SendController {
 
 	// 파일 전송_Post
 	@RequestMapping(value = "/send/write", method = RequestMethod.POST)
-	public String write(SendVO sendVO /* http세션으로 membernum받기 */) {
+	public String write(@RequestParam String sendContent, SendVO sendVO) {
 		String msg = "";
 		try {
+			
+			sendContent = sendContent.replace("\r\n", "<br>");
+			sendVO.setSendContent(sendContent);
+			
 			fileSendService.uploadSend(sendVO);
 			msg = "전송이 완료되었습니다.";
 		} catch (Exception e) {

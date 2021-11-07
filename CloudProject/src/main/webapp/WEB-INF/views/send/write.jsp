@@ -59,7 +59,7 @@ table tr th {
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td><input type="text" name="sendTitle" class="form-control mt-4 mb-2" style="width: 100%; display: inline-block;" /></td>
+							<td><input type="text" name="sendTitle" class="form-control mt-4 mb-2" placeholder="제목을 입력해주세요" style="width: 100%; display: inline-block;" /></td>
 						</tr>
 						<tr>
 							<th>내용</th>
