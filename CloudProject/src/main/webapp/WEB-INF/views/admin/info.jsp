@@ -52,8 +52,8 @@
                      </table>
                </div>
             </div>
-            <input type="button" value="삭제" onclick="location.href='/delete/${member.memberNum}'" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
-            <input type="button" value="수정" onclick="location.href='/update/${member.memberNum}'" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+            <input type="button" value="삭제" onclick="location.href='/delete/${member.memberNum}'" class="btn btn-compose" style="margin-top: -10px; margin-right: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+            <input type="button" value="수정" onclick="location.href='/update/${member.memberNum}'" class="btn btn-compose" style="margin-top: -10px; margin-left: 20px; width: 10%; float:left; height: 30px; padding: 0;">
          </aside>
       </div>
 	</div>

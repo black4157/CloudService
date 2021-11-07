@@ -84,8 +84,8 @@
                      </table>
                </div>
             </div>
-          <input type="reset" value="취소" class="btn btn-compose" id="cancle" onclick="location.href='/signup'" style="margin-top: 20px; width: 10%; float:left; height: 30px; padding: 0;">
-          <input type="button" value="저장" id="save" class="btn btn-compose" style="margin-top: 20px; width: 10%; float:right; height: 30px; padding: 0;">
+          <input type="reset" value="취소" class="btn btn-compose" id="cancle" onclick="location.href='/signup'" style="margin-top: -10px; margin-left: 20px; width: 10%; float:left; height: 30px; padding: 0;">
+          <input type="button" value="저장" id="save" class="btn btn-compose" style="margin-top: -10px; margin-right: 20px; width: 10%; float:right; height: 30px; padding: 0;">
           </form>
           </aside>
       </div>
